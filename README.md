@@ -14,7 +14,7 @@ eventually, communities of all types.
 Framework - 
 JavaScript,
 MEAN Stack,
-Responsive web (HTML5) app,
+Responsive web (HTML5) app
 
 Process Tools - 
 Slack for general communication and reporting,
