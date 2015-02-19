@@ -19,6 +19,7 @@ Responsive web (HTML5) app
 Process Tools - 
 Slack for general communication and reporting,
   URL: https://datcoco.slack.com/messages
+  
 Pivotal Tracker
   URL: https://www.pivotaltracker.com/n/projects/1276086
 
