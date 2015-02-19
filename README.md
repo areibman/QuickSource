@@ -1,26 +1,26 @@
 QuickSource
 =====
 
-Idea
+Idea - 
 Crowdsource people not money. 
 
-Growth Strategy
-Campus faculty post research opportunities and field student interest
+Growth Strategy - 
+Campus faculty post research opportunities and field student interest.
 
-Market 
-Initially, inter-campus communities. 
-Eventually, communities of all types. 
+Market -
+Initially, inter-campus communities,
+eventually, communities of all types. 
 
-Framework
-JavaScript
-MEAN Stack
-Responsive web (HTML5) app
+Framework - 
+JavaScript,
+MEAN Stack,
+Responsive web (HTML5) app,
 
-Process Tools
-Slack for general communication and reporting
+Process Tools - 
+Slack for general communication and reporting,
 Pivotal Tracker
 
-Core User Stories
+Core User Stories - 
 As a professor, I can post my research opportunities to attract potential talent. 
 As a student, I can search the postings to find interesting opportunities that match my skill level. 
 As a student, I can post student opportunities to recruit other students to my club/organization. 
