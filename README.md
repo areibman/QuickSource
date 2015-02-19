@@ -19,7 +19,7 @@ Framework :
 JavaScript,
 MEAN Stack,
 Responsive web (HTML5) app
------------------------------------------------------------------------------
+
 Process Tools :
 -----------------------------------------------------------------------------
 Slack for general communication and reporting,
