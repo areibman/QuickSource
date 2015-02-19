@@ -26,6 +26,6 @@ Pivotal Tracker
 Core User Stories - 
 As a professor, I can post my research opportunities to attract potential talent. 
 As a student, I can search the postings to find interesting opportunities that match my skill level. 
-As a student, I can post student opportunities to recruit other students to my club/organization. 
+As a student, I can post student opportunities to recruit other students to my club/organization/project. 
 
 
