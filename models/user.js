@@ -1,5 +1,5 @@
 /*  README
-
+    This is the skeleton code for user model. The basic constructors, getters, and setters are in place. We need more understanding in MEAN stack to integrate this object to MongoDB as well as develop further function for this object.
  */
 
 //Object
