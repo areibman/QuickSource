@@ -25,7 +25,7 @@ var PostSchema = new Schema({
 
     //Basic info
     owner: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: 'Owner is required'
     },
@@ -69,17 +69,17 @@ var PostSchema = new Schema({
 
     // Additional
     participants: {
-        type: [ObjectId],
+        type: [mongoose.Schema.Types.ObjectId],
         ref: 'User',
         default: []
     },
     interestedUsers: {
-        type: [ObjectId],
+        type: [mongoose.Schema.Types.ObjectId],
         ref: 'User',
         default: []
     },
     comments: {
-        type: [ObjectId],
+        type: [mongoose.Schema.Types.ObjectId],
         ref: 'Comment',
         default: []
     }

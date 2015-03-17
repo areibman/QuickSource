@@ -27,9 +27,10 @@ exports.create = function(req, res) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
-        } else {
-            // If successful, do something
         }
+        //else {
+        //    // If successful, do something
+        //}
     });
 };
 

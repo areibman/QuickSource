@@ -20,7 +20,7 @@ var CommentSchema = new Schema({
 
     //Basic info
     owner: {
-        type: ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: 'Owner is required'
     },
@@ -29,7 +29,7 @@ var CommentSchema = new Schema({
         trim: true,
         required: 'Content of the comment is required'
     },
-    updated:{
+        updated:{
         type: Date
     },
     created: {
