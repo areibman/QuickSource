@@ -1,5 +1,5 @@
 <section class="row" data-ng-controller="AuthenticationController">
-	<h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
+	<!-- <h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
 	<div class="col-md-12 text-center">
 		<a href="/auth/facebook" class="undecorated-link">
 			<img src="/modules/users/img/buttons/facebook.png">
@@ -7,8 +7,8 @@
 		<a href="/auth/linkedin" class="undecorated-link">
 			<img src="/modules/users/img/buttons/linkedin.png">
 		</a>
-	</div>
-	<h3 class="col-md-12 text-center">Or with your email</h3>
+	</div> -->
+	<h3 class="col-md-12 text-center">Sign up for QuickSource/h3>
 	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2">
 		<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" novalidate autocomplete="off">
 			<fieldset>
@@ -41,11 +41,18 @@
                     <input type="text" id="zipCode" name="zipCode" class="form-control" data-ng-model="credentials.zipCode" placeholder="Zip Code">
                 </div>
                 <div class="form-group">
-                    <label for="interests">Interests</label>
+                    <label for="interests">Interests (select all that apply)</label>
                     <select multiple="yes" id="interests"  name="interests" class="form-control" data-ng-model="credentials.interests">
                         <option value="A"> A </option>
                         <option value="B"> B </option>
                         <option value="C"> C </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="roles">Roles</label>
+                    <select id="roles"  name="roles" class="form-control" data-ng-model="credentials.roles">
+                        <option value="Student"> Student </option>
+                        <option value="Professor"> Professor </option>
                     </select>
                 </div>
 				<div class="text-center form-group">

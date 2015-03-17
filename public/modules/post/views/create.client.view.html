@@ -1,0 +1,40 @@
+<section data-ng-controller="CreateController">
+	<div class="container">
+		<h3>Create a new project</h3>
+		<div class="row">
+			<div class="col-md-3">
+			</div>
+			<div class="col-md-6">
+				<form ng-submit="addPost()">
+					<div class="form-group">
+						<label for="title">Project Title</label>
+						<input type="text" class="form-control" id="title" data-ng-model="title">
+					</div>
+					<div class="form-group">
+						<label for="abstract">Abstract</label>
+						<textarea type="text" class="form-control" id="abstract" data-ng-model="abstract" rows="3"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="description">Detailed Description</label>
+						<textarea type="text" class="form-control" id="description" data-ng-model="description" rows="8"></textarea>
+					</div>
+					<div class="form-group">
+	                    <label for="categories">Categories (select all that apply)</label>
+	                    <select multiple="yes" id="categories"  name="categories" class="form-control" data-ng-model="categories">
+	                        <option value="A"> A </option>
+	                        <option value="B"> B </option>
+	                        <option value="C"> C </option>
+	                    </select>
+                	</div>
+                	<div class="form-group">
+						<label for="location">Location (zip code)</label>
+						<input type="text" class="form-control" id="location" data-ng-model="location">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+			<div class="col-md-3">
+			</div>	
+		</div>
+	</div>
+</section>
