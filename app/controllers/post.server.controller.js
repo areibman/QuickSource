@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
     _ = require('lodash');
 
-var errorHandler = require('errors.server.controller'),
+var errorHandler = require('../controllers/errors.server.controller'),
     Post = mongoose.model('Post');
 
 
@@ -16,7 +16,6 @@ var errorHandler = require('errors.server.controller'),
 exports.create = function(req, res) {
     // Init Variables
     var post = new Post(req.body);
-    var message = null;
 
     //Add to missing fields
     post.provider = 'local';
@@ -28,9 +27,10 @@ exports.create = function(req, res) {
                 message: errorHandler.getErrorMessage(err)
             });
         }
-        //else {
-        //    // If successful, do something
-        //}
+        else {
+            // If successful, send back the postID
+            req.send(post.id);
+        }
     });
 };
 
@@ -52,10 +52,9 @@ exports.read = function(req, res) {
  * Update a Post
  */
 exports.update = function(req, res) {
-    var message = null;
     Post.findById(req.params.postID, function(err, post){
         if(!err && post){
-            post = _.extend(user, req.body);
+            post = _.extend(post, req.body);
             post.updated = Date.now();
 
             post.save(function(err){
@@ -64,7 +63,8 @@ exports.update = function(req, res) {
                         message: errorHandler.getErrorMessage(err)
                     });
                 } else {
-                    //Update successfully, do something
+                    //Update successfully, send back the postID
+                    res.send(post.id);
                 }
             });
         }
@@ -87,7 +87,8 @@ exports.delete = function(req, res) {
                         message: errorHandler.getErrorMessage(err)
                     });
                 } else {
-                    //Update successfully, do something
+                    //Update successfully, send back {@code true}
+                    res.send(true);
                 }
             });
         }
@@ -97,6 +98,7 @@ exports.delete = function(req, res) {
 /**
  * List of Posts
  */
+//Get the most recent posts (with @param limit)
 exports.getRecent = function(req, res) {
     var list = Post.find({isActive: true}).sort({'created': -1}).limit(req.params.limit);
     res.json(list);

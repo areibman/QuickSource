@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-    var post = requires('../../app/controllers/post.server.controller');
+    var post = require('../../app/controllers/post.server.controller');
 
     //Get post(s)
     app.route('post/view/:postID').get(post.read);
@@ -10,7 +10,7 @@ module.exports = function(app) {
     app.route('post/new').post(post.create);
 
     //Edit a post
-    app.route('post/edit/:postID').update(post.update);
+    app.route('post/edit/:postID').put(post.update);
 
     //Delete (Set Inactive) a post
     app.route('post/delete/:postID').delete(post.delete);
