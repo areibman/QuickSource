@@ -19,6 +19,7 @@ var CommentSchema = new Schema({
     additionalProvidersData: {},
 
     //Basic info
+    _id: Number,
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

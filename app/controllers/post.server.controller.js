@@ -19,7 +19,7 @@ exports.create = function(req, res) {
 
     //Add to missing fields
     post.provider = 'local';
-    post.owner = req.user;
+    post.owner = req.user._id;
 
     post.save(function(err) {
         if (err) {
@@ -29,7 +29,7 @@ exports.create = function(req, res) {
         }
         else {
             // If successful, send back the postID
-            req.send(post.id);
+            req.send(post.__id);
         }
     });
 };
