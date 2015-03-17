@@ -108,6 +108,10 @@ var UserSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+    isActive: {
+        type: Boolean,
+        default: true
+    },
 
 	/* For reset password */
 	resetPasswordToken: {
