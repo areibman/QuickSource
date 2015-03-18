@@ -24,7 +24,8 @@ var PostSchema = new Schema({
     abstract: {
         type: String,
         trim: true,
-        default: ''
+        default: '',
+        required: 'Abstract of the post is required'
     },
     description: {
         type: String,

@@ -15,6 +15,13 @@ var validateLocalStrategyProperty = function(property) {
 };
 
 /**
+ * A Validation function for optional local strategy properties
+ */
+var validateLocalStrategyProperty_Optional = function() {
+    return (this.provider === 'local' && !this.updated);
+};
+
+/**
  * A Validation function for local strategy password
  */
 var validateLocalStrategyPassword = function(password) {
@@ -82,6 +89,27 @@ var UserSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+    school: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+    zipCode: {
+        type: String,
+        trim: true,
+        default: '',
+        validate: [validateLocalStrategyProperty, 'Please fill in your zip code'],
+        match: [/^\d{5}$/, 'Please fill in your zip code in the correct format']
+    },
+    interests: {
+        type: [String],
+        trim: true,
+        default: []
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
 	/* For reset password */
 	resetPasswordToken: {
 		type: String

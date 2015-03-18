@@ -30,7 +30,14 @@ exports.create = function(req, res) {
  * Show the current Post
  */
 exports.read = function(req, res) {
-	res.jsonp(req.post);
+    Post.findById(req.params.postId, function(err, post){
+        if(!err && post){
+            res.json(post);
+        }
+        else{
+            res.status(400).send({ message: 'Post not found'});
+        }
+    });
 };
 
 /**
