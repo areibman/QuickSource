@@ -1,9 +1,9 @@
 <section data-ng-controller="PostsController" data-ng-init="findOne()">
-	<div class="container">
+	<div class="container" style="margin-top:20px">
 		<div class="col-md-2">
 			<ol class="breadcrumb">
 				<li><a href="">Browse</a></li>
-				<li class="active" data-ng-bind="post.name"></li>
+				<li class="active" data-ng-bind="post.title"></li>
 			</ol>
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -29,7 +29,7 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<h3 data-ng-bind="post.name"></h3>
+					<h3 data-ng-bind="post.title"></h3>
 					<div class="pull-right">
 						<span class="label label-primary" style="padding:2px" ng-repeat="tag in post.categories">
                             {{tag}}
@@ -57,10 +57,16 @@
 					</small>
 					<p data-ng-bind="post.abstract" class="lead"></p>
 					<p data-ng-show="post.description == ''"></p>
+					<p>Location: {{post.zipcode}}</p>
+
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img src="" alt="temp" class="img-thumbnail">
+					
 		</div>
 		<!-- <div class="page-header">
 			<h1 data-ng-bind="post.name"></h1>
