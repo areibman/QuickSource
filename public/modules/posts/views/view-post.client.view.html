@@ -35,7 +35,7 @@
                             {{tag}}
                         </span>
 					</div>
-					<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == post.user._id))">
+					<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == post.post.user._id))">
 						<a class="btn btn-primary" href="/#!/posts/{{post._id}}/edit">
 							<i class="glyphicon glyphicon-edit"></i>
 						</a>
