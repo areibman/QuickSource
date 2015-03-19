@@ -8,16 +8,16 @@
                 <div class="form-group">
                     <label class="control-label" for="name">Title</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="edit.title" id="name" class="form-control" placeholder="Name" required>
+                        <input type="text" data-ng-model="edit.title" id="name" class="form-control" placeholder="{{post.title}}" required></input>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="abstract">Abstract</label>
-                    <textarea type="text" class="form-control" id="abstract" data-ng-model="edit.abstract" rows="3"></textarea>
+                    <textarea type="text" class="form-control" id="abstract" data-ng-model="edit.abstract" rows="3">{{post.abstract}}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="description">Detailed Description</label>
-                    <textarea type="text" class="form-control" id="description" data-ng-model="edit.description" rows="8"></textarea>
+                    <textarea type="text" class="form-control" id="description" data-ng-model="edit.description" rows="8">{{post.description}}</textarea>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Update" class="btn btn-default">
