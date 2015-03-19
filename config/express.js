@@ -29,7 +29,7 @@ module.exports = function(db) {
 
 	// Globbing model files
 	config.getGlobbedFiles('./app/models/**/*.js').forEach(function(modelPath) {
-		require(path.resolve(modelPath));
+        require(path.resolve(modelPath));
 	});
 
 	// Setting application local variables

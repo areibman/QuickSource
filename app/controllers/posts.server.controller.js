@@ -20,7 +20,7 @@ exports.create = function(req, res) {
     post.save(function(err) {
         if (err) {
             return res.status(400).send({
-            	//message: errorHandler.getErrorMessage(err)
+            	message: errorHandler.getErrorMessage(err)
             });
         } else {
             res.send(String(post._id));
