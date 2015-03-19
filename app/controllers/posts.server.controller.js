@@ -24,7 +24,7 @@ exports.create = function(req, res) {
             	message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.send(String(post._id));
+            res.jsonp(post);
         }
     });
 };
@@ -59,7 +59,7 @@ exports.read = function(req, res) {
  * Update a Post
  */
 exports.update = function(req, res) {
-	var post = req.post ;
+	var post = req.post;
 
 	post = _.extend(post , req.body);
     post.updated = Date.now();
@@ -70,7 +70,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(post);
+            res.jsonp(post);
 		}
 	});
 };

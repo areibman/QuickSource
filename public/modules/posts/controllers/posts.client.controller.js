@@ -18,31 +18,24 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
 		// Remove existing Post
 		$scope.remove = function(post) {
-			if ( post ) { 
-				post.$remove();
-
-				for (var i in $scope.posts) {
-					if ($scope.posts [i] === post) {
-						$scope.posts.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.post.$remove(function() {
-					$location.path('posts');
-				});
-			}
+			$http.delete('/posts'+post._id).success(function(response){
+                $location.path('/posts');
+            }).error(function(response){
+                $scope.error=response.message;
+            });
 		};
 
 		// Update existing Post
 		$scope.update = function() {
-			var post = $scope.post;
+            var post = $scope.post;
+            $http.put('/posts/'+post._id,$scope.edit).success(function (response) {
+                $location.path('posts/' + response._id);
+            }).error(function (response) {
+                $scope.error = response.message;
+            });
+        };
 
-			post.$update(function() {
-				$location.path('posts/' + post._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
+
 
 		// Find a list of Posts
 		$scope.find = function() {
@@ -76,7 +69,10 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             });
 
             $scope.post = post;
+<<<<<<< HEAD
            	console.log($scope.post);
+=======
+>>>>>>> origin/master
         };
 	}
 ]);
