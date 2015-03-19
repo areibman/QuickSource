@@ -16,7 +16,10 @@ angular.module('posts').config(['$stateProvider',
 		state('viewPost', {
 			url: '/posts/:postId',
 			templateUrl: 'modules/posts/views/view-post.client.view.html'
-		}).
+		}).state('interest',{
+               url:'/posts/:postId/interest',
+               templateUrl:'modules/posts/views/view-post.client.view.html'
+            }).
 		state('editPost', {
 			url: '/posts/:postId/edit',
 			templateUrl: 'modules/posts/views/edit-post.client.view.html'

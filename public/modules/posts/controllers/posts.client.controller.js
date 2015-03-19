@@ -49,6 +49,14 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 			$scope.posts = Posts.query();
 		};
 
+        $scope.interest= function(){
+        $http.post('/posts/interest').success(function(response){
+            $scope.interest = true;
+        }).error(function(response){
+            $scope.error = response.message;
+        });
+        };
+
 		// Find existing Post
 		$scope.findOne = function() {
 			$scope.post = Posts.get({ 
