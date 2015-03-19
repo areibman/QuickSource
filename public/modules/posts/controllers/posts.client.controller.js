@@ -43,7 +43,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 		};
 
         $scope.interest= function(){
-        $http.post('/posts/interest', $scope.post).success(function(response){
+        $http.post('/posts/'+post._id+'/interest').success(function(response){
         }).error(function(response){
             $scope.error = response.message;
         });
