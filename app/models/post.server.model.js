@@ -4,13 +4,14 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+    autoIncrement = require('mongoose-auto-increment');
 
+autoIncrement.initialize(mongoose.connection);
 /**
  * Post Schema
  */
 var PostSchema = new Schema({
-    _id: Number,
     user: {
         type: Schema.ObjectId,
         ref: 'User'
@@ -72,4 +73,5 @@ var PostSchema = new Schema({
     }
 });
 
+PostSchema.plugin(autoIncrement.plugin, 'Post');
 mongoose.model('Post', PostSchema);

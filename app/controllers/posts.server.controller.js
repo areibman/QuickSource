@@ -13,20 +13,17 @@ var mongoose = require('mongoose'),
  * Create a Post
  */
 exports.create = function(req, res) {
-	var post = new Post(req.body);
-    var message = null;
-
+    var post = new Post(req.body);
     post.user = req.user;
+    var message = null;
 
     post.save(function(err) {
         if (err) {
-            console.log(err);
-            return res.jsonp(post);
-            //return res.status(400).send({
-            //	//message: errorHandler.getErrorMessage(err)
-            //});
+            return res.status(400).send({
+            	//message: errorHandler.getErrorMessage(err)
+            });
         } else {
-            res.send(post._id);
+            res.send(String(post._id));
         }
     });
 };

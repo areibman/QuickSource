@@ -11,7 +11,6 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
                 title: '123',
                 abstract: '123',
                 location: '12345',
-                user: $scope.authentication.user
             });
 
             //$http.post('/posts', $scope.fields).success(function(response) {

@@ -4,13 +4,15 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+    autoIncrement = require('mongoose-auto-increment');
+
+autoIncrement.initialize(mongoose.connection);
 
 /**
  * Comment Schema
  */
 var CommentSchema = new Schema({
-    _id: Number,
     user: {
         type: Schema.ObjectId,
         ref: 'User'
@@ -31,4 +33,5 @@ var CommentSchema = new Schema({
     }
 });
 
+CommentSchema.plugin(autoIncrement.plugin, 'Comment');
 mongoose.model('Comment', CommentSchema);
