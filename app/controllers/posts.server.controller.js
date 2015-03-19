@@ -61,7 +61,7 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	var post = req.post ;
 
-	post = _.extend(post , req.body);
+	post = _.extend(post , req.body.post);
     post.updated = Date.now();
 
 	post.save(function(err) {
