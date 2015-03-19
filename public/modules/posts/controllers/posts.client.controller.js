@@ -69,6 +69,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             });
 
             $scope.post = post;
+           	console.log($scope.post);
         };
 	}
 ]);

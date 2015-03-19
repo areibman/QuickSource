@@ -1,8 +1,8 @@
 <section data-ng-controller="PostsController" data-ng-init="findOne()">
 	<div class="container" style="margin-top:20px">
-		<div class="col-md-2">
+		<div class="col-md-3">
 			<ol class="breadcrumb">
-				<li><a href="">Browse</a></li>
+				<li><a href="/#!/posts">Browse</a></li>
 				<li class="active" data-ng-bind="post.title"></li>
 			</ol>
 			<div class="panel panel-default">
@@ -11,15 +11,20 @@
 				</div>
 				<div class="panel-body">
 					<form data-ng-submit="interest()">
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label class="control-label">Name:</label>
 							<div class="col-sm-10">
 								<p class="form-control-static" data-ng-bind="authentication.user.displayName"></p>
 							</div>
-						</div>
+						</div> -->
 						<div class="form-group" data-ng-hide="post.isAlreadyInterested || post.isPoster">
 							<div>
-								<button type="submit" class="btn btn-default">I'm interested!</button>
+								<button type="submit" class="btn btn-default btn-block">I'm interested!</button>
+							</div>
+						</div>
+						<div class="form-group" data-ng-show="post.isAlreadyInterested || post.isPoster">
+							<div>
+								<button type="submit" class="btn btn-default btn-block" disabled="disabled">Opted-in!</button>
 							</div>
 						</div>
 					</form>
@@ -29,20 +34,24 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<h3 data-ng-bind="post.title"></h3>
-					<div class="pull-right">
-						<span class="label label-primary" style="padding:2px" ng-repeat="tag in post.categories">
-                            {{tag}}
-                        </span>
-					</div>
-					<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == post.user._id))">
-						<a class="btn btn-primary" href="/#!/posts/{{post._id}}/edit">
-							<span class="glyphicon glyphicon-edit"></span>
-						</a>
-						<a class="btn btn-primary" data-ng-click="remove();">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>
-					</div>
+					<h3>
+						{{post.title}}
+						<span class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == post.user._id))">
+							<a href="/#!/posts/{{post._id}}/edit">
+								<span class="glyphicon glyphicon-edit"></span>
+							</a>
+							<a data-ng-click="remove();">
+								<span class="glyphicon glyphicon-trash"></span>
+							</a>
+						</span>
+						<small><span style="margin-right:5px;" class="pull-right">
+							<span class="label label-success" style="margin:2px" ng-repeat="tag in post.categories">
+	                            {{tag}}
+                        	</span>
+						</span></small>
+					</h3>
+					
+					
 				</div>
 			</div>
 			<div class="panel panel-default">
@@ -50,21 +59,21 @@
 					<small>
 						<em class="text-muted">
 							Updated on
-							<span data-ng-bind="post.post.updated | date:'mediumDate'"></span>
+							<span data-ng-bind="post.updated | date:'mediumDate'"></span>
 							by
 							<span data-ng-bind="post.user.displayName"></span>
 						</em>
 					</small>
 					<p data-ng-bind="post.abstract" class="lead"></p>
-					<p data-ng-show="post.description == ''"></p>
-					<p>Location: {{post.location}}</p>
+					<p data-ng-bind="post.description"></p>
+					<p>Location: {{post.location}} (zip code)</p>
 					<div class="panel-footer">
 						Interested participants: <span class="label label-default" ng-repeat="user in post.interestedUsers">{{user.displayName}}</span>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<img src="http://nocturnalgaming.com/wp-content/uploads/2014/02/seshn-default-avatar.png" alt="temp" class="img-thumbnail"><br>
