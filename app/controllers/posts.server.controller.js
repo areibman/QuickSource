@@ -147,7 +147,27 @@ exports.addInterest = function(req, res){
                 console.log(err);
                 return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
             } else {
-                res.jsonp(post);
+                Post.findById(req.params.postId, function(err, post){
+                    if(err && !post){ return res.status(400).send({ message: 'Post not found'}); }
+                    if(!post.isActive){ return res.status(400).send({ message: 'Post Inactive'}); }
+                    else{
+                        var opt = [
+                            { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
+                            { path : 'interestedUsers', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
+                            { path : 'participants', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
+                            { path : 'comments', model : 'Comment',  match : { isActive : true }}
+                        ];
+
+                        Post.populate(post, opt, function(err, post) {
+                            if (err || !post.user.isActive) {
+                                res.status(400).send({message: 'Post user not found'});
+                            }
+                            else {
+                                res.jsonp(post);
+                            }
+                        });
+                    }
+                });
             }
         });
     }
