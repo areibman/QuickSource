@@ -3,7 +3,7 @@
 		<div class="col-md-2">
 			<ol class="breadcrumb">
 				<li><a href="">Browse</a></li>
-				<li class="active" data-ng-bind="post.post.title"></li>
+				<li class="active" data-ng-bind="post.title"></li>
 			</ol>
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -17,7 +17,7 @@
 								<p class="form-control-static" data-ng-bind="authentication.user.displayName"></p>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" data-ng-hide="post.isAlreadyInterested || post.isPoster">
 							<div>
 								<button type="submit" class="btn btn-default">I'm interested!</button>
 							</div>
@@ -29,13 +29,13 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<h3 data-ng-bind="post.post.title"></h3>
+					<h3 data-ng-bind="post.title"></h3>
 					<div class="pull-right">
-						<span class="label label-primary" style="padding:2px" ng-repeat="tag in post.post.categories">
+						<span class="label label-primary" style="padding:2px" ng-repeat="tag in post.categories">
                             {{tag}}
                         </span>
 					</div>
-					<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == post.post.user._id))">
+					<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == post.user._id))">
 						<a class="btn btn-primary" href="/#!/posts/{{post._id}}/edit">
 							<span class="glyphicon glyphicon-edit"></span>
 						</a>
@@ -55,11 +55,11 @@
 							<span data-ng-bind="post.user.displayName"></span>
 						</em>
 					</small>
-					<p data-ng-bind="post.post.abstract" class="lead"></p>
-					<p data-ng-show="post.post.description == ''"></p>
-					<p>Location: {{post.post.location}}</p>
+					<p data-ng-bind="post.abstract" class="lead"></p>
+					<p data-ng-show="post.description == ''"></p>
+					<p>Location: {{post.location}}</p>
 					<div class="panel-footer">
-						Interested participants: <span class="label label-default" ng-repeat="user in post.post.interestedUsers">{{user.displayName}}</span>
+						Interested participants: <span class="label label-default" ng-repeat="user in post.interestedUsers">{{user.displayName}}</span>
 					</div>
 				</div>
 			</div>
@@ -76,7 +76,7 @@
 				<div class="panel-body">
 					<h4>Lastest Projects</h4>
 					<div class="list-group">
-						<a class="list-group-item" data-ng-repeat="latest in posts | orderBy: '-updated' | limitTo:10" data-ng-href="#!/posts/{{lastest._id}}"><p data-ng-bind="lastest.title"></p></a>
+						<a class="list-group-item" data-ng-repeat="latest in posts | orderBy: '-updated'" data-ng-href="#!/posts/{{lastest._id}}"><p data-ng-bind="lastest.title"></p></a>
 					</div>
 				</div>
 			</div>
