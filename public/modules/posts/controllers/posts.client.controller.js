@@ -9,8 +9,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 		$scope.create = function() {
             $http.post('/posts', $scope.fields).success(function(response) {
                 // And redirect to the index page
-                //$location.path('/posts'+response);
-                console.log(response);
+                $location.path('/posts/'+response);
             }).error(function(response) {
                 $scope.error = response.message;
             });
