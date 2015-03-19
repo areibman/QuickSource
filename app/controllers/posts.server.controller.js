@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	Post = mongoose.model('Post'),
+	User = mongoose.model('User'),
+    Post = mongoose.model('Post'),
 	_ = require('lodash');
 
 /**
@@ -13,17 +14,21 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var post = new Post(req.body);
-	post.user = req.user;
+    var message = null;
 
-	post.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(post);
-		}
-	});
+    post.user = req.user;
+
+    post.save(function(err) {
+        if (err) {
+            console.log(err);
+            return res.jsonp(post);
+            //return res.status(400).send({
+            //	//message: errorHandler.getErrorMessage(err)
+            //});
+        } else {
+            res.send(post._id);
+        }
+    });
 };
 
 /**

@@ -1,27 +1,28 @@
 'use strict';
 
 // Posts controller
-angular.module('posts').controller('PostsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Posts',
-	function($scope, $stateParams, $location, Authentication, Posts) {
+angular.module('posts').controller('PostsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Posts','$http',
+	function($scope, $stateParams, $location, Authentication, Posts,$http) {
 		$scope.authentication = Authentication;
 
 		// Create new Post
 		$scope.create = function() {
-			// Create new Post object
-			var post = new Posts ({
-				name: this.name
-			});
+            var post = new Posts({
+                title: '123',
+                abstract: '123',
+                location: '12345',
+                user: $scope.authentication.user
+            });
 
-			// Redirect after save
-			post.$save(function(response) {
-				$location.path('posts/' + response._id);
-
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
+            //$http.post('/posts', $scope.fields).success(function(response) {
+            $http.post('/posts', post).success(function(response) {
+                // And redirect to the index page
+                //$location.path('/posts'+response);
+                console.log(response);
+            }).error(function(response) {
+                $scope.error = response.message;
+            });
+        };
 
 		// Remove existing Post
 		$scope.remove = function(post) {
