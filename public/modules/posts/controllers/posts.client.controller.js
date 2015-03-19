@@ -43,10 +43,11 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 		};
 
         $scope.interest= function(){
-        $http.post('/posts/'+post._id+'/interest').success(function(response){
-        }).error(function(response){
-            $scope.error = response.message;
-        });
+            var post = $scope.post;
+            $http.post('/posts/'+post._id+'/interested').success(function(response){
+                }).error(function(response){
+                $scope.error = response.message;
+            });
         };
 
 		// Find existing Post
