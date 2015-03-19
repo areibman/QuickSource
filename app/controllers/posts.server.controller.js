@@ -35,6 +35,7 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
     Post.findById(req.params.postId, function(err, post){
         if(err && !post){ return res.status(400).send({ message: 'Post not found'}); }
+        if(!post.isActive){ return res.status(400).send({ message: 'Post Inactive'}); }
         else{
             var opt = [
                 { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
@@ -48,7 +49,6 @@ exports.read = function(req, res) {
                     res.status(400).send({message: 'Post user not found'});
                 }
                 else {
-                    console.log(post);
                     res.jsonp(post);
                 }
             });
@@ -79,9 +79,9 @@ exports.update = function(req, res) {
 /**
  * Delete an Post
  */
-exports.delete = function(req, res) {
+exports.setInactive = function(req, res) {
 	var post = req.post;
-    post.isActive = false;
+    post = _.extend(post , { isActive : false, updated : Date.now() });
 
     console.log(post);
 	post.save(function(err) {
@@ -90,7 +90,7 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			req.jsonp(post);
+            res.jsonp(post);
 		}
 	});
 };
@@ -99,7 +99,7 @@ exports.delete = function(req, res) {
  * List of Posts
  */
 exports.list = function(req, res) { 
-	Post.find().sort('-created').populate('user', 'displayName school location').exec(function(err, posts) {
+	Post.find({ isActive : true }).sort('-created').populate('user', 'displayName school location').exec(function(err, posts) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -142,14 +142,32 @@ exports.addInterest = function(req, res){
         post.interestedUsers.push(req.user);
         post.updated = Date.now();
 
-        console.log(post);
-
         post.save(function(err) {
             if (err) {
                 console.log(err);
                 return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
             } else {
-                res.jsonp(post);
+                Post.findById(req.params.postId, function(err, post){
+                    if(err && !post){ return res.status(400).send({ message: 'Post not found'}); }
+                    if(!post.isActive){ return res.status(400).send({ message: 'Post Inactive'}); }
+                    else{
+                        var opt = [
+                            { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
+                            { path : 'interestedUsers', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
+                            { path : 'participants', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
+                            { path : 'comments', model : 'Comment',  match : { isActive : true }}
+                        ];
+
+                        Post.populate(post, opt, function(err, post) {
+                            if (err || !post.user.isActive) {
+                                res.status(400).send({message: 'Post user not found'});
+                            }
+                            else {
+                                res.jsonp(post);
+                            }
+                        });
+                    }
+                });
             }
         });
     }
