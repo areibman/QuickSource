@@ -81,19 +81,18 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 	var post = req.post;
-
     post.isActive = false;
 
     console.log(post);
-	//post.save(function(err) {
-	//	if (err) {
-	//		return res.status(400).send({
-	//			message: errorHandler.getErrorMessage(err)
-	//		});
-	//	} else {
-	//		req.send(Boolean(true));
-	//	}
-	//});
+	post.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			req.jsonp(post);
+		}
+	});
 };
 
 /**

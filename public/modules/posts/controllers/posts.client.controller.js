@@ -17,7 +17,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
         };
 
 		// Remove existing Post
-		$scope.remove = function(post) {
+		$scope.remove = function() {
             var post = $scope.post;
 			$http.delete('/posts/'+post._id).success(function(response){
                 $location.path('/posts');
