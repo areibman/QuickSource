@@ -48,6 +48,7 @@ exports.read = function(req, res) {
                     res.status(400).send({message: 'Post user not found'});
                 }
                 else {
+                    console.log(post);
                     res.jsonp(post);
                 }
             });
@@ -59,8 +60,9 @@ exports.read = function(req, res) {
  * Update a Post
  */
 exports.update = function(req, res) {
-	var post = req.post ;
-
+	var post = req.post;
+    console.log(post);
+    console.log(req.body);
 	post = _.extend(post , req.body.post);
     post.updated = Date.now();
 
@@ -70,7 +72,8 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-            res.send(String(post._id));
+            res.jsonp(post);
+            //res.send(String(post._id));
 		}
 	});
 };
