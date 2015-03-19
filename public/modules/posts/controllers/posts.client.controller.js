@@ -8,7 +8,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 		// Create new Post
 		$scope.create = function() {
             $http.post('/posts', $scope.fields).success(function(response) {
-                // And redirect to the project page
+            // And redirect to the project page
                 $location.path('/posts/'+response);
 
             }).error(function(response) {
