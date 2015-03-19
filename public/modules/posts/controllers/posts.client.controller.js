@@ -44,9 +44,11 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
         $scope.interest= function(){
             var post = $scope.post;
+
             $http.post('/posts/'+post._id+'/interested').success(function(response){
+
                 $scope.interestedUsers = response.interestedUsers;
-                $location.path('/posts/'+response._id);
+                //$location.path('/posts/'+response._id);
                 }).error(function(response){
                 $scope.error = response.message;
             });
@@ -70,7 +72,6 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
                     post.isPoster=true;
                 }
                 $scope.post = post;
-                console.log($scope.post);
             }).error(function(response){
                 alert(response.message);
                 $scope.error = response.message;
