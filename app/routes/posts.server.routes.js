@@ -14,7 +14,9 @@ module.exports = function(app) {
 		.put(users.requiresLogin, posts.hasAuthorization, posts.update)
 		.delete(users.requiresLogin, posts.hasAuthorization, posts.delete);
 
+    app.route('/posts/interest')
+        .post(posts.addInterest);
+
 	// Finish by binding the Post middleware
 	app.param('postId', posts.postByID);
-    app.param('limit', posts.listLimit);
 };

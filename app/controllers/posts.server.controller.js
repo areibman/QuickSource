@@ -35,7 +35,14 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
     Post.findById(req.params.postId, function(err, post){
         if(!err && post){
-            res.json(post);
+            User.findOne({_id : post.user}).select('displayName roles school isActive').exec(function(err, user){
+                if(err || !user.isActive){
+                   res.status(400).send({ message: 'Post user not found'});
+               }
+               else{
+                   res.jsonp({post: post, user: user});
+               }
+            });
         }
         else{
             res.status(400).send({ message: 'Post not found'});
@@ -97,19 +104,6 @@ exports.list = function(req, res) {
 	});
 };
 
-exports.listRecent = function(req, res) {
-    console.log(req.params.limit);
-    Post.find().sort('-created').populate('user', 'displayName').limit(req.params.limit).exec(function(err, posts) {
-        if (err) {
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.jsonp(posts);
-        }
-    });
-};
-
 /**
  * Post middleware
  */
@@ -142,98 +136,10 @@ exports.hasAuthorization = function(req, res, next) {
 	next();
 };
 
-
-//*** Old codes
-///**
-// * Create a Post
-// */
-//exports.create = function(req, res) {
-//    // Init Variables
-//    var post = new Post(req.body);
-//
-//    //Add to missing fields
-//    post.provider = 'local';
-//    post.owner = req.user._id;
-//
-//    post.save(function(err) {
-//        if (err) {
-//            return res.status(400).send({
-//                message: errorHandler.getErrorMessage(err)
-//            });
-//        }
-//        else {
-//            // If successful, send back the postID
-//            req.send(post.__id);
-//        }
-//    });
-//};
-//
-///**
-// * Show the current Post
-// */
-//exports.read = function(req, res) {
-//    Post.findById(req.params.postID, function(err, post){
-//        if(!err && post){
-//            res.json(post);
-//        }
-//        else{
-//            res.status(400).send({ message: 'Post not found'});
-//        }
-//    });
-//};
-//
-///**
-// * Update a Post
-// */
-//exports.update = function(req, res) {
-//    Post.findById(req.params.postID, function(err, post){
-//        if(!err && post){
-//            post = _.extend(post, req.body);
-//            post.updated = Date.now();
-//
-//            post.save(function(err){
-//                if (err) {
-//                    return res.status(400).send({
-//                        message: errorHandler.getErrorMessage(err)
-//                    });
-//                } else {
-//                    //Update successfully, send back the postID
-//                    res.send(post.id);
-//                }
-//            });
-//        }
-//    });
-//};
-//
-///**
-// * Delete an Post
-// */
-//exports.delete = function(req, res) {
-//    var message = null;
-//    Post.findById(req.params.postID, function(err, post){
-//        if(!err && post){
-//            post.isActive = false;
-//            post.updated = Date.now();
-//
-//            post.save(function(err){
-//                if (err) {
-//                    return res.status(400).send({
-//                        message: errorHandler.getErrorMessage(err)
-//                    });
-//                } else {
-//                    //Update successfully, send back {@code true}
-//                    res.send(true);
-//                }
-//            });
-//        }
-//    });
-//};
-//
-///**
-// * List of Posts
-// */
-////Get the most recent posts (with @param limit)
-//exports.getRecent = function(req, res) {
-//    var list = Post.find({isActive: true}).sort({'created': -1}).limit(req.params.limit);
-//    res.json(list);
-//};
+/**
+ * Add interest user to a post
+ */
+exports.addInterest = function(req, res){
+  console.log(req.body);
+    console.log(req.user);
+};
