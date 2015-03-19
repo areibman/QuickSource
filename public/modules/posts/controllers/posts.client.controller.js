@@ -13,7 +13,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
             }).error(function(response) {
                 $scope.error = response.message;
-            });
+        });
         };
 
 		// Remove existing Post

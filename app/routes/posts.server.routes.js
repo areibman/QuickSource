@@ -9,9 +9,6 @@ module.exports = function(app) {
         .get(posts.list)
 		.post(users.requiresLogin, posts.create);
 
-    app.route('/posts/recent/:limit')
-        .get(posts.listRecent);
-
 	app.route('/posts/:postId')
 		.get(posts.read)
 		.put(users.requiresLogin, posts.hasAuthorization, posts.update)
