@@ -50,7 +50,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 		};
 
         $scope.interest= function(){
-        $http.post('/posts/interest').success(function(response){
+        $http.post('/posts/interest', $scope.post).success(function(response){
             $scope.interest = true;
         }).error(function(response){
             $scope.error = response.message;
