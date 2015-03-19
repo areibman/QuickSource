@@ -48,7 +48,7 @@ exports.read = function(req, res) {
                     res.status(400).send({message: 'Post user not found'});
                 }
                 else {
-                    res.send(String(post._id));
+                    res.jsonp(post._id);
                 }
             });
         }
@@ -70,7 +70,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(post);
+            res.send(String(post._id));
 		}
 	});
 };
