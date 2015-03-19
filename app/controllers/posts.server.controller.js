@@ -35,6 +35,7 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
     Post.findById(req.params.postId, function(err, post){
         if(err && !post){ return res.status(400).send({ message: 'Post not found'}); }
+        if(!post.isActive){ return res.status(400).send({ message: 'Post Inactive'}); }
         else{
             var opt = [
                 { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
@@ -79,9 +80,9 @@ exports.update = function(req, res) {
 /**
  * Delete an Post
  */
-exports.delete = function(req, res) {
+exports.setInactive = function(req, res) {
 	var post = req.post;
-    post.isActive = false;
+    post = _.extend(post , { isActive : false, updated : Date.now() });
 
     console.log(post);
 	post.save(function(err) {
@@ -90,7 +91,7 @@ exports.delete = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			req.jsonp(post);
+            res.jsonp(post);
 		}
 	});
 };
