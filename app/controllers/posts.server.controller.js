@@ -48,6 +48,7 @@ exports.read = function(req, res) {
                     res.status(400).send({message: 'Post user not found'});
                 }
                 else {
+                    console.log(post);
                     res.jsonp(post);
                 }
             });
