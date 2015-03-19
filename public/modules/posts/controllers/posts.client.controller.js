@@ -1,8 +1,8 @@
 'use strict';
 
 // Posts controller
-angular.module('posts').controller('PostsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Posts','$http',
-	function($scope, $stateParams, $location, Authentication, Posts,$http) {
+angular.module('posts').controller('PostsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Posts','$http','$state',
+	function($scope, $stateParams, $location, Authentication, Posts,$http,$state) {
 		$scope.authentication = Authentication;
 
 		// Create new Post
@@ -41,14 +41,12 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 		$scope.find = function() {
 			$scope.posts = Posts.query();
 		};
-
         $scope.interest= function(){
             var post = $scope.post;
 
             $http.post('/posts/'+post._id+'/interested').success(function(response){
-
                 $scope.interestedUsers = response.interestedUsers;
-                //$location.path('/posts/'+response._id);
+                $state.reload();
                 }).error(function(response){
                 $scope.error = response.message;
             });
