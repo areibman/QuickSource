@@ -9,7 +9,6 @@ var mongoose = require('mongoose'),
     Post = mongoose.model('Post'),
 	_ = require('lodash');
 
-var objUtils = require('../utils/objUtils');
 /**
  * Create a Post
  */
@@ -43,26 +42,36 @@ exports.read = function(req, res) {
                else{
                     var postObject =
                     {
-                        _id : post._id,
-                        __v : post.__v,
-                        title : post.title,
-                        abstract : post.abstract,
+                        _id: post._id,
+                        __v: post.__v,
+                        title: post.title,
+                        abstract: post.abstract,
                         description: post.description,
                         location: post.location,
-                        created : post.created,
-                        updated : post.updated,
-                        isActive : post.isActive
+                        created: post.created,
+                        updated: post.updated,
+                        isActive: post.isActive
                     };
 
                     //user
-                    User.findById(post.user).select('_id displayName roles school isActive').exec(function(err, owner){
+                    User.findById(post.user).select('_id displayName roles school isActive').exec(function (err, owner) {
                         postObject.user = owner;
+
                         //Interested Users
-                        User.find({'_id' : {$in : post.interestedUsers}, 'isActive' : true}).select('_id displayName roles school isActive').exec(function(err, interestedUsers){
+                        User.find({
+                            '_id': {$in: post.interestedUsers},
+                            'isActive': true
+                        }).select('_id displayName roles school isActive').exec(function (err, interestedUsers) {
+
                             postObject.interestedUsers = interestedUsers;
                             //Participants
-                            User.find({'_id' : {$in : post.participants}, 'isActive' : true}).select('_id displayName roles school isActive').exec(function(err, participants){
+                            User.find({
+                                '_id': {$in: post.participants},
+                                'isActive': true
+                            }).select('_id displayName roles school isActive').exec(function (err, participants) {
                                 postObject.participants = participants;
+
+                                console.log(postObject);
                                 return postObject;
                             });
                         });
