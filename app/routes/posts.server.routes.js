@@ -14,7 +14,7 @@ module.exports = function(app) {
 		.put(users.requiresLogin, posts.hasAuthorization, posts.update);
 
     app.route('/posts/:postId/interested')
-        .post(users.requiresLogin, posts.hasAuthorization, posts.addInterest);
+        .post(users.requiresLogin, posts.addInterest);
 
     app.route('/posts/:postId/remove')
         .put(users.requiresLogin, posts.hasAuthorization, posts.setInactive);
