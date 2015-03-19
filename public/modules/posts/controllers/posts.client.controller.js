@@ -9,7 +9,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 		$scope.create = function() {
             $http.post('/posts', $scope.fields).success(function(response) {
             // And redirect to the project page
-                $location.path('/posts/'+response);
+                $location.path('/posts/'+response._id);
 
             }).error(function(response) {
                 $scope.error = response.message;
@@ -18,7 +18,8 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
 		// Remove existing Post
 		$scope.remove = function(post) {
-			$http.delete('/posts'+post._id).success(function(response){
+            var post = $scope.post;
+			$http.delete('/posts/'+post._id).success(function(response){
                 $location.path('/posts');
             }).error(function(response){
                 $scope.error=response.message;
