@@ -46,33 +46,37 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             var post = $scope.post;
             $http.post('/posts/'+post._id+'/interested').success(function(response){
                 $scope.interestedUsers = response.interestedUsers;
-                console.log($scope.interestedUsers);
+                $location.path('/posts/'+response._id);
                 }).error(function(response){
                 $scope.error = response.message;
             });
 
         };
 
-		// Find existing Post
-		$scope.findOne = function() {
-			var post = Posts.get({
-				postId: $stateParams.postId
-			});
+        $scope.findOne = function(){
+            //var post = $scope.post;
+            $http.get('/posts/'+$stateParams.postId).success(function(post){
 
-            post.$promise.then(function(post){
-                    post.isAlreadyInterested = false;
-                    post.isPoster = false;
-                    for(var Iuser in post.interestedUsers){
-                        if($scope.authentication.user._id===Iuser._id){
-                            post.isAlreadyInterested = true;
+                post.isAlreadyInterested = false;
+                post.isPoster = false;
+                for (var key in post.interestedUsers) {
+                    if (post.interestedUsers.hasOwnProperty(key)) {
+                        if(post.interestedUsers[key]._id===$scope.authentication.user._id){
+                            post.isAlreadyInterested=true;
                         }
                     }
-                    if(post.user._id===$scope.authentication.user._id){
-                        post.isPoster=true;
-                    }
+                }
+                if(post.user._id===$scope.authentication.user._id){
+                    post.isPoster=true;
+                }
+                $scope.post = post;
+                console.log($scope.post);
+            }).error(function(response){
+                alert(response.message);
+                $scope.error = response.message;
+                $location.path('/posts');
             });
-
-            $scope.post = post;
         };
+
 	}
 ]);
