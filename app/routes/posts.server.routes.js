@@ -14,7 +14,7 @@ module.exports = function(app) {
 		.put(users.requiresLogin, posts.hasAuthorization, posts.update)
 		.delete(users.requiresLogin, posts.hasAuthorization, posts.delete);
 
-    app.route('/posts/interest')
+    app.route('/posts/:postId/interested')
         .post(posts.addInterest);
 
 	// Finish by binding the Post middleware

@@ -34,7 +34,7 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
     Post.findById(req.params.postId, function(err, post){
-        if(err && !post){ res.status(400).send({ message: 'Post not found'}); }
+        if(err && !post){ return res.status(400).send({ message: 'Post not found'}); }
         else{
             var opt = [
                 { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
@@ -121,16 +121,6 @@ exports.postByID = function(req, res, next, id) {
 	});
 };
 
-exports.listLimit = function(req, res, next, limit) {
-    if(!isNaN(limit)){
-        req.limit = limit;
-    }
-    else{
-        req.limit = 20;
-    }
-    next();
-};
-
 /**
  * Post authorization middleware
  */
@@ -145,19 +135,23 @@ exports.hasAuthorization = function(req, res, next) {
  * Add interest user to a post
  */
 exports.addInterest = function(req, res){
-    Post.findOne(req.body.post, function(err, post){
+    console.log(req.body);
+
+    Post.findBy(req.body.post, function(err, post){
         if(err){
-            res.status(400).send('Post not found');
+            return res.status(400).send('Post not found');
         }
         else{
-            if(post.interestedUsers.indexOf(req.user._id) < 0){
-                post.interestedUsers.push(req.user._id);
+            if(post.interestedUsers.indexOf(req.user) < 0){
+                post.interestedUsers.push(req.user);
                 post.updated = Date.now();
+
+                console.log(post._id);
+                console.log(post);
                 post.save(function(err) {
                     if (err) {
-                        return res.status(400).send({
-                        message: errorHandler.getErrorMessage(err)
-                    });
+                        console.log(err);
+                        return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
                     } else {
                         res.jsonp(post);
                     }
