@@ -35,14 +35,23 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
 		// Update existing Post
 		$scope.update = function() {
-			var post = $scope.post;
+            var post = $scope.post;
+            $http.put('/posts/'+post._id,$scope.edit).success(function (response) {
+                $location.path('posts/' + response);
+            }).error(function (response) {
+                $scope.error = response.message;
+            });
+        };
 
-			post.$update(function() {
+
+
+
+			/*post.$update(function() {
 				$location.path('posts/' + post._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-		};
+		};*/
 
 		// Find a list of Posts
 		$scope.find = function() {
