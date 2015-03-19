@@ -49,7 +49,6 @@ exports.read = function(req, res) {
                     res.status(400).send({message: 'Post user not found'});
                 }
                 else {
-                    console.log(post);
                     res.jsonp(post);
                 }
             });
@@ -100,7 +99,7 @@ exports.setInactive = function(req, res) {
  * List of Posts
  */
 exports.list = function(req, res) { 
-	Post.find().sort('-created').populate('user', 'displayName school location').exec(function(err, posts) {
+	Post.find({ isActive : true }).sort('-created').populate('user', 'displayName school location').exec(function(err, posts) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -142,8 +141,6 @@ exports.addInterest = function(req, res){
     if(post.interestedUsers.indexOf(req.user.id) < 0){
         post.interestedUsers.push(req.user);
         post.updated = Date.now();
-
-        console.log(post);
 
         post.save(function(err) {
             if (err) {
