@@ -48,6 +48,7 @@ exports.read = function(req, res) {
                     res.status(400).send({message: 'Post user not found'});
                 }
                 else {
+                    console.log(post);
                     res.jsonp(post);
                 }
             });
@@ -135,28 +136,21 @@ exports.hasAuthorization = function(req, res, next) {
  * Add interest user to a post
  */
 exports.addInterest = function(req, res){
-    console.log(req.body);
+    var post = req.post;
 
-    Post.findBy(req.body.post, function(err, post){
-        if(err){
-            return res.status(400).send('Post not found');
-        }
-        else{
-            if(post.interestedUsers.indexOf(req.user) < 0){
-                post.interestedUsers.push(req.user);
-                post.updated = Date.now();
+    if(post.interestedUsers.indexOf(req.user.id) < 0){
+        post.interestedUsers.push(req.user);
+        post.updated = Date.now();
 
-                console.log(post._id);
-                console.log(post);
-                post.save(function(err) {
-                    if (err) {
-                        console.log(err);
-                        return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
-                    } else {
-                        res.jsonp(post);
-                    }
-                });
+        console.log(post);
+
+        post.save(function(err) {
+            if (err) {
+                console.log(err);
+                return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
+            } else {
+                res.jsonp(post);
             }
-        }
-    });
+        });
+    }
 };
