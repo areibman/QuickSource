@@ -41,6 +41,7 @@ var PostSchema = new Schema({
     location: {
         type: String,
         trim: true,
+        required: 'Please fill in the zip code for your project',
         match: [/^\d{5}$/, 'Please fill in your zip code in the correct format']
     },
     updated:{
