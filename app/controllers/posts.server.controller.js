@@ -84,15 +84,16 @@ exports.delete = function(req, res) {
 
     post.isActive = false;
 
-	post.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			req.send(Boolean(true));
-		}
-	});
+    console.log(post);
+	//post.save(function(err) {
+	//	if (err) {
+	//		return res.status(400).send({
+	//			message: errorHandler.getErrorMessage(err)
+	//		});
+	//	} else {
+	//		req.send(Boolean(true));
+	//	}
+	//});
 };
 
 /**
