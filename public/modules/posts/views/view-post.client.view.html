@@ -10,7 +10,7 @@
 					<h3 class="panel-title">Apply to this project!</h3>
 				</div>
 				<div class="panel-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" data-ng-init="interest()">
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Name</label>
 							<div class="col-sm-10">
@@ -57,16 +57,18 @@
 					</small>
 					<p data-ng-bind="post.abstract" class="lead"></p>
 					<p data-ng-show="post.description == ''"></p>
-					<p>Location: {{post.zipcode}}</p>
-
+					<p>Location: {{post.location}}</p>
+					<div class="panel-footer">
+						Interested participants: <span class="label label-default" ng-repeat="user in post.interestedUsers">{{user.displayName}}</span>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<img src="" alt="temp" class="img-thumbnail">
-					
+					<img src="http://nocturnalgaming.com/wp-content/uploads/2014/02/seshn-default-avatar.png" alt="temp" class="img-thumbnail"><br>
+					<h4 class="text-center" data-ng-bind="post.user.displayName"></h4>
 		</div>
 		<!-- <div class="page-header">
 			<h1 data-ng-bind="post.name"></h1>
