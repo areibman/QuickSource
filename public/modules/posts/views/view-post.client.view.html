@@ -17,12 +17,12 @@
 								<p class="form-control-static" data-ng-bind="authentication.user.displayName"></p>
 							</div>
 						</div> -->
-						<div class="form-group" data-ng-hide="post.isAlreadyInterested || post.isPoster">
+						<div class="form-group" data-ng-hide="((post.isAlreadyInterested) || (post.isPoster))">
 							<div>
 								<button type="submit" class="btn btn-default btn-block">I'm interested!</button>
 							</div>
 						</div>
-						<div class="form-group" data-ng-show="post.isAlreadyInterested || post.isPoster">
+						<div class="form-group" data-ng-show="((post.isAlreadyInterested) || (post.isPoster))">
 							<div>
 								<button type="submit" class="btn btn-default btn-block" disabled="disabled">Opted-in!</button>
 							</div>
@@ -68,7 +68,7 @@
 					<p data-ng-bind="post.description"></p>
 					<p>Location: {{post.location}} (zip code)</p>
 					<div class="panel-footer">
-						Interested participants: <span style="margin:2px" class="label label-default" ng-repeat="user in post.interestedUsers">{{user.displayName}}</span>
+						Interested participants: <span style="margin:2px" class="label label-default" ng-repeat="user in post.interestedUsers" data-ng-bind="user.displayName">{{user.displayName}}</span>
 					</div>
 				</div>
 			</div>

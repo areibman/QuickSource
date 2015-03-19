@@ -76,9 +76,9 @@ var UserSchema = new Schema({
 	providerData: {},
 	additionalProvidersData: {},
 	roles: {
-		type: [String],
+		type: String,
         trim: true,
-		default: ['user']
+		default: 'Student'
 	},
 	updated: {
 		type: Date
