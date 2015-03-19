@@ -21,7 +21,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(comment);
+			res.send(String(comment._id));
 		}
 	});
 };

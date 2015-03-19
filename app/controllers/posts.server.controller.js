@@ -15,6 +15,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
     var post = new Post(req.body);
     post.user = req.user;
+    post.updated = Date.now();
     var message = null;
 
     post.save(function(err) {
@@ -49,6 +50,7 @@ exports.update = function(req, res) {
 	var post = req.post ;
 
 	post = _.extend(post , req.body);
+    post.updated = Date.now();
 
 	post.save(function(err) {
 		if (err) {
@@ -65,15 +67,17 @@ exports.update = function(req, res) {
  * Delete an Post
  */
 exports.delete = function(req, res) {
-	var post = req.post ;
+	var post = req.post;
 
-	post.remove(function(err) {
+    post.isActive = false;
+
+	post.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(post);
+			req.send(Boolean(true));
 		}
 	});
 };
@@ -93,6 +97,19 @@ exports.list = function(req, res) {
 	});
 };
 
+exports.listRecent = function(req, res) {
+    console.log(req.params.limit);
+    Post.find().sort('-created').populate('user', 'displayName').limit(req.params.limit).exec(function(err, posts) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(posts);
+        }
+    });
+};
+
 /**
  * Post middleware
  */
@@ -103,6 +120,16 @@ exports.postByID = function(req, res, next, id) {
 		req.post = post ;
 		next();
 	});
+};
+
+exports.listLimit = function(req, res, next, limit) {
+    if(!isNaN(limit)){
+        req.limit = limit;
+    }
+    else{
+        req.limit = 20;
+    }
+    next();
 };
 
 /**
