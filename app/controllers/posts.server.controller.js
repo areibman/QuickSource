@@ -56,23 +56,22 @@ exports.read = function(req, res) {
                     //user
                     User.findById(post.user).select('_id displayName roles school isActive').exec(function (err, owner) {
                         postObject.user = owner;
-
+                        if (err) res.status(400).send({ message: 'Owner user not found'});
                         //Interested Users
                         User.find({
                             '_id': {$in: post.interestedUsers},
                             'isActive': true
                         }).select('_id displayName roles school isActive').exec(function (err, interestedUsers) {
-
                             postObject.interestedUsers = interestedUsers;
+                            if (err) res.status(400).send({ message: 'Owner user not found'});
                             //Participants
                             User.find({
                                 '_id': {$in: post.participants},
                                 'isActive': true
                             }).select('_id displayName roles school isActive').exec(function (err, participants) {
                                 postObject.participants = participants;
-
-                                console.log(postObject);
-                                return postObject;
+                                if (err) res.status(400).send({ message: 'Owner user not found'});
+                                res.jsonp(postObject);
                             });
                         });
                     });
