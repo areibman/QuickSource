@@ -58,9 +58,25 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
 		// Find existing Post
 		$scope.findOne = function() {
-			$scope.post = Posts.get({ 
+			var post = Posts.get({
 				postId: $stateParams.postId
 			});
-		};
+
+            post.$promise.then(function(post){
+                    post.isAlreadyInterested = false;
+                    post.isPoster = false;
+                    for(var Iuser in post.interestedUsers){
+                        if($scope.authentication.user._id===Iuser._id){
+                            post.isAlreadyInterested = true;
+                        }
+                    }
+                    if(post.user._id===$scope.authentication.user._id){
+                        post.isPoster=true;
+                    }
+            });
+
+            $scope.post = post;
+            console.log($scope.post);
+        };
 	}
 ]);

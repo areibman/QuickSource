@@ -99,18 +99,23 @@
 			// Create a sample Post response
 			var samplePostResponse = new Posts({
 				_id: '525cf20451979dea2c000001',
-				name: 'New Post'
+				title: 'New Post',
+                abstract:'Test Abstract',
+                description:'Test Description',
+                location:'10304'
+
 			});
 
 			// Fixture mock form input values
 			scope.name = 'New Post';
 
 			// Set POST response
-			$httpBackend.expectPOST('posts', samplePostPostData).respond(samplePostResponse);
+			$httpBackend.expectPOST('/posts', samplePostPostData).respond(samplePostResponse);
 
 			// Run controller functionality
 			scope.create();
 			$httpBackend.flush();
+
 
 			// Test form inputs are reset
 			expect(scope.name).toEqual('');
