@@ -6,8 +6,11 @@ module.exports = function(app) {
 
 	// Posts Routes
 	app.route('/posts')
-		.get(posts.list)
+        .get(posts.list)
 		.post(users.requiresLogin, posts.create);
+
+    app.route('/posts/recent/:limit')
+        .get(posts.listRecent);
 
 	app.route('/posts/:postId')
 		.get(posts.read)
@@ -16,4 +19,5 @@ module.exports = function(app) {
 
 	// Finish by binding the Post middleware
 	app.param('postId', posts.postByID);
+    app.param('limit', posts.listLimit);
 };

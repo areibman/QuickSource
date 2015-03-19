@@ -7,14 +7,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
 		// Create new Post
 		$scope.create = function() {
-            var post = new Posts({
-                title: '123',
-                abstract: '123',
-                location: '12345',
-            });
-
-            //$http.post('/posts', $scope.fields).success(function(response) {
-            $http.post('/posts', post).success(function(response) {
+            $http.post('/posts', $scope.fields).success(function(response) {
                 // And redirect to the index page
                 //$location.path('/posts'+response);
                 console.log(response);
