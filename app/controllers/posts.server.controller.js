@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
     Post = mongoose.model('Post'),
 	_ = require('lodash');
 
+var objUtils = require('../utils/objUtils');
 /**
  * Create a Post
  */
@@ -40,7 +41,32 @@ exports.read = function(req, res) {
                    res.status(400).send({ message: 'Post user not found'});
                }
                else{
-                   res.jsonp({post: post, user: user});
+                    var postObject =
+                    {
+                        _id : post._id,
+                        __v : post.__v,
+                        title : post.title,
+                        abstract : post.abstract,
+                        description: post.description,
+                        location: post.location,
+                        created : post.created,
+                        updated : post.updated,
+                        isActive : post.isActive
+                    };
+
+                    //user
+                    User.findById(post.user).select('_id displayName roles school isActive').exec(function(err, owner){
+                        postObject.user = owner;
+                        //Interested Users
+                        User.find({'_id' : {$in : post.interestedUsers}, 'isActive' : true}).select('_id displayName roles school isActive').exec(function(err, interestedUsers){
+                            postObject.interestedUsers = interestedUsers;
+                            //Participants
+                            User.find({'_id' : {$in : post.participants}, 'isActive' : true}).select('_id displayName roles school isActive').exec(function(err, participants){
+                                postObject.participants = participants;
+                                return postObject;
+                            });
+                        });
+                    });
                }
             });
         }
@@ -140,6 +166,24 @@ exports.hasAuthorization = function(req, res, next) {
  * Add interest user to a post
  */
 exports.addInterest = function(req, res){
-  console.log(req.body);
-    console.log(req.user);
+    Post.findOne(req.body.post, function(err, post){
+        if(err){
+            res.status(400).send('Post not found');
+        }
+        else{
+            if(post.interestedUsers.indexOf(req.user._id) < 0){
+                post.interestedUsers.push(req.user._id);
+                post.updated = Date.now();
+                post.save(function(err) {
+                    if (err) {
+                        return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                    } else {
+                        res.jsonp(post);
+                    }
+                });
+            }
+        }
+    });
 };
