@@ -46,9 +46,12 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
         $scope.interest= function(){
             var post = $scope.post;
             $http.post('/posts/'+post._id+'/interested').success(function(response){
+                $scope.interestedUsers = response.interestedUsers;
+                console.log($scope.interestedUsers);
                 }).error(function(response){
                 $scope.error = response.message;
             });
+
         };
 
 		// Find existing Post
@@ -71,7 +74,6 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             });
 
             $scope.post = post;
-           	console.log($scope.post);
         };
 	}
 ]);
