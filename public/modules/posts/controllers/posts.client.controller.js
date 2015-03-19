@@ -69,10 +69,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             });
 
             $scope.post = post;
-<<<<<<< HEAD
            	console.log($scope.post);
-=======
->>>>>>> origin/master
         };
 	}
 ]);
