@@ -3,6 +3,7 @@
 module.exports = function(app) {
 	var users = require('../../app/controllers/users.server.controller');
 	var posts = require('../../app/controllers/posts.server.controller');
+    var comments = require('../../app/controllers/comments.server.controller');
 
 	// Posts Routes
 	app.route('/posts')
@@ -15,10 +16,19 @@ module.exports = function(app) {
 
     app.route('/posts/:postId/opt-in')
         .post(users.requiresLogin, posts.addInterest);
+    app.route('/posts/:postId/opt-out')
+        .post(users.requiresLogin, posts.removeInterest);
 
     app.route('/posts/:postId/remove')
         .put(users.requiresLogin, posts.hasAuthorization, posts.setInactive);
 
+    app.route('/posts/:postId/addComment')
+        .post(users.requiresLogin, posts.addComment);
+
+    app.route('/posts/:postId/removeComment/:commentId')
+        .put(users.requiresLogin, posts.removeComment);
+
 	// Finish by binding the Post middleware
 	app.param('postId', posts.postByID);
+    app.param('commentId', comments.commentByID);
 };
