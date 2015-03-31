@@ -13,7 +13,7 @@ module.exports = function(app) {
 		.get(posts.read)
 		.put(users.requiresLogin, posts.hasAuthorization, posts.update);
 
-    app.route('/posts/:postId/interested')
+    app.route('/posts/:postId/opt-in')
         .post(users.requiresLogin, posts.addInterest);
 
     app.route('/posts/:postId/remove')
