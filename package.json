@@ -42,7 +42,8 @@
 		"chalk": "~0.5",
         "mongoose-auto-increment": "~3.2.0",
         "fibers": "~1.0.5",
-        "sync": "~0.2.5"
+        "sync": "~0.2.5",
+        "fileupload": "0.3.0"
 	},
 	"devDependencies": {
 		"supertest": "~0.14.0",
