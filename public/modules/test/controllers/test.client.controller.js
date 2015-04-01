@@ -1,6 +1,8 @@
 'use strict';
 
 angular.module('test').controller('TestController', ['$scope', '$upload', function ($scope, $upload) {
+
+    // Angular-File-Upload: Watching model
     $scope.$watch('file', function () {
         $scope.upload($scope.file);
     });
@@ -15,8 +17,8 @@ angular.module('test').controller('TestController', ['$scope', '$upload', functi
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 console.log('progress: ' + progressPercentage + '% ' +
                 evt.config.file.name);
-            }).success(function (data, status, headers, config) {
-                console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+            }).success(function (response) {
+                console.log('fileName:' + response);
             });
         }
     };

@@ -5,6 +5,8 @@
  */
 var mongoose = require('mongoose'),
     fs = require('fs'),
+    path = require('path'),
+    uuid = require('node-uuid'),
     _ = require('lodash');
 
 /**
@@ -12,14 +14,15 @@ var mongoose = require('mongoose'),
  */
 exports.uploadResume = function(req, res) {
     req.pipe(req.busboy);
-    console.log('Uploading... to '+__dirname);
-    //req.busboy.on('file', function(fieldname, file, filename) {
-    //    var fstream = fs.createWriteStream('./images/' + filename);
-    //    file.pipe(fstream);
-    //    fstream.on('close', function () {
-    //        res.redirect('back');
-    //    });
-    //});
+    req.busboy.on('file', function(fieldname, file, filename) {
+        var newFilename = uuid.v1() + filename.substring(filename.lastIndexOf('.'), filename.length);
+        var saveTo = path.dirname(require.main.filename) + '/uploads/profilePic/' + newFilename;
+        var fstream = fs.createWriteStream(saveTo);
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            res.status(200).send(newFilename);
+        });
+    });
 };
 
 /*
