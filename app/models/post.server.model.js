@@ -19,13 +19,11 @@ var PostSchema = new Schema({
     title: {
         type: String,
         trim: true,
-        default: '',
         required: 'Title of the post is required'
     },
     abstract: {
         type: String,
         trim: true,
-        default: '',
         required: 'Abstract of the post is required'
     },
     description: {

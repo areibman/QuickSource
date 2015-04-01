@@ -9,13 +9,13 @@ var should = require('should'),
 	agent = request.agent(app);
 
 /**
- * Globals
- */
+* Globals
+*/
 var credentials, user, comment;
 
 /**
- * Comment routes tests
- */
+* Comment routes tests
+*/
 describe('Comment CRUD tests', function() {
 	beforeEach(function(done) {
 		// Create user credentials
@@ -26,19 +26,20 @@ describe('Comment CRUD tests', function() {
 
 		// Create a new user
 		user = new User({
-			firstName: 'Full',
-			lastName: 'Name',
-			displayName: 'Full Name',
-			email: 'test@test.com',
-			username: credentials.username,
-			password: credentials.password,
-			provider: 'local'
+            firstName: 'Full',
+            lastName: 'Name',
+            displayName: 'Full Name',
+            email: 'test@test.com',
+            username: credentials.username,
+            password: credentials.password,
+            provider: 'local',
+            zipCode: '12345'
 		});
 
 		// Save a user to the test db and create new Comment
 		user.save(function() {
 			comment = {
-				name: 'Comment Name'
+				content: 'Comment Name'
 			};
 
 			done();
@@ -75,7 +76,7 @@ describe('Comment CRUD tests', function() {
 
 								// Set assertions
 								(comments[0].user._id).should.equal(userId);
-								(comments[0].name).should.match('Comment Name');
+								(comments[0].content).should.match('Comment Name');
 
 								// Call the assertion callback
 								done();
@@ -96,7 +97,7 @@ describe('Comment CRUD tests', function() {
 
 	it('should not be able to save Comment instance if no name is provided', function(done) {
 		// Invalidate name field
-		comment.name = '';
+		comment.content = '';
 
 		agent.post('/auth/signin')
 			.send(credentials)
@@ -114,8 +115,8 @@ describe('Comment CRUD tests', function() {
 					.expect(400)
 					.end(function(commentSaveErr, commentSaveRes) {
 						// Set message assertion
-						(commentSaveRes.body.message).should.match('Please fill Comment name');
-						
+						(commentSaveRes.body.message).should.match('Please fill in comment content');
+
 						// Handle Comment save error
 						done(commentSaveErr);
 					});
@@ -142,7 +143,7 @@ describe('Comment CRUD tests', function() {
 						if (commentSaveErr) done(commentSaveErr);
 
 						// Update Comment name
-						comment.name = 'WHY YOU GOTTA BE SO MEAN?';
+						comment.content = 'WHY YOU GOTTA BE SO MEAN?';
 
 						// Update existing Comment
 						agent.put('/comments/' + commentSaveRes.body._id)
@@ -154,7 +155,7 @@ describe('Comment CRUD tests', function() {
 
 								// Set assertions
 								(commentUpdateRes.body._id).should.equal(commentSaveRes.body._id);
-								(commentUpdateRes.body.name).should.match('WHY YOU GOTTA BE SO MEAN?');
+								(commentUpdateRes.body.content).should.match('WHY YOU GOTTA BE SO MEAN?');
 
 								// Call the assertion callback
 								done();
@@ -192,7 +193,7 @@ describe('Comment CRUD tests', function() {
 			request(app).get('/comments/' + commentObj._id)
 				.end(function(req, res) {
 					// Set assertion
-					res.body.should.be.an.Object.with.property('name', comment.name);
+					res.body.should.be.an.Object.with.property('content', comment.content);
 
 					// Call the assertion callback
 					done();
@@ -238,7 +239,7 @@ describe('Comment CRUD tests', function() {
 	});
 
 	it('should not be able to delete Comment instance if not signed in', function(done) {
-		// Set Comment user 
+		// Set Comment user
 		comment.user = user;
 
 		// Create new Comment model instance

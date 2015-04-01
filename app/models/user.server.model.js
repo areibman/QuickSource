@@ -108,6 +108,15 @@ var UserSchema = new Schema({
         type: Boolean,
         default: true
     },
+    /* File handling */
+    profilePic: {
+        type: Buffer,
+        contentType: String
+    },
+    resumeDoc: {
+        type: Buffer,
+        contentType: String
+    },
 	/* For reset password */
 	resetPasswordToken: {
 		type: String

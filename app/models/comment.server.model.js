@@ -19,7 +19,6 @@ var CommentSchema = new Schema({
     },
     content: {
 		type: String,
-		default: '',
 		required: 'Please fill in comment content',
 		trim: true
 	},
