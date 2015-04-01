@@ -37,14 +37,24 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 
 
 
+        //Opt out
+        $scope.opt_out = function(){
+            var post = $scope.post;
+            $http.post('/posts/'+post._id+'/opt-out').success(function(response){
+                $scope.interestedUsers = response.interestedUsers;
+                $state.reload();
+            }).error(function(response){
+                $scope.error = response.message;
+            });
+        };
+
 		// Find a list of Posts
 		$scope.find = function() {
 			$scope.posts = Posts.query();
 		};
-        $scope.interest= function(){
+        $scope.opt_in= function(){
             var post = $scope.post;
-
-            $http.post('/posts/'+post._id+'/interested').success(function(response){
+            $http.post('/posts/'+post._id+'/opt-in').success(function(response){
                 $scope.interestedUsers = response.interestedUsers;
                 $state.reload();
                 }).error(function(response){
