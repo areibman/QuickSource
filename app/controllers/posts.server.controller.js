@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	User = mongoose.model('User'),
     Post = mongoose.model('Post'),
+    Comment = mongoose.model('Comment'),
 	_ = require('lodash');
 
 /**
@@ -229,7 +230,7 @@ exports.addComment = function(req, res){
             res.jsonp(comment);
         }
     });
-}
+};
 
 /**
  * Remove comment to the post
@@ -238,7 +239,7 @@ exports.removeComment = function(req, res){
     var post = req.post;
     var comment = req.comment;
 
-    if(req.user != post.user && req.user != comment.user){
+    if(req.user !== post.user && req.user !== comment.user){
         return res.status(403).send('User is not authorized');
     }
 
@@ -252,4 +253,4 @@ exports.removeComment = function(req, res){
             res.jsonp(comment);
         }
     });
-}
+};
