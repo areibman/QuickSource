@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('test').controller('TestController', ['$scope', '$stateParams', '$location', 'Authentication', 'Posts','$http','$state',
+angular.module('test').controller('TestController', ['$scope', '$stateParams', '$location', 'Authentication', 'Users','$http','$state',
     function($scope, $stateParams, $location, Authentication, Posts,$http,$state) {
 
         $scope.postTest = function() {
-
+            console.log($scope);
             $http.post('/test', $scope.fields).success(function(response) {
             }).error(function(response) {
                 $scope.error = response.message;
