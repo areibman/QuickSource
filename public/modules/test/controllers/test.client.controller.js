@@ -5,14 +5,14 @@ angular.module('test').controller('TestController', ['$scope', '$stateParams', '
 
         $scope.postTest = function() {
             console.log($scope);
-            $http.post('/test', $scope.fields).success(function(response) {
+            $http.post('/test/upload', $scope.filefield).success(function(response) {
             }).error(function(response) {
                 $scope.error = response.message;
             });
         };
 
         $scope.getTest = function() {
-            $http.get('/test', $scope.fields).success(function(response) {
+            $http.get('/test/fetch', $scope.fields).success(function(response) {
                 console.log(response);
             }).error(function(response) {
                 $scope.error = response.message;

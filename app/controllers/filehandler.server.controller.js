@@ -3,20 +3,18 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    //filehandler = require('fileupload').createFileUpload('/uploads/profilePic').middleware,
-    _ = require('lodash');
+var mongoose = require('mongoose'), _ = require('lodash');
 
 /**
- * Get User Profile Picture
+ * File upload
  */
-exports.getProfilePic = function(req, res){
-
+exports.create = function(req, res) {
+    
 };
 
-/**
- * Upload User Profile Picture
+/*
+ * Fetch file
  */
-exports.uploadProfilePic = function(req, res){
-    console.log('Testing...');
+exports.read = function(req, res) {
+
 };
