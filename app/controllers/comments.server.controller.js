@@ -12,18 +12,20 @@ var mongoose = require('mongoose'),
  * Create a Comment
  */
 exports.create = function(req, res) {
-	var comment = new Comment(req.body);
+	var message = null;
+    var comment = new Comment(req.body);
 	comment.user = req.user;
 
-	comment.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.send(String(comment._id));
-		}
-	});
+
+    comment.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(comment);
+        }
+    });
 };
 
 /**
