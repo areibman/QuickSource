@@ -1,15 +1,4 @@
-<script src="angular-file-upload-shim.min.js"></script>
-<script src="angular.min.js"></script>
-<script src="angular-file-upload.min.js"></script>
-
-<section ng-controller="TestController">
-    <input type="text" ng-model="myModelObj">
-    <input type="file" ng-file-select="onFileSelect($files)">
-    <input type="file" ng-file-select="onFileSelect($files)" multiple accept="image/*">
-    <div class="button" ng-file-select="onFileSelect($files)" data-multiple="true"></div>
-    <div ng-file-drop="onFileSelect($files)" ng-file-drag-over-class="optional-css-class-name-or-function"
-         ng-show="dropSupported">drop files here</div>
-    <div ng-file-drop-available="dropSupported=true"
-         ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
-    <button ng-click="upload.abort()">Cancel Upload</button>
-</section>
+<div ng-controller="TestController">
+    <div style="-moz-appearance: button;-webkit-appearance: button;padding: 10px;margin: 10px;width: 90px;"
+         ng-file-select ng-model="file">Select File</div>
+</div>

@@ -1,30 +1,23 @@
 'use strict';
 
-angular.module('test').controller('TestController', ['$scope', '$stateParams', '$location', 'Authentication', 'Users','$http','$state',
-    function($scope, $stateParams, $location, Authentication, Posts,$http,$state) {
+angular.module('test').controller('TestController', ['$scope', '$upload', function ($scope, $upload) {
+    $scope.$watch('file', function () {
+        $scope.upload($scope.file);
+    });
 
-        $scope.postTest = function() {
-            console.log($scope);
-            $http.post('/test/upload', $scope.filefield).success(function(response) {
-            }).error(function(response) {
-                $scope.error = response.message;
+    $scope.upload = function (file) {
+        if (file) {
+            $upload.upload({
+                url: '/users/uploadResume',
+                method: 'POST',
+                file: file[0]
+            }).progress(function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' +
+                evt.config.file.name);
+            }).success(function (data, status, headers, config) {
+                console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
             });
-        };
-
-        $scope.getTest = function() {
-            $http.get('/test/fetch', $scope.fields).success(function(response) {
-                console.log(response);
-            }).error(function(response) {
-                $scope.error = response.message;
-            });
-        };
-
-        $scope.putTest = function() {
-            $http.put('/test', $scope.fields).success(function(response) {
-                console.log(response);
-            }).error(function(response) {
-                $scope.error = response.message;
-            });
-        };
-	}
-]);
+        }
+    };
+}]);
