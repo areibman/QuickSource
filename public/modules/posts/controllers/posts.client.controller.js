@@ -20,6 +20,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             var post = $scope.post;
 			$http.put('/posts/'+post._id+'/remove').success(function (response) {
                 $location.path('/posts');
+                $scope.post.isActive=false;
             }).error(function(response){
                 $scope.error=response.message;
             });

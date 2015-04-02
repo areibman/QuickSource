@@ -32,7 +32,12 @@
 		// Then we can start by loading the main application module
 		beforeEach(module(ApplicationConfiguration.applicationModuleName));
 
-		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
+        beforeEach(module(function($urlRouterProvider) {
+            $urlRouterProvider.deferIntercept();
+        }));
+
+
+        // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
 		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
@@ -90,39 +95,44 @@
 			// Test scope value
 			expect(scope.post).toEqualData(samplePost);
 		}));
-
+*/
 		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Posts) {
 			// Create a sample Post object
 			var samplePostPostData = new Posts({
-                _id: '525cf20451979dea2c000001',
                 title: 'New Post',
-                abstract:'Test Abstract',
-                description:'Test Description',
-                location:'10304'
+                zip:'10304'
 			});
 
 			// Create a sample Post response
-			var samplePostResponse = '/posts/';
+            var samplePostResponse = new Posts({
+                _id: '525cf20451979dea2c000001',
+                title: 'New Post',
+                zip:'10304'
+            });
 
-			// Fixture mock form input values
-			scope.name = 'New Post';
 
+            // Fixture mock form input values
+            scope._id = '525cf20451979dea2c000001',
+            scope.title = 'New Post';
+            scope.zip = '10304';
 			// Set POST response
-			$httpBackend.expectPOST('/posts', '/post/0').respond(samplePostResponse);
+			//$httpBackend.whenPOST('/posts',samplePostPostData).respond(samplePostResponse);
+            $httpBackend.expectPOST('/posts').respond(samplePostResponse);
 
-			// Run controller functionality
+            // Run controller functionality
 			scope.create();
 			$httpBackend.flush();
 
+            //Scope fields aren't cleared the url is redirected though
+			expect(scope.title).toEqual('New Post');
+            expect(scope._id).toEqual('525cf20451979dea2c000001');
 
-			// Test form inputs are reset
-			expect(scope.name).toEqual('');
 
-			// Test URL redirection after the Post was created
-			expect($location.path()).toBe('/posts/' + samplePostResponse);
+            // Test URL redirection after the Post was created
+			expect($location.path()).toBe('/posts/' + samplePostResponse._id);
 		}));
 
-		it('$scope.update() should update a valid Post', inject(function(Posts) {
+/*		it('$scope.update() should update a valid Post', inject(function(Posts) {
 			// Define a sample Post put data
 			var samplePostPutData = new Posts({
                 _id: '525cf20451979dea2c000001',
@@ -144,27 +154,32 @@
 
 			// Test URL location to new object
 			expect($location.path()).toBe('/posts/' + samplePostPutData._id);
-		}));
-*/
-
+		}));*/
 		it('$scope.remove() should send a DELETE request with a valid postId and remove the Post from the scope', inject(function(Posts) {
 			// Create new Post object
 			var samplePost = new Posts({
-				_id: '525a8422f6d0f87f0e407a33'
+                id:0,
+                _id: 0,
+                isActive: true
+
 			});
 
+            var sampleResponse =  new Posts({
+                id:0,
+                _id:0,
+                isActive:false
+            });
+
 			// Create new Posts array and include the Post
-			scope.posts = [samplePost];
+			scope.post = samplePost;
 
 			// Set expected DELETE response
-			$httpBackend.expectDELETE(/posts\/([0-9a-fA-F]{24})$/).respond(204);
-
+			$httpBackend.expectPUT('/posts/0/remove').respond(204);
 			// Run controller functionality
-			scope.remove(samplePost);
-			$httpBackend.flush();
-
+            scope.remove();
+            $httpBackend.flush();
 			// Test array after successful delete
-			expect(scope.posts.length).toBe(0);
+			expect(scope.post.isActive).toBe(false);
 		}));
 	});
 }());
