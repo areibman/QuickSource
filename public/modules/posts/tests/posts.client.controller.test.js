@@ -117,16 +117,15 @@
             scope.zip = '10304';
 			// Set POST response
 			//$httpBackend.whenPOST('/posts',samplePostPostData).respond(samplePostResponse);
-            $httpBackend.expectPOST('/posts',samplePostPostData).respond(samplePostResponse);
+            $httpBackend.expectPOST('/posts').respond(samplePostResponse);
 
             // Run controller functionality
 			scope.create();
 			$httpBackend.flush();
 
-
-			// Test form inputs are reset
-			expect(scope.title).toEqual('');
-            expect(scope._id).toEqual('');
+            //Scope fields aren't cleared the url is redirected though
+			expect(scope.title).toEqual('New Post');
+            expect(scope._id).toEqual('525cf20451979dea2c000001');
 
 
             // Test URL redirection after the Post was created
@@ -159,21 +158,28 @@
 		it('$scope.remove() should send a DELETE request with a valid postId and remove the Post from the scope', inject(function(Posts) {
 			// Create new Post object
 			var samplePost = new Posts({
-				_id: '525a8422f6d0f87f0e407a33'
+                id:0,
+                _id: 0,
+                isActive: true
+
 			});
 
+            var sampleResponse =  new Posts({
+                id:0,
+                _id:0,
+                isActive:false
+            });
+
 			// Create new Posts array and include the Post
-			scope.posts = [samplePost];
+			scope.post = samplePost;
 
 			// Set expected DELETE response
-			$httpBackend.expectDELETE(/posts\/([0-9a-fA-F]{24})$/).respond(204);
-
+			$httpBackend.expectPUT('/posts/0/remove').respond(204);
 			// Run controller functionality
-			scope.remove(samplePost);
-			$httpBackend.flush();
-
+            scope.remove();
+            $httpBackend.flush();
 			// Test array after successful delete
-			expect(scope.posts.length).toBe(0);
+			expect(scope.post.isActive).toBe(false);
 		}));
 	});
 }());
