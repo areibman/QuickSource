@@ -250,7 +250,9 @@ exports.removeComment = function(req, res){
     var comment = req.comment;
 
     if(req.user.id !== post.user.id && req.user.id !== comment.user.id){
-        return res.status(403).send('User is not authorized');
+        return res.status(403).send({
+            message: 'User is not authorized'
+        });
     }
 
     comment = _.extend(comment , { isActive : false, updated : Date.now() });

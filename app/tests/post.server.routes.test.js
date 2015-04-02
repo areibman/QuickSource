@@ -433,7 +433,7 @@ describe('Post CRUD tests', function() {
                 });
     });
 
-    it('should not be able to remove a comment of post if you have the permission', function(done) {
+    it('should be able to remove a comment of post if you have the permission', function(done) {
         agent.post('/auth/signin')
             .send(credentials_user)
             .expect(200)
@@ -465,10 +465,110 @@ describe('Post CRUD tests', function() {
                                             .end(function(postGetError, postGetRes){
                                                 if (postGetError) done(postGetError);
                                                 postGetRes.body.comments.should.be.an.Array.with.lengthOf(0);
-                                                
+
                                                 done();
                                         });
                                 });
+                            });
+                    });
+            });
+    });
+
+    it('should not be able to remove a comment of post if you do not have the permission as the commentor', function(done) {
+        agent.post('/auth/signin')
+            .send(credentials_user)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Post
+                agent.post('/posts')
+                    .send(post)
+                    .expect(200)
+                    .end(function(postSaveErr, postSaveRes) {
+                        // Handle Post save error
+                        if (postSaveErr) done(postSaveErr);
+
+                        var postID = postSaveRes.body._id;
+                        agent.post('/posts/' + postID + '/addComment').send(comment).expect(200)
+                            .end(function(commentError, commentRes){
+                                if (commentError) done(commentError);
+                                agent.get('/auth/signout');
+
+                                agent.post('/auth/signin')
+                                    .send(credentials_vistor)
+                                    .expect(200)
+                                    .end(function(signinErr, signinRes) {
+                                        // Handle signin error
+                                        if (signinErr) done(signinErr);
+
+                                        agent.put('/posts/' + postID + '/removeComment/' + commentRes.body._id).expect(403)
+                                            .end(function(commentRemoveError, commentRemoveRes) {
+                                                (commentRemoveRes.body.message).should.match('User is not authorized');
+
+                                                done(commentRemoveError);
+                                            });
+                                    });
+                            });
+                    });
+            });
+    });
+
+    it('should not be able to remove a comment of post if you are the owner of the post', function(done) {
+        agent.post('/auth/signin')
+            .send(credentials_user)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Post
+                agent.post('/posts')
+                    .send(post)
+                    .expect(200)
+                    .end(function(postSaveErr, postSaveRes) {
+                        // Handle Post save error
+                        var postID = postSaveRes.body._id;
+                        if (postSaveErr) done(postSaveErr);
+
+                        agent.get('/auth/signout');
+
+                        agent.post('/auth/signin')
+                            .send(credentials_vistor)
+                            .expect(200)
+                            .end(function(signinErr, signinRes) {
+                                // Handle signin error
+                                if (signinErr) done(signinErr);
+                                agent.post('/posts/' + postID + '/addComment').send(comment).expect(200)
+                                    .end(function(commentError, commentRes){
+                                        if (commentError) done(commentError);
+                                        agent.get('/auth/signout');
+
+                                        agent.post('/auth/signin')
+                                            .send(credentials_user)
+                                            .expect(200)
+                                            .end(function(signinErr, signinRes) {
+                                                // Handle signin error
+                                                if (signinErr) done(signinErr);
+                                                agent.put('/posts/' + postID + '/removeComment/' + commentRes.body._id).expect(200)
+                                                    .end(function(commentRemoveError, commentRemoveRes) {
+                                                        agent.get('/posts/' + postID).expect(200)
+                                                            .end(function(postGetError, postGetRes){
+                                                                if (postGetError) done(postGetError);
+                                                                postGetRes.body.comments.should.be.an.Array.with.lengthOf(0);
+
+                                                                done();
+                                                            });
+                                                    });
+                                            });
+                                    });
                             });
                     });
             });
