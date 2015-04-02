@@ -50,7 +50,19 @@ exports.read = function(req, res) {
                     res.status(400).send({message: 'Post user not found'});
                 }
                 else {
-                    res.jsonp(post);
+                    Comment.populate(post, {
+                        path :'comments.user',
+                        model : 'User',
+                        select: 'displayName roles school zipCode isActive',
+                        match : { isActive : true }
+                    }, function(err, post){
+                        if (err || !post.user.isActive) {
+                            res.status(400).send({message: 'Unable to populate post comments'});
+                        }
+                        else{
+                            res.jsonp(post);
+                        }
+                    });
                 }
             });
         }
