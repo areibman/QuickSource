@@ -17,7 +17,7 @@ module.exports = function(config) {
 		// Test results reporter to use
 		// Possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
 		//reporters: ['progress'],
-		reporters: ['progress'],
+		reporters: ['progress','coverage'],
 
 		// Web server port
 		port: 9876,
@@ -32,7 +32,44 @@ module.exports = function(config) {
 		// Enable / disable watching file and executing tests whenever any file changes
 		autoWatch: true,
 
-		// Start these browsers, currently available:
+        preprocessors: {
+            // source files, that you wanna generate coverage for
+            // do not include tests or libraries
+            // (these files will be instrumented by Istanbul)
+            'app/controller/*.js': ['coverage'],
+            'app/models/*.js': ['coverage'],
+            'app/routes/*.js': ['coverage'],
+            'app/views/*.js': ['coverage'],
+            'config/*.js': ['coverage'],
+            'public/modules/comments/config/*.js': ['coverage'],
+            'public/modules/comments/controllers/*.js': ['coverage'],
+            'public/modules/comments/services/*.js': ['coverage'],
+            'public/modules/comments/views/*.js': ['coverage'],
+            'public/modules/core/config/*.js': ['coverage'],
+            'public/modules/core/controllers/*.js': ['coverage'],
+            'public/modules/core/services/*.js': ['coverage'],
+            'public/modules/core/views/*.js': ['coverage'],
+            'public/modules/posts/config/*.js': ['coverage'],
+            'public/modules/posts/controllers/*.js': ['coverage'],
+            'public/modules/posts/services/*.js': ['coverage'],
+            'public/modules/posts/views/*.js': ['coverage'],
+            'public/modules/users/config/*.js': ['coverage'],
+            'public/modules/users/controllers/*.js': ['coverage'],
+            'public/modules/users/services/*.js': ['coverage'],
+            'public/modules/users/views/*.js': ['coverage'],
+
+
+        },
+
+        coverageReporter: {
+            type : 'html',
+            dir : 'coverage/'
+           // ,file : 'coverage.txt'
+        },
+
+
+
+        // Start these browsers, currently available:
 		// - Chrome
 		// - ChromeCanary
 		// - Firefox

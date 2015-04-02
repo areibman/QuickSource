@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for core/services/menus.client.service.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">core/services/menus.client.service.js</span></h1>
+    <h2>
+        Statements: <span class="metric">37.74% <small>(20 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">16.67% <small>(8 / 48)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">40% <small>(4 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">37.74% <small>(20 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">core/services/</a> &#187; menus.client.service.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+//Menu service used for managing  menus
+angular.module('core').service('Menus', [
+&nbsp;
+	function() {
+		// Define a set of default roles
+		this.defaultRoles = ['*'];
+&nbsp;
+		// Define the menus object
+		this.menus = {};
+&nbsp;
+		// A private function for rendering decision 
+		var shouldRender = <span class="fstat-no" title="function not covered" >function(user) {</span>
+<span class="cstat-no" title="statement not covered" >			if (user) {</span>
+<span class="cstat-no" title="statement not covered" >				if (!!~this.roles.indexOf('*')) {</span>
+<span class="cstat-no" title="statement not covered" >					return true;</span>
+				} else {
+<span class="cstat-no" title="statement not covered" >					for (var userRoleIndex in user.roles) {</span>
+<span class="cstat-no" title="statement not covered" >						for (var roleIndex in this.roles) {</span>
+<span class="cstat-no" title="statement not covered" >							if (this.roles[roleIndex] === user.roles[userRoleIndex]) {</span>
+<span class="cstat-no" title="statement not covered" >								return true;</span>
+							}
+						}
+					}
+				}
+			} else {
+<span class="cstat-no" title="statement not covered" >				return this.isPublic;</span>
+			}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			return false;</span>
+		};
+&nbsp;
+		// Validate menu existance
+		this.validateMenuExistance = function(menuId) {
+			<span class="missing-if-branch" title="else path not taken" >E</span>if (menuId &amp;&amp; menuId.length) {
+				<span class="missing-if-branch" title="else path not taken" >E</span>if (this.menus[menuId]) {
+					return true;
+				} else {
+<span class="cstat-no" title="statement not covered" >					throw new Error('Menu does not exists');</span>
+				}
+			} else {
+<span class="cstat-no" title="statement not covered" >				throw new Error('MenuId was not provided');</span>
+			}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >			return false;</span>
+		};
+&nbsp;
+		// Get the menu object by menu id
+		this.getMenu = function(menuId) {
+			// Validate that the menu exists
+			this.validateMenuExistance(menuId);
+&nbsp;
+			// Return the menu object
+			return this.menus[menuId];
+		};
+&nbsp;
+		// Add new menu object by menu id
+		this.addMenu = function(menuId, isPublic, roles) {
+			// Create the new menu
+			this.menus[menuId] = {
+				isPublic: isPublic || false,
+				roles: roles || this.defaultRoles,
+				items: [],
+				shouldRender: shouldRender
+			};
+&nbsp;
+			// Return the menu object
+			return this.menus[menuId];
+		};
+&nbsp;
+		// Remove existing menu object by menu id
+		this.removeMenu = <span class="fstat-no" title="function not covered" >function(menuId) {</span>
+			// Validate that the menu exists
+<span class="cstat-no" title="statement not covered" >			this.validateMenuExistance(menuId);</span>
+&nbsp;
+			// Return the menu object
+<span class="cstat-no" title="statement not covered" >			delete this.menus[menuId];</span>
+		};
+&nbsp;
+		// Add menu item object
+		this.addMenuItem = <span class="fstat-no" title="function not covered" >function(menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles, position) {</span>
+			// Validate that the menu exists
+<span class="cstat-no" title="statement not covered" >			this.validateMenuExistance(menuId);</span>
+&nbsp;
+			// Push new menu item
+<span class="cstat-no" title="statement not covered" >			this.menus[menuId].items.push({</span>
+				title: menuItemTitle,
+				link: menuItemURL,
+				menuItemType: menuItemType || 'item',
+				menuItemClass: menuItemType,
+				uiRoute: menuItemUIRoute || ('/' + menuItemURL),
+				isPublic: ((isPublic === null || typeof isPublic === 'undefined') ? this.menus[menuId].isPublic : isPublic),
+				roles: ((roles === null || typeof roles === 'undefined') ? this.menus[menuId].roles : roles),
+				position: position || 0,
+				items: [],
+				shouldRender: shouldRender
+			});
+&nbsp;
+			// Return the menu object
+<span class="cstat-no" title="statement not covered" >			return this.menus[menuId];</span>
+		};
+&nbsp;
+		// Add submenu item object
+		this.addSubMenuItem = <span class="fstat-no" title="function not covered" >function(menuId, rootMenuItemURL, menuItemTitle, menuItemURL, menuItemUIRoute, isPublic, roles, position) {</span>
+			// Validate that the menu exists
+<span class="cstat-no" title="statement not covered" >			this.validateMenuExistance(menuId);</span>
+&nbsp;
+			// Search for menu item
+<span class="cstat-no" title="statement not covered" >			for (var itemIndex in this.menus[menuId].items) {</span>
+<span class="cstat-no" title="statement not covered" >				if (this.menus[menuId].items[itemIndex].link === rootMenuItemURL) {</span>
+					// Push new submenu item
+<span class="cstat-no" title="statement not covered" >					this.menus[menuId].items[itemIndex].items.push({</span>
+						title: menuItemTitle,
+						link: menuItemURL,
+						uiRoute: menuItemUIRoute || ('/' + menuItemURL),
+						isPublic: ((isPublic === null || typeof isPublic === 'undefined') ? this.menus[menuId].items[itemIndex].isPublic : isPublic),
+						roles: ((roles === null || typeof roles === 'undefined') ? this.menus[menuId].items[itemIndex].roles : roles),
+						position: position || 0,
+						shouldRender: shouldRender
+					});
+				}
+			}
+&nbsp;
+			// Return the menu object
+<span class="cstat-no" title="statement not covered" >			return this.menus[menuId];</span>
+		};
+&nbsp;
+		// Remove existing menu object by menu id
+		this.removeMenuItem = <span class="fstat-no" title="function not covered" >function(menuId, menuItemURL) {</span>
+			// Validate that the menu exists
+<span class="cstat-no" title="statement not covered" >			this.validateMenuExistance(menuId);</span>
+&nbsp;
+			// Search for menu item to remove
+<span class="cstat-no" title="statement not covered" >			for (var itemIndex in this.menus[menuId].items) {</span>
+<span class="cstat-no" title="statement not covered" >				if (this.menus[menuId].items[itemIndex].link === menuItemURL) {</span>
+<span class="cstat-no" title="statement not covered" >					this.menus[menuId].items.splice(itemIndex, 1);</span>
+				}
+			}
+&nbsp;
+			// Return the menu object
+<span class="cstat-no" title="statement not covered" >			return this.menus[menuId];</span>
+		};
+&nbsp;
+		// Remove existing menu object by menu id
+		this.removeSubMenuItem = <span class="fstat-no" title="function not covered" >function(menuId, submenuItemURL) {</span>
+			// Validate that the menu exists
+<span class="cstat-no" title="statement not covered" >			this.validateMenuExistance(menuId);</span>
+&nbsp;
+			// Search for menu item to remove
+<span class="cstat-no" title="statement not covered" >			for (var itemIndex in this.menus[menuId].items) {</span>
+<span class="cstat-no" title="statement not covered" >				for (var subitemIndex in this.menus[menuId].items[itemIndex].items) {</span>
+<span class="cstat-no" title="statement not covered" >					if (this.menus[menuId].items[itemIndex].items[subitemIndex].link === submenuItemURL) {</span>
+<span class="cstat-no" title="statement not covered" >						this.menus[menuId].items[itemIndex].items.splice(subitemIndex, 1);</span>
+					}
+				}
+			}
+&nbsp;
+			// Return the menu object
+<span class="cstat-no" title="statement not covered" >			return this.menus[menuId];</span>
+		};
+&nbsp;
+		//Adding the topbar menu
+		this.addMenu('topbar');
+	}
+]);</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Apr 02 2015 00:30:27 GMT-0400 (EDT)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
