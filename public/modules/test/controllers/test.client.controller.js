@@ -9,6 +9,7 @@ angular.module('test').controller('TestController', ['$scope', '$upload', functi
 
     $scope.uploadProfilePic = function (profilePic) {
         if (profilePic) {
+            console.log(profilePic);
             $upload.upload({
                 url: '/file/uploadProfilePic',
                 method: 'POST',
