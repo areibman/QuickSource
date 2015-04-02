@@ -6,23 +6,29 @@ var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Post = mongoose.model('Post'),
+    Comment = mongoose.model('Comment'),
 	agent = request.agent(app);
 
 /**
 * Globals
 */
-var credentials, user, post;
+var credentials_user, credentials_vistor, user, vistor, post, comment;
 
 /**
 * Post routes tests
 */
 describe('Post CRUD tests', function() {
-	beforeEach(function(done) {
-		// Create user credentials
-		credentials = {
+    beforeEach(function(done) {
+		// Create user credentials_user
+		credentials_user = {
 			username: 'username',
 			password: 'password'
 		};
+
+        credentials_vistor = {
+            username: 'username_vistor',
+            password: 'password_vistor'
+        };
 
 		// Create a new user
 		user = new User({
@@ -30,11 +36,27 @@ describe('Post CRUD tests', function() {
 			lastName: 'Name',
 			displayName: 'Full Name',
 			email: 'test@test.com',
-			username: credentials.username,
-			password: credentials.password,
+			username: credentials_user.username,
+			password: credentials_user.password,
 			provider: 'local',
             zipCode: '12345'
 		});
+
+        vistor = new User({
+            firstName: 'Full',
+            lastName: 'Name',
+            displayName: 'Full Name',
+            email: 'test@test.com',
+            username: credentials_vistor.username,
+            password: credentials_vistor.password,
+            provider: 'local',
+            zipCode: '12345'
+        });
+
+        comment = new Comment({
+            user: user,
+            content: 'Comment content'
+        });
 
 		// Save a user to the test db and create new Post
 		user.save(function() {
@@ -44,14 +66,16 @@ describe('Post CRUD tests', function() {
                 location: '12345',
                 user: user
             });
-
-			done();
 		});
-	});
+
+        vistor.save(function() {
+            done();
+        });
+    });
 
 	it('should be able to save Post instance if logged in', function(done) {
 		agent.post('/auth/signin')
-			.send(credentials)
+			.send(credentials_user)
 			.expect(200)
 			.end(function(signinErr, signinRes) {
 				// Handle signin error
@@ -105,7 +129,7 @@ describe('Post CRUD tests', function() {
 		post.title = '';
 
 		agent.post('/auth/signin')
-			.send(credentials)
+			.send(credentials_user)
 			.expect(200)
 			.end(function(signinErr, signinRes) {
 				// Handle signin error
@@ -130,7 +154,7 @@ describe('Post CRUD tests', function() {
 
 	it('should be able to update Post instance if signed in', function(done) {
 		agent.post('/auth/signin')
-			.send(credentials)
+			.send(credentials_user)
 			.expect(200)
 			.end(function(signinErr, signinRes) {
 				// Handle signin error
@@ -212,7 +236,7 @@ describe('Post CRUD tests', function() {
 
 	it('should be able to delete Post instance if signed in', function(done) {
 		agent.post('/auth/signin')
-			.send(credentials)
+			.send(credentials_user)
 			.expect(200)
 			.end(function(signinErr, signinRes) {
 				// Handle signin error
@@ -269,6 +293,286 @@ describe('Post CRUD tests', function() {
 
 		});
 	});
+
+    it('should be able to opt-in if you are a logged in user', function(done){
+        // Create a post with user
+        agent.post('/auth/signin')
+            .send(credentials_user)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Post
+                agent.post('/posts')
+                    .send(post)
+                    .expect(200)
+                    .end(function(postSaveErr, postSaveRes) {
+                        // Handle Post save error
+                        if (postSaveErr) done(postSaveErr);
+
+                        var postID = postSaveRes.body._id;
+                        agent.get('/auth/signout');
+
+                        agent.post('/auth/signin')
+                            .send(credentials_vistor)
+                            .expect(200)
+                            .end(function(signinErr, signinRes) {
+                                // Handle signin error
+                                if (signinErr) done(signinErr);
+
+                                var vistorID = vistor.id;
+                                agent.post('/posts/' + postID + '/opt-in').expect(200).end(function(optinError, optinRes){
+                                    optinRes.body.interestedUsers.should.be.an.Array.with.lengthOf(1);
+                                    (optinRes.body.interestedUsers[0]._id).should.equal(vistorID);
+
+                                    done(optinError);
+                                });
+                            });
+                    });
+            });
+    });
+
+    it('should not be able to opt-in if you are not logged in', function(done) {
+        post.user = user;
+        var postObj = new Post(post);
+
+        postObj.save(function() {
+            request(app).post('/posts/' + postObj._id + '/opt-in')
+                .expect(401)
+                .end(function(postOptinErr, postOptinRes) {
+                    // Set message assertion
+                    (postOptinRes.body.message).should.match('User is not logged in');
+
+                    // Handle Post error error
+                    done(postOptinErr);
+                });
+        });
+    });
+
+    it('should be able to opt-out if you are a logged in user', function(done){
+        // Create a post with user
+        agent.post('/auth/signin')
+            .send(credentials_user)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Post
+                agent.post('/posts')
+                    .send(post)
+                    .expect(200)
+                    .end(function(postSaveErr, postSaveRes) {
+                        // Handle Post save error
+                        if (postSaveErr) done(postSaveErr);
+
+                        var postID = postSaveRes.body._id;
+                        agent.get('/auth/signout');
+
+                        agent.post('/auth/signin')
+                            .send(credentials_vistor)
+                            .expect(200)
+                            .end(function(signinErr, signinRes) {
+                                // Handle signin error
+                                if (signinErr) done(signinErr);
+
+                                var vistorID = vistor.id;
+                                agent.post('/posts/' + postID + '/opt-in').expect(200).end(function(optinError, optinRes){
+                                    agent.post('/posts/' + postID + '/opt-out').expect(200).end(function(optoutError, optoutRes){
+                                        optoutRes.body.interestedUsers.should.be.an.Array.with.lengthOf(0);
+
+                                        done(optoutError);
+                                    });
+                                });
+                            });
+                    });
+            });
+    });
+
+    it('should not be able to comment a post if you are not logged in', function(done) {
+        // Create a post with user
+        agent.post('/auth/signin')
+            .send(credentials_user)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Post
+                agent.post('/posts')
+                    .send(post)
+                    .expect(200)
+                    .end(function(postSaveErr, postSaveRes) {
+                        // Handle Post save error
+                        if (postSaveErr) done(postSaveErr);
+
+                        var postID = postSaveRes.body._id;
+                        agent.post('/posts/' + postID + '/addComment').send(comment).expect(200)
+                            .end(function(commentError, commentRes){
+                                if (commentError) done(commentError);
+
+                                agent.get('/posts/' + postID).expect(200)
+                                    .end(function(postGetError, postGetRes){
+                                        if (postGetError) done(postGetError);
+
+                                        (postGetRes.body.comments[0]._id).should.equal(commentRes.body._id);
+                                        done();
+                                });
+                        });
+                    });
+                });
+    });
+
+    it('should be able to remove a comment of post if you have the permission', function(done) {
+        agent.post('/auth/signin')
+            .send(credentials_user)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Post
+                agent.post('/posts')
+                    .send(post)
+                    .expect(200)
+                    .end(function(postSaveErr, postSaveRes) {
+                        // Handle Post save error
+                        if (postSaveErr) done(postSaveErr);
+
+                        var postID = postSaveRes.body._id;
+                        agent.post('/posts/' + postID + '/addComment').send(comment).expect(200)
+                            .end(function(commentError, commentRes){
+                                if (commentError) done(commentError);
+
+                                agent.put('/posts/' + postID + '/removeComment/' + commentRes.body._id).expect(200)
+                                    .end(function(commentRemoveError, commentRemoveRes) {
+                                        if (commentRemoveError) done(commentRemoveError);
+
+                                        agent.get('/posts/' + postID).expect(200)
+                                            .end(function(postGetError, postGetRes){
+                                                if (postGetError) done(postGetError);
+                                                postGetRes.body.comments.should.be.an.Array.with.lengthOf(0);
+
+                                                done();
+                                        });
+                                });
+                            });
+                    });
+            });
+    });
+
+    it('should not be able to remove a comment of post if you do not have the permission as the commentor', function(done) {
+        agent.post('/auth/signin')
+            .send(credentials_user)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Post
+                agent.post('/posts')
+                    .send(post)
+                    .expect(200)
+                    .end(function(postSaveErr, postSaveRes) {
+                        // Handle Post save error
+                        if (postSaveErr) done(postSaveErr);
+
+                        var postID = postSaveRes.body._id;
+                        agent.post('/posts/' + postID + '/addComment').send(comment).expect(200)
+                            .end(function(commentError, commentRes){
+                                if (commentError) done(commentError);
+                                agent.get('/auth/signout');
+
+                                agent.post('/auth/signin')
+                                    .send(credentials_vistor)
+                                    .expect(200)
+                                    .end(function(signinErr, signinRes) {
+                                        // Handle signin error
+                                        if (signinErr) done(signinErr);
+
+                                        agent.put('/posts/' + postID + '/removeComment/' + commentRes.body._id).expect(403)
+                                            .end(function(commentRemoveError, commentRemoveRes) {
+                                                (commentRemoveRes.body.message).should.match('User is not authorized');
+
+                                                done(commentRemoveError);
+                                            });
+                                    });
+                            });
+                    });
+            });
+    });
+
+    it('should not be able to remove a comment of post if you are the owner of the post', function(done) {
+        agent.post('/auth/signin')
+            .send(credentials_user)
+            .expect(200)
+            .end(function(signinErr, signinRes) {
+                // Handle signin error
+                if (signinErr) done(signinErr);
+
+                // Get the userId
+                var userId = user.id;
+
+                // Save a new Post
+                agent.post('/posts')
+                    .send(post)
+                    .expect(200)
+                    .end(function(postSaveErr, postSaveRes) {
+                        // Handle Post save error
+                        var postID = postSaveRes.body._id;
+                        if (postSaveErr) done(postSaveErr);
+
+                        agent.get('/auth/signout');
+
+                        agent.post('/auth/signin')
+                            .send(credentials_vistor)
+                            .expect(200)
+                            .end(function(signinErr, signinRes) {
+                                // Handle signin error
+                                if (signinErr) done(signinErr);
+                                agent.post('/posts/' + postID + '/addComment').send(comment).expect(200)
+                                    .end(function(commentError, commentRes){
+                                        if (commentError) done(commentError);
+                                        agent.get('/auth/signout');
+
+                                        agent.post('/auth/signin')
+                                            .send(credentials_user)
+                                            .expect(200)
+                                            .end(function(signinErr, signinRes) {
+                                                // Handle signin error
+                                                if (signinErr) done(signinErr);
+                                                agent.put('/posts/' + postID + '/removeComment/' + commentRes.body._id).expect(200)
+                                                    .end(function(commentRemoveError, commentRemoveRes) {
+                                                        agent.get('/posts/' + postID).expect(200)
+                                                            .end(function(postGetError, postGetRes){
+                                                                if (postGetError) done(postGetError);
+                                                                postGetRes.body.comments.should.be.an.Array.with.lengthOf(0);
+
+                                                                done();
+                                                            });
+                                                    });
+                                            });
+                                    });
+                            });
+                    });
+            });
+    });
 
 	afterEach(function(done) {
 		User.remove().exec();

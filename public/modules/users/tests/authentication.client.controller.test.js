@@ -61,17 +61,17 @@
 		it('$scope.signin() should fail to log in with nothing', function() {
 			// Test expected POST request
 			$httpBackend.expectPOST('/auth/signin').respond(400, {
-				'message': 'Missing credentials'
+				'message': 'Missing credentials_user'
 			});
 
 			scope.signin();
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.error).toEqual('Missing credentials');
+			expect(scope.error).toEqual('Missing credentials_user');
 		});
 
-		it('$scope.signin() should fail to log in with wrong credentials', function() {
+		it('$scope.signin() should fail to log in with wrong credentials_user', function() {
 			// Foo/Bar combo assumed to not exist
 			scope.authentication.user = 'Foo';
 			scope.credentials = 'Bar';

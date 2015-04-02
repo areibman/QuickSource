@@ -18,7 +18,7 @@ var credentials, user, comment;
 */
 describe('Comment CRUD tests', function() {
 	beforeEach(function(done) {
-		// Create user credentials
+		// Create user credentials_user
 		credentials = {
 			username: 'username',
 			password: 'password'

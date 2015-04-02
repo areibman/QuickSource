@@ -21,7 +21,8 @@ var fs = require('fs'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
-	path = require('path');
+	path = require('path'),
+    busboy = require('connect-busboy');
 
 module.exports = function(db) {
 	// Initialize express app
@@ -109,6 +110,9 @@ module.exports = function(db) {
 	app.use(helmet.nosniff());
 	app.use(helmet.ienoopen());
 	app.disable('x-powered-by');
+
+    // Additional npms
+    app.use(busboy());
 
 	// Setting the app router and static folder
 	app.use(express.static(path.resolve('./public')));
