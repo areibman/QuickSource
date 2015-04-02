@@ -1,0 +1,25 @@
+<section data-ng-controller="ViewprofileController">
+	<div class="container" style="margin-top:20px">
+		<h1>View {{authentication.user.displayName}}'s Profile</h1>
+		<div class="row">
+			<div class="col-md-7">
+				<h3>Name:</h3>
+				<p>{{authentication.user.displayName}}</p>
+				<h3>School:</h3>
+				<p>{{authentication.user.school}}</p>
+				<h3>Location:</h3>
+				<p>{{authentication.user.zipCode}}</p>
+				<h3>Interests:</h3>
+				<p><span style="margin:2px" class="label label-primary" ng-repeat="interest in authentication.user.displayName.interests" data-ng-bind="interest">{{interest}}</span></p>
+			</div>
+			<div class="col-md-5">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<img src="http://nocturnalgaming.com/wp-content/uploads/2014/02/seshn-default-avatar.png" alt="temp" class="img-thumbnail"><br>
+						<h4 class="text-center">View Resume</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
