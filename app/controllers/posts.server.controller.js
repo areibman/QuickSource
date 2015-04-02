@@ -217,17 +217,27 @@ exports.removeInterest = function(req, res){
  * Add comment to the post
  */
 exports.addComment = function(req, res){
+    var post = req.post;
     var comment = new Comment(req.body);
     var message = null;
     comment.user = req.user;
 
-    comment.save(function(err) {
+    comment.save(function(err){
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.jsonp(comment);
+            post.comments.push(comment);
+            post.updated = Date.now();
+            post.save(function(err) {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
+                } else {
+                    res.jsonp(comment);
+                }
+            });
         }
     });
 };
@@ -239,11 +249,11 @@ exports.removeComment = function(req, res){
     var post = req.post;
     var comment = req.comment;
 
-    if(req.user !== post.user && req.user !== comment.user){
+    if(req.user.id !== post.user.id && req.user.id !== comment.user.id){
         return res.status(403).send('User is not authorized');
     }
 
-    comment = _.extend(post , { isActive : false, updated : Date.now() });
+    comment = _.extend(comment , { isActive : false, updated : Date.now() });
     comment.save(function(err) {
         if (err) {
             return res.status(400).send({
