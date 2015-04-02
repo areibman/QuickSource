@@ -110,12 +110,12 @@ var UserSchema = new Schema({
     },
     /* File handling */
     profilePic: {
-        type: Buffer,
-        contentType: String
+        type: String,
+        default: 'default.png'
     },
     resumeDoc: {
-        type: Buffer,
-        contentType: String
+        type: String,
+        default: ''
     },
 	/* For reset password */
 	resetPasswordToken: {
