@@ -35,7 +35,17 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             });
         };
 
+        // Opt in
+        $scope.opt_in= function(){
+            var post = $scope.post;
+            $http.post('/posts/'+post._id+'/opt-in').success(function(response){
+                $scope.interestedUsers = response.interestedUsers;
+                $state.reload();
+            }).error(function(response){
+                $scope.error = response.message;
+            });
 
+        };
 
         //Opt out
         $scope.opt_out = function(){
@@ -52,15 +62,15 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
 		$scope.find = function() {
 			$scope.posts = Posts.query();
 		};
-        $scope.opt_in= function(){
+
+        $scope.addComment = function(){
             var post = $scope.post;
-            $http.post('/posts/'+post._id+'/opt-in').success(function(response){
-                $scope.interestedUsers = response.interestedUsers;
+            $http.post('/posts/'+post._id+'/addComment', $scope.comment).success(function(response){
+                console.log(response);
                 $state.reload();
-                }).error(function(response){
+            }).error(function(response){
                 $scope.error = response.message;
             });
-
         };
 
         $scope.findOne = function(){
