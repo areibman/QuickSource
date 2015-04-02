@@ -5,7 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	Comment = mongoose.model('Comment'),
+    Comment = mongoose.model('Comment'),
 	_ = require('lodash');
 
 /**

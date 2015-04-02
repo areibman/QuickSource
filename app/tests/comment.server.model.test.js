@@ -3,9 +3,10 @@
 /**
 * Module dependencies.
 */
-var should = require('should'),
-	mongoose = require('mongoose'),
-	User = mongoose.model('User'),
+var mongoose = require('mongoose'),
+    should = require('should');
+
+var User = mongoose.model('User'),
 	Comment = mongoose.model('Comment');
 
 /**
