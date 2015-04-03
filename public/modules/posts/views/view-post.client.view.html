@@ -5,6 +5,7 @@
 				<li><a href="/#!/posts">Browse</a></li>
 				<li class="active" data-ng-bind="post.title"></li>
 			</ol>
+            <div data-ng-show="not(post.isPoster)">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Apply to this project!</h3>
@@ -30,6 +31,7 @@
                     </form>
 				</div>
 			</div>
+                </div>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Interested Participants:</h3>
@@ -107,6 +109,7 @@
 									<img class="media-object" src="http://c.dryicons.com/images/icon_sets/symbolize_icons_set/png/64x64/user.png" alt="temp">
 								</a>
 							</div>
+
 							<div class="media-body" data-ng-bind="comment.content"></div>
 						</li>
 					</ul>
