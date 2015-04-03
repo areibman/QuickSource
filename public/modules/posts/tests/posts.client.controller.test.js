@@ -112,7 +112,7 @@
 
 
             // Fixture mock form input values
-            scope._id = '525cf20451979dea2c000001',
+            scope._id = '525cf20451979dea2c000001';
             scope.title = 'New Post';
             scope.zip = '10304';
 			// Set POST response
