@@ -20,6 +20,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             var post = $scope.post;
 			$http.put('/posts/'+post._id+'/remove').success(function (response) {
                 $location.path('/posts');
+                $scope.post.isActive=false;
             }).error(function(response){
                 $scope.error=response.message;
             });
@@ -35,22 +36,42 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             });
         };
 
+        // Opt in
+        $scope.opt_in= function(){
+            var post = $scope.post;
+            $http.post('/posts/'+post._id+'/opt-in').success(function(response){
+                $scope.interestedUsers = response.interestedUsers;
+                $state.reload();
+            }).error(function(response){
+                $scope.error = response.message;
+            });
 
+        };
+
+        //Opt out
+        $scope.opt_out = function(){
+            var post = $scope.post;
+            $http.post('/posts/'+post._id+'/opt-out').success(function(response){
+                $scope.interestedUsers = response.interestedUsers;
+                $state.reload();
+            }).error(function(response){
+                $scope.error = response.message;
+            });
+        };
 
 		// Find a list of Posts
 		$scope.find = function() {
 			$scope.posts = Posts.query();
 		};
-        $scope.interest= function(){
-            var post = $scope.post;
 
-            $http.post('/posts/'+post._id+'/interested').success(function(response){
-                $scope.interestedUsers = response.interestedUsers;
+        $scope.addComment = function(){
+            var post = $scope.post;
+            $http.post('/posts/'+post._id+'/addComment', $scope.comment).success(function(response){
+                console.log(response);
                 $state.reload();
-                }).error(function(response){
+            }).error(function(response){
                 $scope.error = response.message;
             });
-
         };
 
         $scope.findOne = function(){

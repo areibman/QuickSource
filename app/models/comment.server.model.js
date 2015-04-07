@@ -4,10 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema,
-    autoIncrement = require('mongoose-auto-increment');
-
-autoIncrement.initialize(mongoose.connection);
+	Schema = mongoose.Schema;
 
 /**
  * Comment Schema
@@ -19,7 +16,6 @@ var CommentSchema = new Schema({
     },
     content: {
 		type: String,
-		default: '',
 		required: 'Please fill in comment content',
 		trim: true
 	},
@@ -33,5 +29,4 @@ var CommentSchema = new Schema({
     }
 });
 
-CommentSchema.plugin(autoIncrement.plugin, 'Comment');
 mongoose.model('Comment', CommentSchema);

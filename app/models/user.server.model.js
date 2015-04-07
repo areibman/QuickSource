@@ -108,6 +108,15 @@ var UserSchema = new Schema({
         type: Boolean,
         default: true
     },
+    /* File handling */
+    profilePic: {
+        type: String,
+        default: 'default.png'
+    },
+    resumeDoc: {
+        type: String,
+        default: ''
+    },
 	/* For reset password */
 	resetPasswordToken: {
 		type: String

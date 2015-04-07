@@ -1,21 +1,22 @@
 'use strict';
 
 /**
- * Module dependencies.
- */
-var should = require('should'),
-	mongoose = require('mongoose'),
-	User = mongoose.model('User'),
+* Module dependencies.
+*/
+var mongoose = require('mongoose'),
+    should = require('should');
+
+var User = mongoose.model('User'),
 	Comment = mongoose.model('Comment');
 
 /**
- * Globals
- */
+* Globals
+*/
 var user, comment;
 
 /**
- * Unit tests
- */
+* Unit tests
+*/
 describe('Comment Model Unit Tests:', function() {
 	beforeEach(function(done) {
 		user = new User({
@@ -24,12 +25,13 @@ describe('Comment Model Unit Tests:', function() {
 			displayName: 'Full Name',
 			email: 'test@test.com',
 			username: 'username',
-			password: 'password'
+			password: 'password',
+            zipCode: '12345'
 		});
 
-		user.save(function() { 
+		user.save(function() {
 			comment = new Comment({
-				name: 'Comment Name',
+				content: 'Comment content',
 				user: user
 			});
 
@@ -45,8 +47,8 @@ describe('Comment Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error when try to save without name', function(done) { 
-			comment.name = '';
+		it('should be able to show an error when try to save without name', function(done) {
+			comment.content = '';
 
 			return comment.save(function(err) {
 				should.exist(err);
@@ -55,7 +57,7 @@ describe('Comment Model Unit Tests:', function() {
 		});
 	});
 
-	afterEach(function(done) { 
+	afterEach(function(done) {
 		Comment.remove().exec();
 		User.remove().exec();
 
