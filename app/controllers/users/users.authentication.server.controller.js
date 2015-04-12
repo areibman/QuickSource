@@ -7,7 +7,8 @@ var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+    Profile = mongoose.model('Profile');
 
 /**
  * Signup
@@ -16,6 +17,7 @@ exports.signup = function(req, res) {
 	// Init Variables
 	var user = new User(req.body);
     var profile = new Profile({ user : user });
+    user.profile = profile;
 	var message = null;
 
 	// Add missing user fields

@@ -7,7 +7,9 @@ var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller.js'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+    Profile = mongoose.model('Profile'),
+    Experience = mongoose.model('Experience');
 
 /**
  * Update user details
@@ -52,6 +54,27 @@ exports.update = function(req, res) {
  * Send User
  */
 exports.me = function(req, res) {
-    console.log(req.user);
-	res.json(req.user || null);
+    if(req.user){
+        var optUser = [{path : 'profile', model : 'Profile', match : { isActive : true }}];
+        User.populate(req.user, optUser, function(err, user){
+            if(err) res.status(400).send({message: 'Cannot find user profile'});
+            else{
+                user.profile._id = undefined;
+                user.profile.user = undefined;
+
+                var optProfile = [
+                    { path : 'profile.positions', model : 'Experience', select : 'title institution summary startDate endDate isCurrent updated created', match : { isActive : true }},
+                    { path : 'profile.educations', model : 'Experience', select : 'title institution summary major gpa startDate endDate isCurrent updated created', match : { isActive : true }},
+                    { path : 'profile.courses', model : 'Experience', select : 'title institution summary courseNumber startDate endDate isCurrent updated created', match : { isActive : true }},
+                    { path : 'profile.publications', model : 'Experience', select : 'title institution summary authors startDate endDate isCurrent updated created', match : { isActive : true }}
+                ];
+
+                Profile.populate(user, optProfile, function(err, populatedProfile){
+                    if(err) res.status(400).send({message: 'Cannot find user profile'});
+                    else    res.json(user);
+                });
+            }
+        });
+    }
+    else    res.json(null);
 };
