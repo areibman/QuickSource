@@ -15,6 +15,7 @@ var _ = require('lodash'),
 exports.signup = function(req, res) {
 	// Init Variables
 	var user = new User(req.body);
+    var profile = new Profile({ user : user });
 	var message = null;
 
 	// Add missing user fields
@@ -32,6 +33,7 @@ exports.signup = function(req, res) {
 			user.password = undefined;
 			user.salt = undefined;
 
+            profile.save();
 			req.login(user, function(err) {
 				if (err) {
 					res.status(400).send(err);

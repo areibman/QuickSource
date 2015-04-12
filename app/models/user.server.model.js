@@ -117,6 +117,10 @@ var UserSchema = new Schema({
         type: String,
         default: ''
     },
+    profile: {
+        type: Schema.ObjectId,
+        ref: 'Profile'
+    },
 	/* For reset password */
 	resetPasswordToken: {
 		type: String
