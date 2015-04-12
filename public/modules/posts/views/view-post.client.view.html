@@ -5,14 +5,14 @@
 				<li><a href="/#!/posts">Browse</a></li>
 				<li class="active" data-ng-bind="post.title"></li>
 			</ol>
-            <div data-ng-show="post.isPoster">
+            <div data-ng-hide="post.isPoster">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Apply to this project!</h3>
 					</div>
 					<div class="panel-body">
 						<form data-ng-submit="opt_in()">
-							<div class="form-group" data-ng-hide="((post.isAlreadyInterested) || (post.isPoster))">
+							<div class="form-group" data-ng-hide="(post.isAlreadyInterested || post.isPoster)">
 								<div>
 									<button type="submit" class="btn btn-default btn-block">I'm interested!</button>
 								</div>
@@ -47,7 +47,7 @@
 							<a data-ng-click="remove();">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>
-						</span>
+						</span>&nbsp;
 						<small><span style="margin-right:5px;" class="pull-right">
 							<span class="label label-success" style="margin:2px" ng-repeat="tag in post.categories">
 	                            {{tag}}
