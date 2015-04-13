@@ -27,18 +27,15 @@ describe('Profile Model Unit Tests:', function() {
 			password: 'password'
 		});
 
-		user.save(function() { 
-			profile = new Profile({
-				// Add model fields
-				// ...
-			});
-
+		user.save(function() {
 			done();
 		});
 	});
 
 	describe('Method Save', function() {
 		it('should be able to save without problems', function(done) {
+
+            profile = new Profile({ user : user });
 			return profile.save(function(err) {
 				should.not.exist(err);
 				done();
