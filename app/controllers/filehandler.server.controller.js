@@ -46,16 +46,21 @@ exports.uploadProfileResume = function(req, res) {
     });
 };
 
-
-/*
- * Fetch file
+/**
+ * File (Post Attachment) upload
  */
-exports.read = function(req, res) {
-    console.log('Getting...');
+exports.uploadPostAttachment = function(req, res) {
+    req.pipe(req.busboy);
+    req.busboy.on('file', function(fieldname, file, filename) {
+        var newFilename = uuid.v1() + filename.substring(filename.lastIndexOf('.'), filename.length);
+        var saveTo = path.dirname(require.main.filename) + '/uploads/postAttachment/' + newFilename;
+        var fstream = fs.createWriteStream(saveTo);
+        file.pipe(fstream);
+        fstream.on('close', function () {
+            if(req.fields)  req.fields.profileResumePath = newFilename;
+            else            req.profileResumePath = newFilename;
+            res.status(200).send(newFilename);
+        });
+    });
 };
 
-
-exports.dummyTest = function(req, res){
-    if(req.profilePicPath)  console.log(req.profilePicPath);
-    if(req.profileResumePath)   console.log(req.profileResumePath);
-};

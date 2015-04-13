@@ -5,4 +5,5 @@ module.exports = function(app) {
 
     app.route('/file/uploadProfilePic').post(filehandler.uploadProfilePic);
     app.route('/file/uploadProfileResume').post(filehandler.uploadProfileResume);
+    app.route('/file/uploadPostAttachment').post(filehandler.uploadPostAttachment);
 };
