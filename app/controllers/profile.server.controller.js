@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     Profile = mongoose.model('Profile'),
+    errorHandler = require('./errors.server.controller'),
     _ = require('lodash');
 
 /**
