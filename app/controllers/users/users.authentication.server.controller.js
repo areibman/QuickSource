@@ -7,7 +7,8 @@ var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+    Profile = mongoose.model('Profile');
 
 /**
  * Signup
@@ -15,6 +16,8 @@ var _ = require('lodash'),
 exports.signup = function(req, res) {
 	// Init Variables
 	var user = new User(req.body);
+    var profile = new Profile({ user : user });
+    user.profile = profile;
 	var message = null;
 
 	// Add missing user fields
@@ -32,6 +35,7 @@ exports.signup = function(req, res) {
 			user.password = undefined;
 			user.salt = undefined;
 
+            profile.save();
 			req.login(user, function(err) {
 				if (err) {
 					res.status(400).send(err);

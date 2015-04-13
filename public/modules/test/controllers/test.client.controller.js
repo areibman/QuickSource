@@ -1,6 +1,12 @@
 'use strict';
 
-angular.module('test').controller('TestController', ['$scope', '$upload', function ($scope, $upload) {
+angular.module('test').controller('TestController', ['$scope', '$http', '$upload', function ($scope, $http, $upload) {
+
+    $scope.test = function () {
+        $http.get('/users/me').success(function(res){
+           console.log(res);
+        });
+    };
 
     // Angular-File-Upload: Watching model (Profile Picture)
     $scope.$watch('profilePic', function () {
