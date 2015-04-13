@@ -54,6 +54,10 @@ exports.update = function(req, res) {
  * Send User
  */
 exports.me = function(req, res) {
+    res.json(req.user || null);
+};
+
+exports.profile = function(req, res) {
     if(req.user){
         var optUser = [{path : 'profile', model : 'Profile', match : { isActive : true }}];
         User.populate(req.user, optUser, function(err, user){
