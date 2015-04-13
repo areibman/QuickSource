@@ -59,8 +59,9 @@ exports.me = function(req, res) {
         User.populate(req.user, optUser, function(err, user){
             if(err) res.status(400).send({message: 'Cannot find user profile'});
             else{
-                user.profile._id = undefined;
-                user.profile.user = undefined;
+               	//user.profile._id = undefined;
+                //user.profile.user = undefined;
+
 
                 var optProfile = [
                     { path : 'profile.positions', model : 'Experience', select : 'title institution summary startDate endDate isCurrent updated created', match : { isActive : true }},
