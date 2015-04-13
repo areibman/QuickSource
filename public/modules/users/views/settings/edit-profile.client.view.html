@@ -39,14 +39,15 @@
                         <option value="Law"> Law </option>
                     </select>
                 </div>
-                <div class="form-group">
-                	<label for="pic">Profile Picture</label>
-                  	<div id="pic" class="btn btn-primary" ng-file-select data-ng-model="user.profilePic">Select Profile Picture</div>
-                </div>
-                <div class="form-group">
-                	<label for="resume">Resume</label>
-                  	<div id="resume" class="btn btn-primary" ng-file-select data-ng-model="user.profileResume">Upload Resume</div>
-                </div>
+				<div ng-controller="ProfileController" data-ng-init="">
+					<div class="form-group">
+					<div class="btn btn-primary" ng-file-select ng-model="profilePic">Select Profile Picture</div>
+						</div>
+					<div class="form-group">
+					<div class="btn btn-primary" ng-file-select ng-model="profileResume">Select Profile Resume</div>
+						</div>
+				</div>
+
 				<div class="text-center form-group">
 					<button type="submit" class="btn btn-large btn-block btn-primary">Save Profile</button>
 				</div>	
