@@ -39,14 +39,15 @@
                         <option value="Law"> Law </option>
                     </select>
                 </div>
-                <div class="form-group">
-                	<label for="pic">Profile Picture</label>
-                  	<div id="pic" class="btn btn-primary" ng-file-select data-ng-model="user.profilePic">Select Profile Picture</div>
-                </div>
-                <div class="form-group">
-                	<label for="resume">Resume</label>
-                  	<div id="resume" class="btn btn-primary" ng-file-select data-ng-model="user.profileResume">Upload Resume</div>
-                </div>
+				<div ng-controller="ProfileController" data-ng-init="profile()">
+					<div class="form-group">
+					<div class="btn btn-primary" ng-file-select ng-model="profilePic">Select Profile Picture</div>
+						</div>
+					<div class="form-group">
+					<div class="btn btn-primary" ng-file-select ng-model="profileResume">Select Profile Resume</div>
+						</div>
+				</div>
+
 				<div class="text-center form-group">
 					<button type="submit" class="btn btn-large btn-block btn-primary">Save Profile</button>
 				</div>	
@@ -59,38 +60,30 @@
 			</fieldset>
 		</form>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-8" ng-controller="Experience">
 			<h3>Professional Information (coming soon)</h3>
-			<!-- <h4>Education</h4>
-			<button id="add_education" class="btn btn-large btn-block btn-primary">Add New Education</button>
-			<div class="education_wrap">
-				<input type="text" id="education" name="education" class="form-control" data-ng-model="user.education" placeholder="Education">
-			</div> -->
+			<h4>Education</h4>
+			<button data-ng-click="add()" class="btn btn-large btn-block btn-primary">Add New Education</button>
+			<div ng-repeat="item in test">
+				<input type="text" id="education" name="education" class="form-control" ng-model="item.basic" placeholder="{{item.newPlaceholder}}">
+			</div>
 		</div>
 	</div>
 	<div class="row">
 		
 	</div>
 	</form>
-	<script>
-	$(document).ready(function() {
-    var max_fields      = 5; //maximum input boxes allowed
-    var wrapper         = $(".education_wrap"); //Fields wrapper
-    var add_button      = $("#add_education"); //Add button ID
-    
-    var x = 1; //initlal text box count
-    $(add_button).click(function(e){ //on add input button click
-        e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            x++; //text box increment
-            $(wrapper).append('<input type="text" id="education" name="education" class="form-control" data-ng-model="user.education" placeholder="Education"><a href="#" class="remove_field">Remove</a>'); //add input box
-        }
-    });
-    
-    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('div').remove(); x--;
-    })
-	});
+	<script type="text/javascript">
+		var Experience = function($scope){
+			$scope.test = [];
+			$scope.add = function() {
+				$scope.test.push({
+					basic: "",
+					newPlaceholder: "new"
+				});
+			}
+		}
+	
 	</script>
 
 </section>

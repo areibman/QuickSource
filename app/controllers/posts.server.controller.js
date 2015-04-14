@@ -4,11 +4,11 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	errorHandler = require('./errors.server.controller'),
-	User = mongoose.model('User'),
+    errorHandler = require('./errors.server.controller'),
+    User = mongoose.model('User'),
     Post = mongoose.model('Post'),
     Comment = mongoose.model('Comment'),
-	_ = require('lodash');
+    _ = require('lodash');
 
 /**
  * Create a Post
@@ -22,7 +22,7 @@ exports.create = function(req, res) {
     post.save(function(err) {
         if (err) {
             return res.status(400).send({
-            	message: errorHandler.getErrorMessage(err)
+                message: errorHandler.getErrorMessage(err)
             });
         } else {
             res.jsonp(post);
@@ -73,75 +73,75 @@ exports.read = function(req, res) {
  * Update a Post
  */
 exports.update = function(req, res) {
-	var post = req.post;
+    var post = req.post;
 
-	post = _.extend(post , req.body);
+    post = _.extend(post , req.body);
     post.updated = Date.now();
 
-	post.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
+    post.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
             res.jsonp(post);
-		}
-	});
+        }
+    });
 };
 
 /**
  * Delete an Post
  */
 exports.setInactive = function(req, res) {
-	var post = req.post;
+    var post = req.post;
     post = _.extend(post , { isActive : false, updated : Date.now() });
 
-	post.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
+    post.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
             res.jsonp(post);
-		}
-	});
+        }
+    });
 };
 
 /**
  * List of Posts
  */
-exports.list = function(req, res) { 
-	Post.find({ isActive : true }).sort('-created').populate('user', 'displayName school location').exec(function(err, posts) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(posts);
-		}
-	});
+exports.list = function(req, res) {
+    Post.find({ isActive : true }).sort('-created').populate('user', 'displayName school location').exec(function(err, posts) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.jsonp(posts);
+        }
+    });
 };
 
 /**
  * Post middleware
  */
-exports.postByID = function(req, res, next, id) { 
-	Post.findById(id).populate('user', 'displayName').exec(function(err, post) {
-		if (err) return next(err);
-		if (! post) return next(new Error('Failed to load Post ' + id));
-		req.post = post ;
-		next();
-	});
+exports.postByID = function(req, res, next, id) {
+    Post.findById(id).populate('user', 'displayName').exec(function(err, post) {
+        if (err) return next(err);
+        if (! post) return next(new Error('Failed to load Post ' + id));
+        req.post = post ;
+        next();
+    });
 };
 
 /**
  * Post authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.post.user.id !== req.user.id) {
-		return res.status(403).send('User is not authorized');
-	}
-	next();
+    if (req.post.user.id !== req.user.id) {
+        return res.status(403).send('User is not authorized');
+    }
+    next();
 };
 
 /**

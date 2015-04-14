@@ -55,6 +55,10 @@ var UserSchema = new Schema({
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
+    emailValidated: {
+        type: Boolean,
+        default: false
+    },
 	username: {
 		type: String,
 		unique: 'testing error message',
@@ -116,6 +120,10 @@ var UserSchema = new Schema({
     resumeDoc: {
         type: String,
         default: ''
+    },
+    profile: {
+        type: Schema.ObjectId,
+        ref: 'Profile'
     },
 	/* For reset password */
 	resetPasswordToken: {
