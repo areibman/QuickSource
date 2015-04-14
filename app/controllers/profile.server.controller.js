@@ -13,6 +13,7 @@ var mongoose = require('mongoose'),
  */
 exports.read = function(req, res) {
     var optProfile = [
+        { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
         { path : 'positions', model : 'Experience', select : 'title institution summary startDate endDate isCurrent updated created', match : { isActive : true }},
         { path : 'educations', model : 'Experience', select : 'title institution summary major gpa startDate endDate isCurrent updated created', match : { isActive : true }},
         { path : 'courses', model : 'Experience', select : 'title institution summary courseNumber startDate endDate isCurrent updated created', match : { isActive : true }},
