@@ -51,6 +51,8 @@ QuickSoure deployes a separated DigitalOcean droplet with Jenkins installed to i
 1. Initial Project Proposal & Research: [Slides](https://d1b10bmlvqabco.cloudfront.net/attach/i4uq9at93sz401/hzag30i2dmv63a/i6mlmfzsnslx/First_Pitch.pdf)
 2. Test Drive MVP : [Slides](https://d1b10bmlvqabco.cloudfront.net/attach/i4uq9at93sz401/hzag30i2dmv63a/i7gkax1hu6vi/Second_Pitch.pdf)
 3. Unit Tesing & Continuous Intergration: [Slides](https://d1b10bmlvqabco.cloudfront.net/attach/i4uq9at93sz401/hzag30i2dmv63a/i80enyxitmci/Third_Pitch.pdf), [Feedback Report](https://d1b10bmlvqabco.cloudfront.net/attach/i4uq9at93sz401/hzag30i2dmv63a/i80eo8x2d0ot/FeedbackReport.pdf)
+4. Lean Canvas: [Click here](business/LeanCanvas.pdf)
+5. Focus Group Research: [Click here](business/CS370FocusGroupReport.pdf)
 
 ## Feedback Form:
 Here is our survey for current iteration: [Click here](https://docs.google.com/forms/d/1WqWU-sW1mSOX9iyyjRbsFz8hunRXNYDnBxgAigczrGU/viewform) 
