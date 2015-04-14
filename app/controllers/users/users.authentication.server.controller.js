@@ -25,29 +25,40 @@ exports.signup = function(req, res) {
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user 
-	user.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
+    // Check if user already exists
+    User.find( { $or: [{ 'username': user.username }, { 'email': user.email }] },
+        function(err, existed) {
+            if(existed.length != 0){
+                console.log(existed);
+                return res.status(400).send({ message: 'Username or email already exists.' });
+            }
+            else{
+                // Then save the user
+                user.save(function(err) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        // Remove sensitive data before login
+                        user.password = undefined;
+                        user.salt = undefined;
 
-            profile.save();
-            emailHandler.sendConfirmationEmail(user._id, user.email);
+                        profile.save();
+                        emailHandler.sendConfirmationEmail(user._id, user.email);
 
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					res.json(user);
-				}
-			});
-		}
-	});
+                        req.login(user, function(err) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    );
 };
 
 /**
