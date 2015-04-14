@@ -42,7 +42,7 @@ module.exports = function(app) {
 	// Setting the github oauth routes
 	app.route('/auth/github').get(passport.authenticate('github'));
 	app.route('/auth/github/callback').get(users.oauthCallback('github'));
-
+    
 	// Finish by binding middlewares
 	app.param('userId', users.userByID);
     app.param('experienceId', experiences.experienceByID);

@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
+    emailHandler = require('../emailhandler.server.controller'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
