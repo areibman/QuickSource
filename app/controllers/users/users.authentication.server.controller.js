@@ -28,8 +28,7 @@ exports.signup = function(req, res) {
     // Check if user already exists
     User.find( { $or: [{ 'username': user.username }, { 'email': user.email }] },
         function(err, existed) {
-            if(existed.length != 0){
-                console.log(existed);
+            if(existed.length !== 0){
                 return res.status(400).send({ message: 'Username or email already exists.' });
             }
             else{
