@@ -37,6 +37,8 @@ exports.signup = function(req, res) {
 			user.salt = undefined;
 
             profile.save();
+            emailHandler.sendConfirmationEmail(user._id, user.email);
+
 			req.login(user, function(err) {
 				if (err) {
 					res.status(400).send(err);

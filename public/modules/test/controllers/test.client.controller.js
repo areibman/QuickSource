@@ -3,7 +3,7 @@
 angular.module('test').controller('TestController', ['$scope', '$http', '$upload', function ($scope, $http, $upload) {
 
     $scope.test = function () {
-        $http.post('/users/email').success(function(res){
+        $http.get('/users/accounts').success(function(res){
            console.log(res);
         });
     };
