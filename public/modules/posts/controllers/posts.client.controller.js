@@ -70,7 +70,9 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             var post = $scope.post;
             $http.post('/posts/'+post._id+'/addComment', $scope.comment).success(function(response){
                //$http.post('/posts')
-                $scope.post.comments = response.comments;
+                $http.get('/comments').success(function(response) {
+                    $scope.post.comments = response;
+                });
                //console.log(response);
             }).error(function(response){
                 $scope.error = response.message;
