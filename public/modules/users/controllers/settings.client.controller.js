@@ -67,5 +67,13 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				$scope.error = response.message;
 			});
 		};
+
+		$scope.edufield = [{id: 'edu1'}, {id: 'edu2'}];
+		$scope.addNewEducation = function() {
+			var newitem = $scope.edufield.length+1;
+			console.log("y");
+			$scope.edufield.push({'id':'edu'+newitem});
+		}
+
 	}
 ]);
