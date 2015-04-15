@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	crypto = require('crypto');
+	crypto = require('crypto'),
+    Profile = mongoose.model('Profile');
 
 /**
  * A Validation function for local strategy properties
@@ -139,8 +140,11 @@ var UserSchema = new Schema({
  */
 UserSchema.pre('save', function(next) {
 	if (this.password && this.password.length > 6) {
-		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
-		this.password = this.hashPassword(this.password);
+        var profile = new Profile({ user : this });
+        this.profile = profile;
+        this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
+        this.password = this.hashPassword(this.password);
+        profile.save(next);
 	}
 
 	next();
