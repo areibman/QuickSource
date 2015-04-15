@@ -9,14 +9,20 @@ module.exports = function(app) {
 	// User Routes
 	var users = require('../../app/controllers/users.server.controller');
     var profile = require('../../app/controllers/profile.server.controller');
+    var experiences = require('../../app/controllers/experience.server.controller');
 
 	// Setting up the users profile api
-	app.route('/users/accounts').get(users.me)
+	app.route('/users/accounts').get(users.me)  // Basic account info
 	                            .put(users.update)
                                 .delete(users.removeOAuthProvider);
 
     // User profile
-    app.route('/users/profile').get(users.profile);
+    app.route('/users/profile').get(users.profile); // Extended user profile info
+    app.route('/users/profile/addPosition').post(users.requiresLogin, experiences.createPosition);
+    app.route('/users/profile/addEducation').post(users.requiresLogin, experiences.createEducation);
+    app.route('/users/profile/addCourse').post(users.requiresLogin, experiences.createCourse);
+    app.route('/users/profile/addPublication').post(users.requiresLogin, experiences.createPublication);
+    app.route('/users/profile/:experienceId/remove').put(users.requiresLogin, experiences.hasAuthorization, experiences.setInactive);
 
 	// Setting up the users password api
 	app.route('/users/password').post(users.changePassword);
@@ -37,6 +43,10 @@ module.exports = function(app) {
 	app.route('/auth/github').get(passport.authenticate('github'));
 	app.route('/auth/github/callback').get(users.oauthCallback('github'));
 
-	// Finish by binding the user middleware
+    // Email validation
+    app.route('/users/:userId/emailValidation/').get(users.validateEmail);
+    
+	// Finish by binding middlewares
 	app.param('userId', users.userByID);
+    app.param('experienceId', experiences.experienceByID);
 };

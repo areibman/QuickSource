@@ -7,9 +7,7 @@ module.exports = function(app) {
     // Profile handling
     app.route('/profile/:profileId')
         // View experience
-        .get(profile.read)
-        // Update experience
-        .put(profile.update);
+        .get(profile.read);
 
     // Finish by binding the Profile middleware
     app.param('profileId', profile.profileByID);

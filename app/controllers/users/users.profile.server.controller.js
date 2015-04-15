@@ -80,3 +80,17 @@ exports.profile = function(req, res) {
     }
     else    res.json(null);
 };
+
+
+/**
+ * Email validation
+ */
+exports.validateEmail = function(req, res){
+    var user = req.user;
+    user.emailValidated = true;
+    user.save(function(err){
+        if(err) res.status(400).send({message: 'User email cannot be validated.'});
+        else res.json(user);
+    });
+
+};

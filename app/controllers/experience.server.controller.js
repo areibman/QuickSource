@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
  */
 var create = function(req, res, type) {
     var experience = new Experience(req.body);
-    experience.user = req.user;
+    experience.profile = req.user.profile;
     experience.updated = Date.now();
     experience.type = type;
 
