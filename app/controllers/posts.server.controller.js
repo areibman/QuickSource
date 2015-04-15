@@ -123,6 +123,10 @@ exports.list = function(req, res) {
 };
 
 /**
+ * List the comments of a post
+ */
+
+/**
  * Post middleware
  */
 exports.postByID = function(req, res, next, id) {
