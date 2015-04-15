@@ -1,6 +1,6 @@
 <section class="row" data-ng-controller="SettingsController">
 	<h2>Edit your profile</h2>
-
+	<div class="row">
 		<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" autocomplete="off">
 		<div class="col-md-4">
 			<fieldset>
@@ -60,30 +60,21 @@
 			</fieldset>
 		</form>
 		</div>
-		<div class="col-md-8" ng-controller="Experience">
+		<div class="col-md-8">
 			<h3>Professional Information (coming soon)</h3>
+			<h4>Headline</h4>
+				<div class="form-group">
+                    <label for="headline">Headline</label>
+                    <input type="text" id="headline" name="headline" class="form-control" data-ng-model="profile.school" placeholder="School">
+                </div>
 			<h4>Education</h4>
-			<button data-ng-click="add()" class="btn btn-large btn-block btn-primary">Add New Education</button>
-			<div ng-repeat="item in test">
-				<input type="text" id="education" name="education" class="form-control" ng-model="item.basic" placeholder="{{item.newPlaceholder}}">
+			<div ng-repeat="choice in edufield" >
+				<input type="text" placeholder="New Education" class="form-control">
 			</div>
+			<button ng-click="addNewEducation()" class="btn btn-large btn-block btn-primary">Add New Education</button>
 		</div>
 	</div>
-	<div class="row">
-		
-	</div>
-	</form>
-	<script type="text/javascript">
-		var Experience = function($scope){
-			$scope.test = [];
-			$scope.add = function() {
-				$scope.test.push({
-					basic: "",
-					newPlaceholder: "new"
-				});
-			}
-		}
 	
-	</script>
+	</form>
 
 </section>
