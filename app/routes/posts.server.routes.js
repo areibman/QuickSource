@@ -24,7 +24,8 @@ module.exports = function(app) {
 
     app.route('/posts/:postId/addComment')
         .post(users.requiresLogin, posts.addComment);
-
+    app.route('posts/:postId/listComments')
+        .get(posts.listComments);
     app.route('/posts/:postId/removeComment/:commentId')
         .put(users.requiresLogin, posts.removeComment);
 

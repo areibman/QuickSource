@@ -125,6 +125,14 @@ exports.list = function(req, res) {
 /**
  * List the comments of a post
  */
+exports.listComments = function(req, res) {
+    var post = req.post;
+    var comments = post.comments;
+
+    Comment.populate(comments, {match : { isActive : true }}, function(err, res){
+       res.jsonp(res);
+    });
+};
 
 /**
  * Post middleware
