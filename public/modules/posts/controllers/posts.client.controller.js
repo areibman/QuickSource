@@ -40,10 +40,13 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
         $scope.opt_in= function(){
             var post = $scope.post;
             $http.post('/posts/'+post._id+'/opt-in').success(function(response){
-                $scope.interestedUsers = response.interestedUsers;
-                $state.reload();
+                $scope.post.interestedUsers = response.interestedUsers;
+                post.isAlreadyInterested = true;
+
             }).error(function(response){
                 $scope.error = response.message;
+                console.log(response.message);
+
             });
 
         };
@@ -52,8 +55,8 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
         $scope.opt_out = function(){
             var post = $scope.post;
             $http.post('/posts/'+post._id+'/opt-out').success(function(response){
-                $scope.interestedUsers = response.interestedUsers;
-                $state.reload();
+                $scope.post.interestedUsers = response.interestedUsers;
+                post.isAlreadyInterested = false;
             }).error(function(response){
                 $scope.error = response.message;
             });
