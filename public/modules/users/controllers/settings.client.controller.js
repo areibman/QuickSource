@@ -68,12 +68,26 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			});
 		};
 
-		$scope.edufield = [{id: 'edu1'}, {id: 'edu2'}];
+		$scope.edufield = [{id: '1'}, {id: '2'}];
 		$scope.addNewEducation = function() {
 			var newitem = $scope.edufield.length+1;
-			console.log("y");
-			$scope.edufield.push({'id':'edu'+newitem});
-		}
+			$scope.edufield.push({'id':newitem});
+		};
+		$scope.posfield = [{id: '1'}, {id: '2'}];
+		$scope.addNewPosition = function() {
+			var newitem = $scope.posfield.length+1;
+			$scope.posfield.push({'id':newitem});
+		};
+		$scope.coursefield = [{id: '1'}, {id: '2'}];
+		$scope.addNewCourse = function() {
+			var newitem = $scope.coursefield.length+1;
+			$scope.coursefield.push({'id':newitem});
+		};
+		$scope.pubfield = [{id: '1'}, {id: '2'}];
+		$scope.addNewPublication = function() {
+			var newitem = $scope.pubfield.length+1;
+			$scope.pubfield.push({'id':newitem});
+		};
 
 		$scope.profile = function () {
 			$http.get('/users/accounts').success(function(res){
