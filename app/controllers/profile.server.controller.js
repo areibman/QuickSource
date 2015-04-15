@@ -4,9 +4,10 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    _ = require('lodash'),
+    User = mongoose.model('User'),
     Profile = mongoose.model('Profile'),
-    errorHandler = require('./errors.server.controller'),
-    _ = require('lodash');
+    errorHandler = require('./errors.server.controller');
 
 /**
  * Show the current Profile
@@ -30,19 +31,21 @@ exports.read = function(req, res) {
  * Update a Profile
  */
 exports.update = function(req, res) {
-    var profile = req.user.profile;
+    var user = req.user;
+    Profile.findById(req.user.profile, function(err, profile){
+        profile = _.extend(profile, req.body);
+        user.updated = Date.now();
 
-    profile = _.extend(profile , req.body);
-    profile.updated = Date.now();
-
-    profile.save(function(err) {
-        if (err) {
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.jsonp(profile);
-        }
+        profile.save(function(err1) {
+            if (err1) {
+                return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
+            } else {
+                user.save(function(err2){
+                    if(err2)    return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
+                    else        res.jsonp(profile);
+                });
+            }
+        });
     });
 };
 
@@ -72,6 +75,17 @@ exports.profileByID = function(req, res, next, id) {
         if (err) return next(err);
         if (!profile) return next(new Error('Failed to load Experience ' + id));
         req.profile = profile;
+        next();
+    });
+};
+
+/**
+ * Profile authorization middleware
+ */
+exports.hasAuthorization = function(req, res, next) {
+    Profile.findById(req.user.profile, function(err, profile){
+        if(err) return res.status(400).send('User profile not found.');
+        if(profile.user != req.user.id) return res.status(403).send('User is not authorized');
         next();
     });
 };
