@@ -27,16 +27,12 @@ exports.sendNotification_route = function(req, res) {
     var notification = new Notification(req.body);
 
     if(req.user)        user = req.user;
-    else if(req.post)   user = req.post.user;
 
-    User.findById(user, function(err, foundUser){
-        if(err) return res.status(400).send({ message: errorHandler.getErrorMessage(err) });
-
-        notification.recipient = user;
-        notification.save(function(errN){
-            if(errN) return res.status(400).send({ message: errorHandler.getErrorMessage(errN) });
-            foundUser.notification.push(notification);
-            if(foundUser.enableEmailNotification)
+    notification.recipient = user;
+    notification.save(function(errN){
+        if(errN) return res.status(400).send({ message: errorHandler.getErrorMessage(errN) });
+        user.notification.push(notification);
+            if(user.enableEmailNotification)
                 emailHandler.sendEmail({
                     from: 'QuickSource <emory.quicksource@gmail.com>',
                     to: user.email,
@@ -44,9 +40,8 @@ exports.sendNotification_route = function(req, res) {
                     text: notification.message,
                     html: '<b>' + notification.message + '</b>'
                 });
-            foundUser.save();
+        user.save();
         });
-    });
 };
 /**
  * Send Notification (Internal)
