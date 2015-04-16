@@ -63,7 +63,16 @@ exports.setInactive = function(req, res) {
 exports.profileByID = function(req, res, next, id) {
     Profile.findById(id).exec(function(err, profile) {
         if (err) return next(err);
-        if (!profile) return next(new Error('Failed to load Experience ' + id));
+        if (!profile) return next(new Error('Failed to load Profile ' + id));
+        req.profile = profile;
+        next();
+    });
+};
+
+exports.getProfile = function(req, res, next) {
+    Profile.findById(req.user.profile).exec(function(err, profile) {
+        if (err) return next(err);
+        if (!profile) return next(new Error('Failed to load Profile'));
         req.profile = profile;
         next();
     });

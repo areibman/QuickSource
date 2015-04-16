@@ -67,7 +67,7 @@ describe('Notification Routes Unit Tests:', function() {
 		});
 	});
 
-	describe('Method Save', function() {
+	describe('Notification Routes Test', function() {
 		it('should be able to update recipient\'s notification', function(done) {
             notification.recipient = vistor;
 

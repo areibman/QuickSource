@@ -19,10 +19,10 @@ module.exports = function(app) {
     // User profile
     app.route('/users/profile').get(users.profile); // Extended user profile info
     app.route('/users/profile/update').put(users.requiresLogin, profile.hasAuthorization, profile.update);
-    app.route('/users/profile/addPosition').post(users.requiresLogin, profile.hasAuthorization, experiences.createPosition);
-    app.route('/users/profile/addEducation').post(users.requiresLogin, profile.hasAuthorization, experiences.createEducation);
-    app.route('/users/profile/addCourse').post(users.requiresLogin, profile.hasAuthorization, experiences.createCourse);
-    app.route('/users/profile/addPublication').post(users.requiresLogin, profile.hasAuthorization, experiences.createPublication);
+    app.route('/users/profile/addPosition').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createPosition);
+    app.route('/users/profile/addEducation').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createEducation);
+    app.route('/users/profile/addCourse').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createCourse);
+    app.route('/users/profile/addPublication').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createPublication);
     app.route('/users/profile/:experienceId/update').put(users.requiresLogin, profile.hasAuthorization, experiences.hasAuthorization, experiences.update);
     app.route('/users/profile/:experienceId/remove').put(users.requiresLogin, profile.hasAuthorization, experiences.hasAuthorization, experiences.setInactive);
 
