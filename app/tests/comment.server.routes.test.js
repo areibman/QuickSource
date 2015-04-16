@@ -66,18 +66,17 @@ describe('Comment CRUD tests', function() {
 						if (commentSaveErr) done(commentSaveErr);
 
 						// Get a list of Comments
-						agent.get('/comments/'+commentSaveRes.id)
+						agent.get('/comments/'+commentSaveRes.body._id)
 							.end(function(commentsGetErr, commentsGetRes) {
 								// Handle Comment save error
 								if (commentsGetErr) done(commentsGetErr);
 
 								// Get Comments list
-								var comments = commentsGetRes.body;
+								var comment = commentsGetRes.body;
 
 								// Set assertions
-                                console.log(comments[0].user.id);
-								(comments[0].user.id).should.equal(userId);
-								(comments[0].content).should.match('Comment Name');
+								(comment.user._id).should.equal(userId);
+								(comment.content).should.match('Comment Name');
 
 								// Call the assertion callback
 								done();
@@ -164,26 +163,6 @@ describe('Comment CRUD tests', function() {
 					});
 			});
 	});
-
-	it('should be able to get a list of Comments if not signed in', function(done) {
-		// Create new Comment model instance
-		var commentObj = new Comment(comment);
-
-		// Save the Comment
-		commentObj.save(function() {
-			// Request Comments
-			request(app).get('/comments')
-				.end(function(req, res) {
-					// Set assertion
-					res.body.should.be.an.Array.with.lengthOf(1);
-
-					// Call the assertion callback
-					done();
-				});
-
-		});
-	});
-
 
 	it('should be able to get a single Comment if not signed in', function(done) {
 		// Create new Comment model instance
