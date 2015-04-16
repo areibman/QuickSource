@@ -25,7 +25,7 @@ exports.userByUsername = function(req, res, next, username) {
         username: username
     }).exec(function(err, user) {
         if (err) return next(err);
-        if (!user) return next(new Error('Failed to load User ' + id));
+        if (!user) return next(new Error('Failed to load User ' + username));
         req.user = user;
         next();
     });

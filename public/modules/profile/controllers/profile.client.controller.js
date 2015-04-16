@@ -4,7 +4,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 	function($scope,$http,$upload,$stateParams) {
 		// Profile controller logic
 		// ...
-		$scope.get = function(){
+		$scope.find = function(){
 			$http.get('/profile/'+$stateParams.username).success(function(user){
 				$scope.user = user;
 			}).error(function(response){

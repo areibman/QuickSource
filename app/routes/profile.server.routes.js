@@ -9,5 +9,5 @@ module.exports = function(app) {
         // View experience
         .get(profile.read);
 
-    app.param('userUsername', user.userByUsername);
+    app.param('userUsername', users.profile);
 };
