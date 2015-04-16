@@ -47,7 +47,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		});
 
 		$scope.$on('$stateChangeStart', function() {
-			console.log("start");
+			console.log('start');
 		});
 
 		$scope.inittab = function(){

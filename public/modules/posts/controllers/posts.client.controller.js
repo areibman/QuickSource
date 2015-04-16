@@ -39,20 +39,22 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
         // Opt in
         $scope.opt_in= function(){
             var post = $scope.post;
-            var message =$scope.notification.message;
-            if(message.length>0){
-                $scope.notificationOft = {
+            //var message =$scope.notification.message;
+            //console.log(message);
+            if(!$scope.notification===undefined){
+                var notificationOft = {
                     title: 'I am interested in your QuickSource Project',
-                    message: message
+                    message: $scope.notification.message
                 };
                 //console.log(post.user._id);
                 //console.log($scope.notificationOft);
-                $http.post('/notification/user/'+post.user._id+'/send',$scope.notificationOft).success(function(response) {
+                $http.post('/notification/user/'+post.user._id+'/send',notificationOft).success(function(response) {
                 });
             }
             $http.post('/posts/'+post._id+'/opt-in').success(function(response){
                 $scope.post.interestedUsers = response.interestedUsers;
                 post.isAlreadyInterested = true;
+                console.log(response);
             }).error(function(response){
                 $scope.error = response.message;
             });

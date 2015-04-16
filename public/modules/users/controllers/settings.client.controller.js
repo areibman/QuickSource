@@ -82,7 +82,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http','$up
 			$http.post('/users/'+$stateParams._id+'/emailValidation/').success(function(response){
 				console.log(response);
 			});
-		}
+		};
 
 
 
