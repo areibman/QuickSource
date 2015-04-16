@@ -8,8 +8,9 @@
     					<h3 class="panel-title">Personal Information</h3>
   					</div>
 					<div class="panel-body">
-						<img src="/uploads/profilePic/{{user.profilePic}}" alt="temp" class="img-thumbnail"><hr>
+						<img ng-src="/uploads/profilePic/{{user.profilePic}}" alt="temp" class="img-thumbnail"><hr>
 						<h5>{{user.displayName}}</h5>
+						<h5>{{user.roles}}</h5>
 						<h5>{{user.school}}</h5>
 						<h5>Location: {{user.zipCode}}</p>
 						<h5>Interests:&nbsp;<span style="margin:2px" class="label label-primary" ng-repeat="interest in user.interests" data-ng-bind="interest">{{interest}}</span></h5>
