@@ -121,12 +121,11 @@ angular.module('users').controller('SettingsController', ['$scope', '$http','$up
 					console.log('Picture uploading progress: ' + progressPercentage + '% ' +
 					evt.config.file.name);
 				}).success(function (response) {
-						console.log("a");
+						$scope.user.profilePicPath = response;
+						console.log(response);
 						$http.put('/users/profile/update',$scope.user).success(function (response) {
 						console.log(response);
 						});
-					
-
 				});
 			}
 		};
