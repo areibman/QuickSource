@@ -25,7 +25,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 
 		$scope.tabs = [
-			{ heading: 'General', route:'profile.general', active:true},
+			{ heading: 'General', route:'profile.general', active:false},
 			{heading:'Position',route:'profile.position', active:false},
 			{heading:'Education',route:'profile.education',active:false},
 			{heading:'Courses',route:'profile.courses', active:false},
@@ -49,6 +49,10 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.$on('$stateChangeStart', function() {
 			console.log("start");
 		});
+
+		$scope.inittab = function(){
+			$state.go('profile.general');
+		};
 
 		$scope.edufield = [{id: '1'}];
 		$scope.addNewEducation = function() {
