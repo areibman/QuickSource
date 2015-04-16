@@ -28,89 +28,60 @@
   						<h5>{{user.profile.headline}}</h4>
   						<h4>Education</h4>
   						<div ng-repeat="experience in education">
-  							<div class="col-md-6">
-  								<h5>{{experience.institution}}</h5>
-  							</div>
-  							<div class="col-md-6">
-  								<h5>Major(s): {{experience.major}}</h5>
-  							</div>
-  						</div>
-  										<!-- <input type="text" id="major" name="major" placeholder="Majors" class="form-control">
-  									</div>
-  									<div class="form-group col-md-4">
-  										<label for="startdate">Start Date</label>
-  										<input type="date" id="startdate" name="startdate" placeholder="Start Date" class="form-control">
-  									</div>
-  									<div class="form-group col-md-4">
-  										<label for="enddate">Graduation Date</label>
-  										<input type="date" placeholder="Graduation Date" class="form-control">
-  									</div>
-  									<div class="form-group col-md-4">
-  										Currently Attending?<input type="checkbox" class="form-control">
-  									</div>
-  								</div>
-  							</div>
-  						</div> -->
-  						<!-- <button ng-click="addNewEducation()" class="btn btn-large btn-block btn-primary">Add New Education</button>
-  						<h4>Positions</h4>
-  						<div ng-repeat="choice in posfield" >
-  							<div class="panel panel-default">
-  								<div class="panel-body">
-  									<div class="form-group col-md-6">
-  										<label for="institution">Company or Institution</label>
-  										<input type="text" id="institution" name="institution" data-ng-model="user.education.institution" placeholder="Institution" class="form-control">
-  									</div>
-  									<div class="form-group col-md-6">
-  										<label for="position">Position</label>
-  										<input type="text" id="position" name="position" placeholder="Position" class="form-control">
-  									</div>
-  									<div class="form-group col-md-4">
-  										<label for="startdate">Start Date</label>
-  										<input type="date" id="startdate" name="startdate" placeholder="Start Date" class="form-control">
-  									</div>
-  									<div class="form-group col-md-4">
-  										<label for="enddate">End Date</label>
-  										<input type="date" placeholder="End Date" class="form-control">
-  									</div>
-  									<div class="form-group col-md-4">
-  										Currently Position?<input type="checkbox" class="form-control">
-  									</div>
-  								</div>
+  							<div class="well well-sm">
+	  							<div class="col-md-6">
+	  								<h5>{{experience.institution}}</h5>
+	  							</div>
+	  							<div class="col-md-6">
+	  								<h5>{{experience.startDate}} - {{experience.endDate}}</h5>
+	  							</div>
+	  							<div class="col-md-6">
+	  								<h5>{{experience.major}}</h5>
+	  							</div>
+	  							<div class="col-md-6">
+	  								<h5>{{experience.gpa}}</h5>
+	  							</div>
   							</div>
   						</div>
-  						<button ng-click="addNewPosition()" class="btn btn-large btn-block btn-primary">Add New Position</button>
+  						<h4>Experience</h4>
+  						<div ng-repeat="position in positions">
+  							<div class="well well-sm">
+	  							<div class="col-md-6">
+	  								<h5>{{position.title}}</h5>
+	  							</div>
+	  							<div class="col-md-6">
+	  								<h5>{{position.startDate}} - {{position.endDate}}</h5>
+	  							</div>
+	  							<div class="col-md-6">
+	  								<h5>{{position.institution}}</h5>
+	  							</div>
+	  							<!-- <div class="col-md-6">
+	  								<h5>{{position.gpa}}</h5>
+	  							</div> -->
+  							</div>
+  						</div>
   						<h4>Courses</h4>
-  						<div ng-repeat="choice in coursefield" >
-  							<div class="panel panel-default">
-  								<div class="panel-body">
-  									<div class="form-group col-md-6">
-  										<label for="coursename">Course Name</label>
-  										<input type="text" id="coursename" name="coursename" data-ng-model="user.education.institution" placeholder="Course Name" class="form-control">
-  									</div>
-  									<div class="form-group col-md-6">
-  										<label for="courseno">Course Number</label>
-  										<input type="text" id="courseno" name="courseno" placeholder="Course Number" class="form-control">
-  									</div>
-  								</div>
+  						<div ng-repeat="course in courses">
+  							<div class="well well-sm">
+	  							<div class="col-md-6">
+	  								<h5>{{course.title}}</h5>
+	  							</div>
+	  							<div class="col-md-6">
+	  								<h5>{{course.courseNumber}}</h5>
+	  							</div>
   							</div>
   						</div>
-  						<button ng-click="addNewCourse()" class="btn btn-large btn-block btn-primary">Add New Course</button>
   						<h4>Publications</h4>
-  						<div ng-repeat="choice in pubfield" >
-  							<div class="panel panel-default">
-  								<div class="panel-body">
-  									<div class="form-group col-md-6">
-  										<label for="coursename">Publication Name</label>
-  										<input type="text" id="pubname" name="pubname" data-ng-model="user.education.institution" placeholder="Publication Name" class="form-control">
-  									</div>
-  									<div class="form-group col-md-6">
-  										<label for="courseno">Publication Authors</label>
-  										<input type="text" id="pubauth" name="puthauth" placeholder="Publication Authors" class="form-control">
-  									</div>
-  								</div>
+  						<div ng-repeat="publication in publications">
+  							<div class="well well-sm">
+	  							<div class="col-md-6">
+	  								<h5>{{publication.title}}</h5>
+	  							</div>
+	  							<div class="col-md-6">
+	  								<h5>{{publication.authors}}</h5>
+	  							</div>
   							</div>
   						</div>
-  						<button ng-click="addNewPublication()" class="btn btn-large btn-block btn-primary">Add New Publication</button> -->
   					</div>
   				</div>
 			</div>
