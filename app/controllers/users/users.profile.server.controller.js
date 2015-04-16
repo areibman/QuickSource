@@ -59,7 +59,10 @@ exports.me = function(req, res) {
 
 exports.profile = function(req, res) {
     if(req.user){
-        var optUser = [{path : 'profile', model : 'Profile', match : { isActive : true }}];
+        var optUser = [
+            {path : 'profile', model : 'Profile', match : { isActive : true }},
+            { path : 'notifications', model : 'Notification', select : 'title message created viewed', match : { isActive : true }}
+        ];
         User.populate(req.user, optUser, function(err, user){
             if(err) res.status(400).send({message: 'Cannot find user profile'});
             else{
@@ -81,6 +84,18 @@ exports.profile = function(req, res) {
     else    res.json(null);
 };
 
+exports.getNotifications = function(req, res) {
+    if(req.user){
+        var opt = [
+            { path : 'notifications', model : 'Notification', select : 'title message created viewed', match : { isActive : true }}
+        ];
+        User.populate(req.user, opt, function(err, user) {
+            if (err) res.status(400).send({message: 'Cannot find user profile'});
+            res.json(user.notifications);
+        });
+    }
+    else    res.json(null);
+};
 
 /**
  * Email validation

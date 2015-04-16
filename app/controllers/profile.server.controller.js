@@ -13,18 +13,7 @@ var mongoose = require('mongoose'),
  * Show the current Profile
  */
 exports.read = function(req, res) {
-    var optProfile = [
-        { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
-        { path : 'positions', model : 'Experience', select : 'title institution summary startDate endDate isCurrent updated created', match : { isActive : true }},
-        { path : 'educations', model : 'Experience', select : 'title institution summary major gpa startDate endDate isCurrent updated created', match : { isActive : true }},
-        { path : 'courses', model : 'Experience', select : 'title institution summary courseNumber startDate endDate isCurrent updated created', match : { isActive : true }},
-        { path : 'publications', model : 'Experience', select : 'title institution summary authors startDate endDate isCurrent updated created', match : { isActive : true }}
-    ];
-
-    Profile.populate(req.profile, optProfile, function(err, profile){
-        if(err) res.status(400).send({message: 'Cannot find user profile'});
-        else    res.json(profile);
-    });
+    User.profile(req, res);
 };
 
 /**
