@@ -52,8 +52,8 @@ exports.sendConfirmationEmail = function(userId, email){
         from: 'QuickSource <emory.quicksource@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'Welcome to QuickSource', // Subject line
-        text: 'Please click the following link to validate your email: http://' + os.hostname() + '/users/emailValidation/'+userId, // plaintext body
-        html: 'Please click the following link to validate your email: <a href="http://' + os.hostname() + '/users/emailValidation/'+userId+'">Click here</a>' // html body
+        text: 'Please click the following link to validate your email: http://45.55.134.189/#!/users/emailValidation/'+userId, // plaintext body
+        html: 'Please click the following link to validate your email: <a href="http://45.55.134.189/#!/users/emailValidation/'+userId+'">Click here</a>' // html body
     };
     send(mailOptions);
 };
