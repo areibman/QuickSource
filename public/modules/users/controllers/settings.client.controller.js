@@ -121,10 +121,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http','$up
 					console.log('Picture uploading progress: ' + progressPercentage + '% ' +
 					evt.config.file.name);
 				}).success(function (response) {
-						$scope.user.profilePicPath = response;
-						console.log(response);
+						$scope.user.profilePic = response;
 						$http.put('/users/profile/update',$scope.user).success(function (response) {
-						console.log(response);
 						});
 				});
 			}
@@ -145,9 +143,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$http','$up
 					console.log('Resume uploading progress: ' + progressPercentage + '% ' +
 					evt.config.file.name);
 				}).success(function (response) {
-					if($scope.fields)   $scope.fields.resumeDoc = response;
-					else                $scope.resumeDoc = response;
-					console.log($scope);
+					$scope.user.resumeDoc = response;
+					$http.put('/users/profile/update',$scope.user).success(function (response) {
+					});
 				});
 			}
 		};
