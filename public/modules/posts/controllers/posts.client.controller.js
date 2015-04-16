@@ -70,7 +70,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             var post = $scope.post;
             $http.post('/posts/'+post._id+'/addComment', $scope.comment).success(function(response){
                //$http.post('/posts')
-                $http.get('/comments').success(function(response) {
+                $http.get('/posts/'+post._id+'/listComments').success(function(response) {
                     $scope.post.comments = response;
                 });
                //console.log(response);
