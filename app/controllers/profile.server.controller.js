@@ -85,7 +85,7 @@ exports.profileByID = function(req, res, next, id) {
 exports.hasAuthorization = function(req, res, next) {
     Profile.findById(req.user.profile, function(err, profile){
         if(err) return res.status(400).send('User profile not found.');
-        if(profile.user != req.user.id) return res.status(403).send('User is not authorized');
+        if(!profile.user.equals(req.user._id)) return res.status(403).send('User is not authorized');
         next();
     });
 };
