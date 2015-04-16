@@ -58,7 +58,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$http','$up
 		$scope.updateProfile = function() {
 			var post = $scope.post;
 			$http.put('/users/profile/update',$scope.user).success(function (response) {
-				Authentication.user = response;
 			}).error(function (response) {
 				$scope.error = response.message;
 			});
