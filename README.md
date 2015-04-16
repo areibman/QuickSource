@@ -1,6 +1,6 @@
 # ~QuickSource~
 #### Current Demo: [Click here](http://45.55.134.189/#!/)
-#### Current Release: [v0.1](https://github.com/CS370-soft-eng-practicum/QuickSource/releases/tag/0.1)
+#### Current Release: [v0.8](https://github.com/CS370-soft-eng-practicum/QuickSource/releases/tag/0.8)
 
 ## Overview
 #### Idea : 
@@ -45,12 +45,17 @@ QuickSoure deployes a separated DigitalOcean droplet with Jenkins installed to i
 - Our Jenkins droplet: [Click here](http://45.55.134.189:8080/)
 - Sample console output: [View here](https://www.dropbox.com/s/5a4wq5lve83pi5k/Jenkin%20Continuous%20Intergration%20Console%20Output.txt?dl=0)
 
+#### Automatic Deployment:
+
+In addition to our Jenkins continuous integration platform, QuickSource will also be automatically deployed whenever a merge between the development and master branch happens. See the links shown above.
+
 ## Iterations
 
 #### Documents:
 1. Initial Project Proposal & Research: [Slides](https://d1b10bmlvqabco.cloudfront.net/attach/i4uq9at93sz401/hzag30i2dmv63a/i6mlmfzsnslx/First_Pitch.pdf)
 2. Test Drive MVP : [Slides](https://d1b10bmlvqabco.cloudfront.net/attach/i4uq9at93sz401/hzag30i2dmv63a/i7gkax1hu6vi/Second_Pitch.pdf)
 3. Unit Tesing & Continuous Intergration: [Slides](https://d1b10bmlvqabco.cloudfront.net/attach/i4uq9at93sz401/hzag30i2dmv63a/i80enyxitmci/Third_Pitch.pdf), [Feedback Report](https://d1b10bmlvqabco.cloudfront.net/attach/i4uq9at93sz401/hzag30i2dmv63a/i80eo8x2d0ot/FeedbackReport.pdf)
+4. Automatic Deployment & Continous Development: [Slides](https://github.com/CS370-soft-eng-practicum/QuickSource/blob/master/business/FinalPitch.pdf)
 
 ## Feedback Form:
 Here is our survey for current iteration: [Click here](https://docs.google.com/forms/d/1WqWU-sW1mSOX9iyyjRbsFz8hunRXNYDnBxgAigczrGU/viewform) 
