@@ -53,8 +53,8 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
-		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
-		match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		validate: [validateLocalStrategyProperty, 'Please fill in your .edu email'],
+		match: [/.+\@.+\.edu+/, 'Please fill a valid email address']
 	},
     emailValidated: {
         type: Boolean,
@@ -102,7 +102,7 @@ var UserSchema = new Schema({
         trim: true,
         default: '',
         validate: [validateLocalStrategyProperty, 'Please fill in your zip code'],
-        match: [/^\d{5}$/, 'Please fill in your zip code in the correct format']
+        match: [/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Please fill in your zip code in the correct format']
     },
     interests: {
         type: [String],
