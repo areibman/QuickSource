@@ -55,6 +55,14 @@ angular.module('users').controller('SettingsController', ['$scope', '$http','$up
 			}
 		};
 
+		$scope.updateProfile = function() {
+			var post = $scope.post;
+			$http.put('/users/profile/update',$scope.user).success(function (response) {
+			}).error(function (response) {
+				$scope.error = response.message;
+			});
+		};
+
 		// Change user password
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
