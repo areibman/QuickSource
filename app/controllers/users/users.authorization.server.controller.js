@@ -16,10 +16,21 @@ exports.userByID = function(req, res, next, id) {
 	}).exec(function(err, user) {
 		if (err) return next(err);
 		if (!user) return next(new Error('Failed to load User ' + id));
-		req.profile = user;
+		req.user = user;
 		next();
 	});
 };
+exports.userByUsername = function(req, res, next, username) {
+    User.findOne({
+        username: username
+    }).exec(function(err, user) {
+        if (err) return next(err);
+        if (!user) return next(new Error('Failed to load User ' + username));
+        req.user = user;
+        next();
+    });
+};
+
 
 /**
  * Require login routing middleware

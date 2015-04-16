@@ -5,29 +5,32 @@
 				<li><a href="/#!/posts">Browse</a></li>
 				<li class="active" data-ng-bind="post.title"></li>
 			</ol>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Apply to this project!</h3>
-				</div>
-				<div class="panel-body">
-					<form data-ng-submit="interest()">
-						<!-- <div class="form-group">
-							<label class="control-label">Name:</label>
-							<div class="col-sm-10">
-								<p class="form-control-static" data-ng-bind="authentication.user.displayName"></p>
-							</div>
-						</div> -->
-						<div class="form-group" data-ng-hide="((post.isAlreadyInterested) || (post.isPoster))">
-							<div>
+            <div data-ng-hide="post.isPoster || !(authentication.user)">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Apply to this project!</h3>
+					</div>
+					<div class="panel-body">
+						<form data-ng-submit="opt_in()">
+							<div class="form-group" data-ng-hide="(post.isAlreadyInterested || post.isPoster)">
+								<textarea type="text" class="form-control" name="message" id="message" data-ng-model="notification.message" rows="8">Add a note</textarea><br>
 								<button type="submit" class="btn btn-default btn-block">I'm interested!</button>
 							</div>
-						</div>
-						<div class="form-group" data-ng-show="((post.isAlreadyInterested) || (post.isPoster))">
-							<div>
-								<button type="submit" class="btn btn-default btn-block" disabled="disabled">Opted-in!</button>
-							</div>
-						</div>
-					</form>
+						</form>
+	                    <form data-ng-submit="opt_out()">
+	                        <div class="form-group" data-ng-show="post.isAlreadyInterested">
+	                            <button type="submit" class="btn btn-default btn-block">Opt out!</button>
+	                        </div>
+	                    </form>
+					</div>
+				</div>
+            </div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Interested Participants:</h3>
+				</div>
+				<div class="panel-body" style="overflow:auto">
+					<span style="margin:2px" class="label label-default" ng-repeat="user in post.interestedUsers" data-ng-bind="user.displayName">{{user.displayName}}</span>
 				</div>
 			</div>
 		</div>
@@ -43,7 +46,7 @@
 							<a data-ng-click="remove();">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>
-						</span>
+						</span>&nbsp;
 						<small><span style="margin-right:5px;" class="pull-right">
 							<span class="label label-success" style="margin:2px" ng-repeat="tag in post.categories">
 	                            {{tag}}
@@ -67,11 +70,38 @@
 					<p data-ng-bind="post.abstract" class="lead"></p>
 					<p data-ng-bind="post.description"></p>
 					<p>Location: {{post.location}} (zip code)</p>
-					<div class="panel-footer">
+					<!-- <div class="panel-footer">
 						Interested participants: <span style="margin:2px" class="label label-default" ng-repeat="user in post.interestedUsers" data-ng-bind="user.displayName">{{user.displayName}}</span>
-					</div>
+					</div> -->
 				</div>
 			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h3>Comments</h3>
+					<form data-ng-submit="addComment()">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Add comment..." data-ng-model="comment.content">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="submit">Submit</button>
+							</span>
+						</div>
+					</form>
+					<br>
+					<ul class="media-list">
+						<li class="media" ng-repeat="comment in post.comments | orderBy: '-created'">
+							<div class="media-left">
+								<a href="#">
+									<img class="media-object" src="http://c.dryicons.com/images/icon_sets/symbolize_icons_set/png/64x64/user.png" alt="temp" width="30" height="30">
+								</a>
+							</div>
+							<div class="media-body"> 
+								<h5 class="media-heading" data-ng-bind="comment.user.displayName"></h5>
+								<p class="small" data-ng-bind="comment.content"></p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>	
 		</div>
 		<div class="col-md-3">
 			<div class="panel panel-default">
@@ -81,6 +111,7 @@
 					<p class="text-center">{{post.user.roles}}<br>{{post.user.school}}</p>
 				</div>
 			</div>
+			
 			<!-- <div class="panel panel-default" data-ng-init="find()">
 				<div class="panel-body">
 					<h4>Lastest Projects</h4>

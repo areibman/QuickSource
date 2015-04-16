@@ -4,10 +4,12 @@
  * Module dependencies.
  */
 var _ = require('lodash'),
+    emailHandler = require('../emailhandler.server.controller'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+    Profile = mongoose.model('Profile');
 
 /**
  * Signup
@@ -17,31 +19,41 @@ exports.signup = function(req, res) {
 	var user = new User(req.body);
 	var message = null;
 
-    console.log(req.body);
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user 
-	user.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
+    // Check if user already exists
+    User.find( { $or: [{ 'username': user.username }, { 'email': user.email }] },
+        function(err, existed) {
+            if(existed.length !== 0){
+                return res.status(400).send({ message: 'Username or email already exists.' });
+            }
+            else{
+                // Then save the user
+                user.save(function(err) {
+                    if (err) {
+                        return res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
+                        //Remove sensitive data before login
+                        user.password = undefined;
+                        user.salt = undefined;
 
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					res.json(user);
-				}
-			});
-		}
-	});
+                        emailHandler.sendConfirmationEmail(user._id, user.email);
+                        req.login(user, function(err) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    );
 };
 
 /**
@@ -49,7 +61,7 @@ exports.signup = function(req, res) {
  */
 exports.signin = function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
-		if (err || !user) {
+        if (err || !user) {
 			res.status(400).send(info);
 		} else {
 			// Remove sensitive data before login

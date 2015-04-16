@@ -1,0 +1,35 @@
+------------------------------------------|-----------|-----------|-----------|-----------|
+File                                      |   % Stmts |% Branches |   % Funcs |   % Lines |
+------------------------------------------|-----------|-----------|-----------|-----------|
+   [92mcomments/config/                      [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+      [92mcomments.client.routes.js          [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+   [92mcomments/controllers/                 [0m |[92m        84[0m |[93m        50[0m |[93m     72.73[0m |[92m        84[0m |
+      [92mcomments.client.controller.js      [0m |[92m        84[0m |[93m        50[0m |[93m     72.73[0m |[92m        84[0m |
+   [92mcomments/services/                    [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+      [92mcomments.client.service.js         [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+   [92mcore/config/                          [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+      [92mcore.client.routes.js              [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+   [92mcore/controllers/                     [0m |[92m        80[0m |[92m       100[0m |[93m        50[0m |[92m        80[0m |
+      [93mheader.client.controller.js        [0m |[93m        75[0m |[92m       100[0m |[91m     33.33[0m |[93m        75[0m |
+      [92mhome.client.controller.js          [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+   [91mcore/services/                        [0m |[91m     37.74[0m |[91m     16.67[0m |[91m        40[0m |[91m     37.74[0m |
+      [91mmenus.client.service.js            [0m |[91m     37.74[0m |[91m     16.67[0m |[91m        40[0m |[91m     37.74[0m |
+   [92mposts/config/                         [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+      [92mposts.client.routes.js             [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+   [91mposts/controllers/                    [0m |[91m     27.27[0m |[91m         0[0m |[91m        15[0m |[91m     27.27[0m |
+      [91mposts.client.controller.js         [0m |[91m     27.27[0m |[91m         0[0m |[91m        15[0m |[91m     27.27[0m |
+   [92mposts/services/                       [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+      [92mposts.client.service.js            [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+   [93musers/config/                         [0m |[93m     63.64[0m |[91m         0[0m |[92m       100[0m |[93m     63.64[0m |
+      [93musers.client.config.js             [0m |[93m     55.56[0m |[91m         0[0m |[92m       100[0m |[93m     55.56[0m |
+      [92musers.client.routes.js             [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+   [91musers/controllers/                    [0m |[91m     23.81[0m |[91m      9.09[0m |[91m     26.92[0m |[91m        25[0m |
+      [92mauthentication.client.controller.js[0m |[92m     92.86[0m |[93m        50[0m |[92m       100[0m |[92m       100[0m |
+      [91mpassword.client.controller.js      [0m |[91m      5.56[0m |[91m         0[0m |[91m         0[0m |[91m      5.88[0m |
+      [91msettings.client.controller.js      [0m |[91m      3.23[0m |[91m         0[0m |[91m         0[0m |[91m      3.33[0m |
+   [92musers/services/                       [0m |[92m     83.33[0m |[92m       100[0m |[93m        50[0m |[92m     83.33[0m |
+      [92mauthentication.client.service.js   [0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |[92m       100[0m |
+      [93musers.client.service.js            [0m |[93m        50[0m |[92m       100[0m |[91m         0[0m |[93m        50[0m |
+------------------------------------------|-----------|-----------|-----------|-----------|
+[91mAll files                                [0m |[91m     44.39[0m |[91m     15.49[0m |[91m     41.46[0m |[91m        45[0m |
+------------------------------------------|-----------|-----------|-----------|-----------|

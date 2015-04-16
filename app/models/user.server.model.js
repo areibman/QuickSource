@@ -5,7 +5,8 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	crypto = require('crypto');
+	crypto = require('crypto'),
+    Profile = mongoose.model('Profile');
 
 /**
  * A Validation function for local strategy properties
@@ -52,9 +53,13 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
-		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
-		match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		validate: [validateLocalStrategyProperty, 'Please fill in your .edu email'],
+		match: [/.+\@.+\.edu+/, 'Please fill a valid email address']
 	},
+    emailValidated: {
+        type: Boolean,
+        default: false
+    },
 	username: {
 		type: String,
 		unique: 'testing error message',
@@ -97,7 +102,7 @@ var UserSchema = new Schema({
         trim: true,
         default: '',
         validate: [validateLocalStrategyProperty, 'Please fill in your zip code'],
-        match: [/^\d{5}$/, 'Please fill in your zip code in the correct format']
+        match: [/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Please fill in your zip code in the correct format']
     },
     interests: {
         type: [String],
@@ -105,6 +110,29 @@ var UserSchema = new Schema({
         default: []
     },
     isActive: {
+        type: Boolean,
+        default: true
+    },
+    /* File handling */
+    profilePic: {
+        type: String,
+        default: 'default.png'
+    },
+    resumeDoc: {
+        type: String,
+        default: ''
+    },
+    profile: {
+        type: Schema.ObjectId,
+        ref: 'Profile'
+    },
+    /* File handling */
+    notifications: {
+        type: [Schema.ObjectId],
+        ref: 'Notification',
+        default: []
+    },
+    enableEmailNotification: {
         type: Boolean,
         default: true
     },
@@ -122,8 +150,11 @@ var UserSchema = new Schema({
  */
 UserSchema.pre('save', function(next) {
 	if (this.password && this.password.length > 6) {
-		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
-		this.password = this.hashPassword(this.password);
+        var profile = new Profile({ user : this });
+        this.profile = profile;
+        this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
+        this.password = this.hashPassword(this.password);
+        profile.save(next);
 	}
 
 	next();

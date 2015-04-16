@@ -8,11 +8,23 @@ var passport = require('passport');
 module.exports = function(app) {
 	// User Routes
 	var users = require('../../app/controllers/users.server.controller');
+    var profile = require('../../app/controllers/profile.server.controller');
+    var experiences = require('../../app/controllers/experience.server.controller');
 
 	// Setting up the users profile api
-	app.route('/users/me').get(users.me);
-	app.route('/users').put(users.update);
-	app.route('/users/accounts').delete(users.removeOAuthProvider);
+	app.route('/users/accounts').get(users.me)  // Basic account info
+	                            .put(users.update)
+                                .delete(users.removeOAuthProvider);
+
+    // User profile
+    app.route('/users/profile').get(users.profile); // Extended user profile info
+    app.route('/users/profile/update').put(users.requiresLogin, profile.hasAuthorization, profile.update);
+    app.route('/users/profile/addPosition').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createPosition);
+    app.route('/users/profile/addEducation').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createEducation);
+    app.route('/users/profile/addCourse').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createCourse);
+    app.route('/users/profile/addPublication').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createPublication);
+    app.route('/users/profile/:experienceId/update').put(users.requiresLogin, profile.hasAuthorization, experiences.hasAuthorization, experiences.update);
+    app.route('/users/profile/:experienceId/remove').put(users.requiresLogin, profile.hasAuthorization, experiences.hasAuthorization, experiences.setInactive);
 
 	// Setting up the users password api
 	app.route('/users/password').post(users.changePassword);
@@ -25,25 +37,6 @@ module.exports = function(app) {
 	app.route('/auth/signin').post(users.signin);
 	app.route('/auth/signout').get(users.signout);
 
-	// Setting the facebook oauth routes
-	app.route('/auth/facebook').get(passport.authenticate('facebook', {
-		scope: ['email']
-	}));
-	app.route('/auth/facebook/callback').get(users.oauthCallback('facebook'));
-
-	// Setting the twitter oauth routes
-	app.route('/auth/twitter').get(passport.authenticate('twitter'));
-	app.route('/auth/twitter/callback').get(users.oauthCallback('twitter'));
-
-	// Setting the google oauth routes
-	app.route('/auth/google').get(passport.authenticate('google', {
-		scope: [
-			'https://www.googleapis.com/auth/userinfo.profile',
-			'https://www.googleapis.com/auth/userinfo.email'
-		]
-	}));
-	app.route('/auth/google/callback').get(users.oauthCallback('google'));
-
 	// Setting the linkedin oauth routes
 	app.route('/auth/linkedin').get(passport.authenticate('linkedin'));
 	app.route('/auth/linkedin/callback').get(users.oauthCallback('linkedin'));
@@ -52,6 +45,10 @@ module.exports = function(app) {
 	app.route('/auth/github').get(passport.authenticate('github'));
 	app.route('/auth/github/callback').get(users.oauthCallback('github'));
 
-	// Finish by binding the user middleware
+    // Email validation
+    app.route('/users/:userId/emailValidation/').post(users.validateEmail);
+    
+	// Finish by binding middlewares
 	app.param('userId', users.userByID);
+    app.param('experienceId', experiences.experienceByID);
 };

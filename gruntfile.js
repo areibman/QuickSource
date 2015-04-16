@@ -11,6 +11,8 @@ module.exports = function(grunt) {
 		mochaTests: ['app/tests/**/*.js']
 	};
 
+    grunt.loadNpmTasks('grunt-mocha-istanbul');
+
 	// Project Configuration
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -59,7 +61,7 @@ module.exports = function(grunt) {
 		},
 		csslint: {
 			options: {
-				csslintrc: '.csslintrc',
+				csslintrc: '.csslintrc'
 			},
 			all: {
 				src: watchFiles.clientCSS
@@ -129,23 +131,43 @@ module.exports = function(grunt) {
 			}
 		},
 		mochaTest: {
-			src: watchFiles.mochaTests,
-			options: {
-				reporter: 'spec',
-				require: 'server.js'
-			}
+			test: {
+                src: watchFiles.mochaTests,
+                options: {
+                    reporter: 'spec',
+                    require: 'server.js'
+                }
+            }
 		},
 		karma: {
 			unit: {
-				configFile: 'karma.conf.js'
+				configFile: 'karma.conf.js',
+                browsers: ['PhantomJS']
 			}
-		}
+		},
+        mocha_istanbul: {
+            coverage: {
+                src: watchFiles.mochaTests,
+                options: {
+                    require: 'server.js',
+                    root: 'app',
+                    coverageFolder: 'coverage',
+                    mask: '**/*.test.js'
+                    //reportFormats: 'html'
+                }
+            }
+        }
 	});
 
 	// Load NPM tasks
 	require('load-grunt-tasks')(grunt);
 
-	// Making grunt default to force in order not to break the project.
+    grunt.event.on('coverage', function(lcovFileContents, done){
+        // Check below
+        done();
+    });
+
+    // Making grunt default to force in order not to break the project.
 	grunt.option('force', true);
 
 	// A Task for loading the configuration object
@@ -173,5 +195,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);
 
 	// Test task.
-	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+    grunt.registerTask('test', ['env:test', 'mochaTest','mocha_istanbul:coverage', 'karma:unit']);
 };
