@@ -43,6 +43,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
                 $scope.post.interestedUsers = response.interestedUsers;
                 post.isAlreadyInterested = true;
 
+                console.log($scope.message);
             }).error(function(response){
                 $scope.error = response.message;
 

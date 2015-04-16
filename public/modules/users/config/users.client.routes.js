@@ -40,7 +40,10 @@ angular.module('users').config(['$stateProvider',
 		state('reset-success', {
 			url: '/password/reset/success',
 			templateUrl: 'modules/users/views/password/reset-password-success.client.view.html'
-		}).
+		}).state('account',{
+				url:'/settings/account',
+				templateUrl:'modules/users/views/settings/account.client.view.html'
+			}).
 		state('reset', {
 			url: '/password/reset/:token',
 			templateUrl: 'modules/users/views/password/reset-password.client.view.html'
