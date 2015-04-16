@@ -126,6 +126,16 @@ var UserSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'Profile'
     },
+    /* File handling */
+    notifications: {
+        type: [Schema.ObjectId],
+        ref: 'Notification',
+        default: []
+    },
+    enableEmailNotification: {
+        type: Boolean,
+        default: true
+    },
 	/* For reset password */
 	resetPasswordToken: {
 		type: String

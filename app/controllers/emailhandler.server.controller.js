@@ -56,3 +56,4 @@ exports.sendConfirmationEmail = function(userId, email){
     };
     send(mailOptions);
 };
+
