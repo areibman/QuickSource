@@ -1,18 +1,24 @@
 <section data-ng-controller="ProfileController">
 	<div class="container" style="margin-top:20px">
-		<h1>View {{authentication.user.displayName}}'s Profile</h1>
+		<h1>{{user.displayName}}'s Profile</h1>
 		<div class="row">
-			<div class="col-md-7">
-				<h3>Name:</h3>
-				<p>{{authentication.user.displayName}}</p>
-				<h3>School:</h3>
-				<p>{{authentication.user.school}}</p>
-				<h3>Location:</h3>
-				<p>{{authentication.user.zipCode}}</p>
-				<h3>Interests:</h3>
-				<p><span style="margin:2px" class="label label-primary" ng-repeat="interest in authentication.user.displayName.interests" data-ng-bind="interest">{{interest}}</span></p>
-			</div>
 			<div class="col-md-5">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+    					<h3 class="panel-title">Personal Information</h3>
+  					</div>
+					<div class="panel-body">
+						<img src="http://nocturnalgaming.com/wp-content/uploads/2014/02/seshn-default-avatar.png" alt="temp" class="img-thumbnail">
+						<h5>{{user.displayName}}</h5>
+						<h5>{{user.school}}</h5>
+						<h5>Location: {{user.zipCode}}</p>
+						<h5>Interests:&nbsp;<span style="margin:2px" class="label label-primary" ng-repeat="interest in user.interests" data-ng-bind="interest">{{interest}}</span></h5>
+						<br>
+						<button class="btn btn-sm btn-primary">View Resume</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<img src="http://nocturnalgaming.com/wp-content/uploads/2014/02/seshn-default-avatar.png" alt="temp" class="img-thumbnail"><br>
