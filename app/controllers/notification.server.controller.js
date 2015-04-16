@@ -27,9 +27,10 @@ exports.sendNotification_route = function(req, res) {
     var notification = new Notification(req.body);
 
     if(req.user)        user = req.user;
-
+    //console.log(req.body);
     notification.recipient = user;
     notification.save(function(errN){
+        console.log(errN);
         if(errN) return res.status(400).send({ message: errorHandler.getErrorMessage(errN) });
         user.notification.push(notification);
             if(user.enableEmailNotification)

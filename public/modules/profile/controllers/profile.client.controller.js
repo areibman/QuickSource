@@ -14,15 +14,6 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 			});
 		};
 
-
-
-
-
-
-
-
-
-
 		$scope.edufield = [{id: '1'}];
 		$scope.addNewEducation = function() {
 			var newitem = $scope.edufield.length+1;
@@ -95,6 +86,12 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 				});
 			}
 		};
+
+
+	
+
+
+
 
 
 	}
