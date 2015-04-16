@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('profile').controller('ProfileController', ['$scope','$http','$upload','$stateParams',
-	function($scope,$http,$upload,$stateParams) {
+angular.module('profile').controller('ProfileController', ['$scope','$http','$upload','$stateParams','$state',
+	function($scope,$http,$upload,$stateParams,$state) {
 		// Profile controller logic
 		// ...
 		$scope.find = function(){
@@ -23,6 +23,36 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 			});
 		};
 
+
+		$scope.tabs = [
+			{ heading: 'General', route:'profile.general', active:false},
+			{heading:'Position',route:'profile.position', active:false},
+			{heading:'Education',route:'profile.education',active:false},
+			{heading:'Courses',route:'profile.courses', active:false},
+			{heading:'Publication',route:'profile.publication', active:false},
+		];
+		$scope.go = function(route){
+			$state.go(route);
+		};
+
+		$scope.active = function(route){
+			return $state.is(route);
+		};
+
+		$scope.$on('$stateChangeSuccess', function() {
+			console.log($state);
+			$scope.tabs.forEach(function(tab) {
+				tab.active = $scope.active(tab.route);
+			});
+		});
+
+		$scope.$on('$stateChangeStart', function() {
+			console.log("start");
+		});
+
+		$scope.inittab = function(){
+			$state.go('profile.general');
+		};
 
 		$scope.edufield = [{id: '1'}];
 		$scope.addNewEducation = function() {

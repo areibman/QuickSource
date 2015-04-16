@@ -8,7 +8,25 @@ angular.module('users').config(['$stateProvider',
 		state('profile', {
 			url: '/settings/profile',
 			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
-		}).
+		}).state('profile.general',{
+			url:'/general',
+			templateUrl: 'modules/users/views/settings/general-settings.client.view.html'
+		}).state('profile.education',{
+				url:'/general',
+				templateUrl: 'modules/users/views/settings/education-settings.client.view.html'
+			}).state('profile.courses',{
+				url:'/general',
+				templateUrl: 'modules/users/views/settings/courses-settings.client.view.html'
+			}).state('profile.publication',{
+				url:'/general',
+				templateUrl: 'modules/users/views/settings/publication-settings.client.view.html'
+			}).state('profile.position',{
+				url:'/general',
+				templateUrl: 'modules/users/views/settings/position-settings.client.view.html'
+			}).state('validate',{
+				url:'/user/emailValidation/:userId',
+				templateUrl: 'modules/users/views/settings/validated.client.view.html'
+			}).
 		state('password', {
 			url: '/settings/password',
 			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
