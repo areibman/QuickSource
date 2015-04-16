@@ -7,12 +7,20 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.find = function(){
 			$http.get('/profile/'+$stateParams.username).success(function(user){
 				$scope.user = user;
+				console.log(user);
 				$scope.user.profileImage = '#!/uploads/profilePic/'+user.profilePic;
-				console.log($scope);
 			}).error(function(response){
 				$scope.error = response.message;
 			});
 		};
+
+		$scope.updateHead = function(){
+			var headline =  $scope.profile.headline;
+			$http.put('/users/profile/update').success(function(response){
+				$scope.profile.headline = headline;
+			});
+		};
+
 
 		$scope.edufield = [{id: '1'}];
 		$scope.addNewEducation = function() {
@@ -37,7 +45,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 		$scope.profile = function () {
 			$http.get('/users/accounts').success(function(res){
-				console.log(res);
+				//console.log(res);
 			});
 		};
 
@@ -86,9 +94,6 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 				});
 			}
 		};
-
-
-	
 
 
 
