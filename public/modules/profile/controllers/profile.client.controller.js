@@ -25,13 +25,11 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 
 		$scope.tabs = [
-			{ heading: 'General', route:'profile.general', active:false},
+			{ heading: 'General', route:'profile.general', active:true},
 			{heading:'Position',route:'profile.position', active:false},
 			{heading:'Education',route:'profile.education',active:false},
 			{heading:'Courses',route:'profile.courses', active:false},
 			{heading:'Publication',route:'profile.publication', active:false},
-
-
 		];
 		$scope.go = function(route){
 			$state.go(route);
