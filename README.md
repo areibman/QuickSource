@@ -1,5 +1,5 @@
 # ~QuickSource~
-#### Current Demo: [Click here](http://104.236.216.164/#!/)
+#### Current Demo: [Click here](http://45.55.134.189/#!/)
 #### Current Release: [v0.1](https://github.com/CS370-soft-eng-practicum/QuickSource/releases/tag/0.1)
 
 ## Overview

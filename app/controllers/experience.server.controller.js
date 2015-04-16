@@ -6,12 +6,14 @@
 var mongoose = require('mongoose'),
     _ = require('lodash'),
     errorHandler = require('./errors.server.controller'),
+    Profile = mongoose.model('Profile'),
     Experience = mongoose.model('Experience');
 
 /**
  * Create a Experience
  */
 var create = function(req, res, type) {
+    var profile = req.profile;
     var experience = new Experience(req.body);
     experience.profile = req.user.profile;
     experience.updated = Date.now();
@@ -23,7 +25,16 @@ var create = function(req, res, type) {
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            res.jsonp(experience);
+            switch(type){
+                case 'position':    profile.positions.push(experience); break;
+                case 'education':   profile.educations.push(experience); break;
+                case 'course':      profile.courses.push(experience); break;
+                case 'publication': profile.publications.push(experience); break;
+                default: return res.status(400).send({ message: 'Cannot save experience to profile' });
+            }
+            profile.save(function(){
+                res.jsonp(experience);
+            });
         }
     });
 };
@@ -123,7 +134,7 @@ exports.experienceByID = function(req, res, next, id) {
  * Experience authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-    if (req.experience.user.id !== req.user.id) {
+    if (req.experience.profile.id !== req.user.profile.id) {
         return res.status(403).send('User is not authorized');
     }
     next();

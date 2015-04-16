@@ -123,6 +123,17 @@ exports.list = function(req, res) {
 };
 
 /**
+ * List the comments of a post
+ */
+exports.listComments = function(req, res) {
+    var post = req.post;
+
+    Post.populate(post, {path : 'comments', model : 'Comment', match : { isActive : true }}, function(err, populatedPost){
+        res.jsonp(populatedPost.comments);
+    });
+};
+
+/**
  * Post middleware
  */
 exports.postByID = function(req, res, next, id) {

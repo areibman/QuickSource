@@ -17,8 +17,6 @@ var _ = require('lodash'),
 exports.signup = function(req, res) {
 	// Init Variables
 	var user = new User(req.body);
-    var profile = new Profile({ user : user });
-    user.profile = profile;
 	var message = null;
 
 	// Add missing user fields
@@ -39,13 +37,11 @@ exports.signup = function(req, res) {
                             message: errorHandler.getErrorMessage(err)
                         });
                     } else {
-                        // Remove sensitive data before login
+                        //Remove sensitive data before login
                         user.password = undefined;
                         user.salt = undefined;
 
-                        profile.save();
                         emailHandler.sendConfirmationEmail(user._id, user.email);
-
                         req.login(user, function(err) {
                             if (err) {
                                 res.status(400).send(err);
@@ -65,7 +61,7 @@ exports.signup = function(req, res) {
  */
 exports.signin = function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
-		if (err || !user) {
+        if (err || !user) {
 			res.status(400).send(info);
 		} else {
 			// Remove sensitive data before login

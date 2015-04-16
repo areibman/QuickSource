@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
     nodemailer = require('nodemailer'),
+    os = require('os'),
     _ = require('lodash');
 
 /**
@@ -51,8 +52,9 @@ exports.sendConfirmationEmail = function(userId, email){
         from: 'QuickSource <emory.quicksource@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'Welcome to QuickSource', // Subject line
-        text: 'Please click the following link to validate your email: http://localhost:3000/#!/users/emailValidation/'+userId, // plaintext body
-        html: 'Please click the following link to validate your email: <a href="http://localhost:3000/#!/users/emailValidation/'+userId+'">Click here</a>' // html body
+        text: 'Please click the following link to validate your email: http://' + os.hostname() + '/users/emailValidation/'+userId, // plaintext body
+        html: 'Please click the following link to validate your email: <a href="http://' + os.hostname() + '/users/emailValidation/'+userId+'">Click here</a>' // html body
     };
     send(mailOptions);
 };
+

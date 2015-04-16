@@ -39,9 +39,20 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
         // Opt in
         $scope.opt_in= function(){
             var post = $scope.post;
+            var message =$scope.notification.message;
+            if(message.length>0){
+                $scope.notificationOft = {
+                    title: 'I am interested in your QuickSource Project',
+                    message: message
+                };
+                //console.log(post.user._id);
+                //console.log($scope.notificationOft);
+                $http.post('/notification/user/'+post.user._id+'/send',$scope.notificationOft).success(function(response) {
+                });
+            }
             $http.post('/posts/'+post._id+'/opt-in').success(function(response){
-                $scope.interestedUsers = response.interestedUsers;
-                $state.reload();
+                $scope.post.interestedUsers = response.interestedUsers;
+                post.isAlreadyInterested = true;
             }).error(function(response){
                 $scope.error = response.message;
             });
@@ -52,8 +63,8 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
         $scope.opt_out = function(){
             var post = $scope.post;
             $http.post('/posts/'+post._id+'/opt-out').success(function(response){
-                $scope.interestedUsers = response.interestedUsers;
-                $state.reload();
+                $scope.post.interestedUsers = response.interestedUsers;
+                post.isAlreadyInterested = false;
             }).error(function(response){
                 $scope.error = response.message;
             });
@@ -67,8 +78,11 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
         $scope.addComment = function(){
             var post = $scope.post;
             $http.post('/posts/'+post._id+'/addComment', $scope.comment).success(function(response){
-                console.log(response);
-                $state.reload();
+               //$http.post('/posts')
+                $http.get('/posts/'+post._id+'/listComments').success(function(response) {
+                    $scope.post.comments = response;
+                });
+               //console.log(response);
             }).error(function(response){
                 $scope.error = response.message;
             });
@@ -91,7 +105,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
                     post.isPoster=true;
                 }
                 $scope.post = post;
-                console.log(post);
+                //console.log(post);
             }).error(function(response){
                 alert(response.message);
                 $scope.error = response.message;

@@ -18,11 +18,13 @@ module.exports = function(app) {
 
     // User profile
     app.route('/users/profile').get(users.profile); // Extended user profile info
-    app.route('/users/profile/addPosition').post(users.requiresLogin, experiences.createPosition);
-    app.route('/users/profile/addEducation').post(users.requiresLogin, experiences.createEducation);
-    app.route('/users/profile/addCourse').post(users.requiresLogin, experiences.createCourse);
-    app.route('/users/profile/addPublication').post(users.requiresLogin, experiences.createPublication);
-    app.route('/users/profile/:experienceId/remove').put(users.requiresLogin, experiences.hasAuthorization, experiences.setInactive);
+    app.route('/users/profile/update').put(users.requiresLogin, profile.hasAuthorization, profile.update);
+    app.route('/users/profile/addPosition').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createPosition);
+    app.route('/users/profile/addEducation').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createEducation);
+    app.route('/users/profile/addCourse').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createCourse);
+    app.route('/users/profile/addPublication').post(users.requiresLogin, profile.hasAuthorization, profile.getProfile, experiences.createPublication);
+    app.route('/users/profile/:experienceId/update').put(users.requiresLogin, profile.hasAuthorization, experiences.hasAuthorization, experiences.update);
+    app.route('/users/profile/:experienceId/remove').put(users.requiresLogin, profile.hasAuthorization, experiences.hasAuthorization, experiences.setInactive);
 
 	// Setting up the users password api
 	app.route('/users/password').post(users.changePassword);
@@ -44,7 +46,7 @@ module.exports = function(app) {
 	app.route('/auth/github/callback').get(users.oauthCallback('github'));
 
     // Email validation
-    app.route('/users/:userId/emailValidation/').get(users.validateEmail);
+    app.route('/users/:userId/emailValidation/').post(users.validateEmail);
     
 	// Finish by binding middlewares
 	app.param('userId', users.userByID);

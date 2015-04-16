@@ -1,89 +1,169 @@
-<section class="row" data-ng-controller="SettingsController">
-	<h2>Edit your profile</h2>
-
-		<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" autocomplete="off">
-		<div class="col-md-4">
-			<fieldset>
-				<h3>Personal Information</h3>
-				<div class="form-group">
-					<label for="firstName">First Name</label>
-					<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name">
-				</div>
-				<div class="form-group">
-					<label for="lastName">Last Name</label>
-					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
-				</div>
-				<div class="form-group">
-					<label for="email">Email</label>
-					<input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="Email">
-				</div>
-				<div class="form-group">
-					<label for="username">Username</label>
-					<input type="text" id="username" name="username" class="form-control" data-ng-model="user.username" placeholder="Username">
-				</div>
-				<div class="form-group">
-                    <label for="school">School</label>
-                    <input type="text" id="school" name="school" class="form-control" data-ng-model="user.school" placeholder="School">
-                </div>
-                <div class="form-group">
-                    <label for="zipCode">Zip Code</label>
-                    <input type="text" id="zipCode" name="zipCode" class="form-control" data-ng-model="user.zipCode" placeholder="Zip Code">
-                </div>
-                <div class="form-group">
-                    <label for="interests">Interests (select all that apply)</label>
-                    <select multiple="yes" id="interests" name="interests" class="form-control" data-ng-model="user.interests">
-                        <option value="Arts"> Arts </option>
-                        <option value="Sciences"> Sciences </option>
-                        <option value="Medicine"> Medicine </option>
-                        <option value="Business"> Business </option>
-                        <option value="Law"> Law </option>
-                    </select>
-                </div>
-				<div ng-controller="ProfileController" data-ng-init="profile()">
-					<div class="form-group">
-					<div class="btn btn-primary" ng-file-select ng-model="profilePic">Select Profile Picture</div>
-						</div>
-					<div class="form-group">
-					<div class="btn btn-primary" ng-file-select ng-model="profileResume">Select Profile Resume</div>
-						</div>
-				</div>
-
-				<div class="text-center form-group">
-					<button type="submit" class="btn btn-large btn-block btn-primary">Save Profile</button>
-				</div>	
-				<div data-ng-show="success" class="text-center text-success">
-					<strong>Profile Saved Successfully</strong>
-				</div>
-				<div data-ng-show="error" class="text-center text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-			</fieldset>
-		</form>
-		</div>
-		<div class="col-md-8" ng-controller="Experience">
-			<h3>Professional Information (coming soon)</h3>
-			<h4>Education</h4>
-			<button data-ng-click="add()" class="btn btn-large btn-block btn-primary">Add New Education</button>
-			<div ng-repeat="item in test">
-				<input type="text" id="education" name="education" class="form-control" ng-model="item.basic" placeholder="{{item.newPlaceholder}}">
-			</div>
-		</div>
-	</div>
+<section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 	<div class="row">
-		
-	</div>
-	</form>
-	<script type="text/javascript">
-		var Experience = function($scope){
-			$scope.test = [];
-			$scope.add = function() {
-				$scope.test.push({
-					basic: "",
-					newPlaceholder: "new"
-				});
-			}
-		}
-	
-	</script>
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8">
+			<h2>Edit Your Professional Profile</h2>
+			<h4>{{profile.headline}}</h4>
+			<form name="headlineform" data-ng-submit="updateHead()" autocomplete="false">
+				<hr>
+				<div class="form-group">
+					<div class="input-group">
+						<input type="text" id="headline" name="headline" class="form-control" data-ng-model="profile.headline" placeholder="Headline">
+						<span class="input-group-btn">
+							<button class="btn btn-large btn-primary" type="submit">Update</button>
+						</span>
+					</div>
+				</div>
+			</form>
+			<hr>
+			<h4>Documents</h4>
+			<div>
+				<div data-ng-init="">
+					<div class="form-group col-md-6">
+						<div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profilePic">Select Profile Picture</div>
+					</div>
+					<div class="form-group col-md-6">
+						<div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profileResume">Select Profile Resume</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<h4>Education</h4>
+				</div>
+				<div class="col-md-6">
+					<button ng-click="addNewEducation()" class="btn btn-large btn-block btn-primary">Add New Education</button>
+				</div>
+			</div>
+			<div ng-repeat="choice in edufield">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="row">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="institution">School</label>
+							<input type="text" name="institution" data-ng-model="user.education.institution"placeholder="School" class="form-control">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="major">Majors</label>
+							<input type="text" id="major" name="major" placeholder="Majors" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="startdate">Start Date</label>
+							<input type="date" id="startdate" name="startdate" placeholder="Start Date" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="enddate">Graduation Date</label>
+							<input type="date" placeholder="Graduation Date" class="form-control">
+						</div>
+						<div class="form-group col-md-1">
+							Currently Attending?<input type="checkbox" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<h4>Positions</h4>
+				</div>
 
+				<div class="col-md-6">
+					<button ng-click="addNewPosition()" class="btn btn-large btn-block btn-primary">Add New Position</button>
+				</div>
+			</div>
+			<div ng-repeat="choice in posfield" >
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="row">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="institution">Company or Institution</label>
+							<input type="text" id="institution" name="institution" data-ng-model="user.education.institution" placeholder="Institution" class="form-control">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="position">Position</label>
+							<input type="text" id="position" name="position" placeholder="Position" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="startdate">Start Date</label>
+							<input type="date" id="startdate" name="startdate" placeholder="Start Date" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="enddate">End Date</label>
+							<input type="date" placeholder="End Date" class="form-control">
+						</div>
+						<div class="form-group col-md-4">
+							Currently Position?<input type="checkbox" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<h4>Courses</h4>
+				</div>
+				<div class="col-md-6">
+					<button ng-click="addNewCourse()" class="btn btn-large btn-block btn-primary">Add New Course</button>
+
+				</div>
+			</div>
+			<div ng-repeat="choice in coursefield" >
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="row">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="coursename">Course Name</label>
+							<input type="text" id="coursename" name="coursename" data-ng-model="user.education.institution" placeholder="Course Name" class="form-control">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="courseno">Course Number</label>
+							<input type="text" id="courseno" name="courseno" placeholder="Course Number" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<h4>Publications</h4>
+
+				</div>
+				<div class="col-md-6">
+					<button ng-click="addNewPublication()" class="btn btn-large btn-block btn-primary">Add New Publication</button>
+
+				</div>
+			</div>
+			<div ng-repeat="choice in pubfield" >
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="row">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="coursename">Publication Name</label>
+							<input type="text" id="pubname" name="pubname" data-ng-model="user.education.institution" placeholder="Publication Name" class="form-control">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="courseno">Publication Authors</label>
+							<input type="text" id="pubauth" name="puthauth" placeholder="Publication Authors" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+		</div>
+		<div class="col-md-2">
+		</div>
+
+
+	</div>
 </section>
