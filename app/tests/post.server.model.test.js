@@ -22,7 +22,7 @@ describe('Post Model Unit Tests:', function() {
             firstName: 'Full',
             lastName: 'Name',
             displayName: 'Full Name',
-            email: 'test@test.com',
+            email: 'test@test.edu',
             username: 'username',
             password: 'password',
             provider: 'local',

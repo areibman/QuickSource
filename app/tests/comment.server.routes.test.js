@@ -29,7 +29,7 @@ describe('Comment CRUD tests', function() {
             firstName: 'Full',
             lastName: 'Name',
             displayName: 'Full Name',
-            email: 'test@test.com',
+            email: 'test@test.edu',
             username: credentials.username,
             password: credentials.password,
             provider: 'local',
@@ -38,7 +38,7 @@ describe('Comment CRUD tests', function() {
 
 		// Save a user to the test db and create new Comment
 		user.save(function() {
-			comment = {
+            comment = {
 				content: 'Comment Name'
 			};
 
@@ -47,7 +47,7 @@ describe('Comment CRUD tests', function() {
 	});
 
 	it('should be able to save Comment instance if logged in', function(done) {
-		agent.post('/auth/signin')
+        agent.post('/auth/signin')
 			.send(credentials)
 			.expect(200)
 			.end(function(signinErr, signinRes) {
@@ -66,7 +66,7 @@ describe('Comment CRUD tests', function() {
 						if (commentSaveErr) done(commentSaveErr);
 
 						// Get a list of Comments
-						agent.get('/comments')
+						agent.get('/comments/'+commentSaveRes.id)
 							.end(function(commentsGetErr, commentsGetRes) {
 								// Handle Comment save error
 								if (commentsGetErr) done(commentsGetErr);
@@ -75,7 +75,8 @@ describe('Comment CRUD tests', function() {
 								var comments = commentsGetRes.body;
 
 								// Set assertions
-								(comments[0].user._id).should.equal(userId);
+                                console.log(comments[0].user.id);
+								(comments[0].user.id).should.equal(userId);
 								(comments[0].content).should.match('Comment Name');
 
 								// Call the assertion callback
