@@ -102,7 +102,7 @@ var UserSchema = new Schema({
         trim: true,
         default: '',
         validate: [validateLocalStrategyProperty, 'Please fill in your zip code'],
-        match: [/^\d{5}$/, 'Please fill in your zip code in the correct format']
+        match: [/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Please fill in your zip code in the correct format']
     },
     interests: {
         type: [String],
