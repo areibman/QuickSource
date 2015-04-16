@@ -17,10 +17,9 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.updateHead = function(){
 			var headline = $scope.profile.headline;
 			var obj = { headline : $scope.profile.headline };
-
 			$http.put('/users/profile/update', obj).success(function(response){
 				//console.log(response);
-				$scope.profile.headline = headline;
+				$scope.profile.headline = response.headline;
 			});
 		};
 
@@ -50,8 +49,9 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		};
 
 		$scope.profile = function () {
-			$http.get('/users/accounts').success(function(res){
-				console.log(res);
+			$http.get('/users/profile').success(function(res){
+				console.log(res.profile.headline);
+				$scope.profile.headline = res.profile.headline;
 			});
 		};
 
