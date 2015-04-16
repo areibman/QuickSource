@@ -6,7 +6,7 @@
 			<h2>Edit Your Professional Profile</h2>
 			<h4>{{profile.headline}}</h4>
 			<form name="headlineform" data-ng-submit="updateHead()" autocomplete="false">
-			<hr>
+				<hr>
 				<div class="form-group">
 					<div class="input-group">
 						<input type="text" id="headline" name="headline" class="form-control" data-ng-model="profile.headline" placeholder="Headline">
@@ -14,29 +14,39 @@
 							<button class="btn btn-large btn-primary" type="submit">Update</button>
 						</span>
 					</div>
-                </div>
-				</form>
-            <hr>
-            <h4>Documents</h4>
-            <div>    
-                <div data-ng-init="">
-                	<div class="form-group col-md-6">
-                		<div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profilePic">Select Profile Picture</div>
-                	</div>
-                	<div class="form-group col-md-6">
-                		<div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profileResume">Select Profile Resume</div>
-                	</div>
-                </div>
-            </div>
-            <hr>
-            <hr>
-			<h4>Education</h4>
+				</div>
+			</form>
+			<hr>
+			<h4>Documents</h4>
+			<div>
+				<div data-ng-init="">
+					<div class="form-group col-md-6">
+						<div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profilePic">Select Profile Picture</div>
+					</div>
+					<div class="form-group col-md-6">
+						<div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profileResume">Select Profile Resume</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<h4>Education</h4>
+				</div>
+				<div class="col-md-6">
+					<button ng-click="addNewEducation()" class="btn btn-large btn-block btn-primary">Add New Education</button>
+				</div>
+			</div>
 			<div ng-repeat="choice in edufield">
 				<div class="panel panel-default">
 					<div class="panel-body">
+						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="row">
+						</div>
 						<div class="form-group col-md-6">
 							<label for="institution">School</label>
-							<input type="text" id="institution" name="institution" data-ng-model="user.education.institution"placeholder="School" class="form-control">
+							<input type="text" name="institution" data-ng-model="user.education.institution"placeholder="School" class="form-control">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="major">Majors</label>
@@ -50,25 +60,28 @@
 							<label for="enddate">Graduation Date</label>
 							<input type="date" placeholder="Graduation Date" class="form-control">
 						</div>
-						<div class="form-group col-md-4">
+						<div class="form-group col-md-1">
 							Currently Attending?<input type="checkbox" class="form-control">
 						</div>
 					</div>
 				</div>
 			</div>
+			<hr>
 			<div class="row">
 				<div class="col-md-6">
-					<button ng-click="addNewEducation()" class="btn btn-large btn-block btn-primary">Add New Education</button>
+					<h4>Positions</h4>
 				</div>
+
 				<div class="col-md-6">
-					<button ng-click="" class="btn btn-large btn-block btn-danger">Delete</button>
+					<button ng-click="addNewPosition()" class="btn btn-large btn-block btn-primary">Add New Position</button>
 				</div>
 			</div>
-			<hr>
-			<h4>Positions</h4>
 			<div ng-repeat="choice in posfield" >
 				<div class="panel panel-default">
 					<div class="panel-body">
+						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="row">
+						</div>
 						<div class="form-group col-md-6">
 							<label for="institution">Company or Institution</label>
 							<input type="text" id="institution" name="institution" data-ng-model="user.education.institution" placeholder="Institution" class="form-control">
@@ -91,19 +104,22 @@
 					</div>
 				</div>
 			</div>
+			<hr>
 			<div class="row">
 				<div class="col-md-6">
-					<button ng-click="addNewPosition()" class="btn btn-large btn-block btn-primary">Add New Position</button>
+					<h4>Courses</h4>
 				</div>
 				<div class="col-md-6">
-					<button ng-click="" class="btn btn-large btn-block btn-danger">Delete</button>
+					<button ng-click="addNewCourse()" class="btn btn-large btn-block btn-primary">Add New Course</button>
+
 				</div>
 			</div>
-			<hr>
-			<h4>Courses</h4>
 			<div ng-repeat="choice in coursefield" >
 				<div class="panel panel-default">
 					<div class="panel-body">
+						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="row">
+						</div>
 						<div class="form-group col-md-6">
 							<label for="coursename">Course Name</label>
 							<input type="text" id="coursename" name="coursename" data-ng-model="user.education.institution" placeholder="Course Name" class="form-control">
@@ -115,19 +131,23 @@
 					</div>
 				</div>
 			</div>
+			<hr>
 			<div class="row">
 				<div class="col-md-6">
-					<button ng-click="addNewCourse()" class="btn btn-large btn-block btn-primary">Add New Course</button>
+					<h4>Publications</h4>
+
 				</div>
 				<div class="col-md-6">
-					<button ng-click="" class="btn btn-large btn-block btn-danger">Delete</button>
+					<button ng-click="addNewPublication()" class="btn btn-large btn-block btn-primary">Add New Publication</button>
+
 				</div>
 			</div>
-			<hr>
-			<h4>Publications</h4>
 			<div ng-repeat="choice in pubfield" >
 				<div class="panel panel-default">
 					<div class="panel-body">
+						<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<div class="row">
+						</div>
 						<div class="form-group col-md-6">
 							<label for="coursename">Publication Name</label>
 							<input type="text" id="pubname" name="pubname" data-ng-model="user.education.institution" placeholder="Publication Name" class="form-control">
@@ -139,17 +159,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<button ng-click="addNewPublication()" class="btn btn-large btn-block btn-primary">Add New Publication</button>
-				</div>
-				<div class="col-md-6">
-					<button ng-click="" class="btn btn-large btn-block btn-danger">Delete</button>
-				</div>
-			</div>
 			<hr>
 		</div>
 		<div class="col-md-2">
 		</div>
+
+
 	</div>
 </section>
