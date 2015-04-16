@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http','$upload','$location', 'Users', 'Authentication',
-	function($scope, $http,$upload, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$http','$upload','$location', '$stateParams','Users', 'Authentication',
+	function($scope, $http,$upload, $location,$stateParams, Users, Authentication) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
@@ -75,6 +75,14 @@ angular.module('users').controller('SettingsController', ['$scope', '$http','$up
 				$scope.error = response.message;
 			});
 		};
+
+
+
+		$scope.verify = function(){
+			$http.post('/users/'+$stateParams._id+'/emailValidation/').success(function(response){
+				console.log(response);
+			});
+		}
 
 
 

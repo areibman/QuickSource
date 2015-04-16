@@ -1,0 +1,29 @@
+<section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
+
+    <div class="col-md-8">
+        <h2>{{profile.headline}}</h2>
+        <form name="headlineform" data-ng-submit="updateHead()" autocomplete="false">
+            <hr>
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" id="headline" name="headline" class="form-control" data-ng-model="profile.headline" placeholder="Headline">
+						<span class="input-group-btn">
+							<button class="btn btn-large btn-primary" type="submit">Update</button>
+						</span>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <h4>Documents</h4>
+        <div>
+            <div data-ng-init="">
+                <div class="form-group col-md-6">
+                    <div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profilePic">Select Profile Picture</div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profileResume">Select Profile Resume</div>
+                </div>
+            </div>
+        </div>
+        </div>
+</section>
