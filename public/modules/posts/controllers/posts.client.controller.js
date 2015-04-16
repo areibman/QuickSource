@@ -41,7 +41,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             var post = $scope.post;
             //var message =$scope.notification.message;
             //console.log(message);
-            if(!$scope.notification===undefined){
+            if($scope.notification!==undefined){
                 var notificationOft = {
                     title: 'I am interested in your QuickSource Project',
                     message: $scope.notification.message

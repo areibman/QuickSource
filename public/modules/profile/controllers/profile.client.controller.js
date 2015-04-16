@@ -40,7 +40,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		};
 
 		$scope.$on('$stateChangeSuccess', function() {
-			console.log($state);
+			//console.log($state);
 			$scope.tabs.forEach(function(tab) {
 				tab.active = $scope.active(tab.route);
 			});
@@ -58,6 +58,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.addNewEducation = function() {
 			var newitem = $scope.edufield.length+1;
 			$scope.edufield.push({'id':newitem});
+			console.log($scope);
 			$http.post('/users/profile/addEducation/').success(function(response){
 				//console.log(response);
 			});
