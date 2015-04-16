@@ -13,7 +13,7 @@
 					<div class="panel-body">
 						<form data-ng-submit="opt_in()">
 							<div class="form-group" data-ng-hide="(post.isAlreadyInterested || post.isPoster)">
-								<textarea type="text" class="form-control" name="message" id="message" rows="8">Add a note</textarea><br>
+								<textarea type="text" class="form-control" name="message" id="message" data-ng-model="notification.message" rows="8">Add a note</textarea><br>
 								<button type="submit" class="btn btn-default btn-block">I'm interested!</button>
 							</div>
 						</form>
