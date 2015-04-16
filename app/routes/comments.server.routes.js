@@ -6,7 +6,6 @@ module.exports = function(app) {
 
 	// Comments Routes
 	app.route('/comments')
-		.get(comments.list)
 		.post(users.requiresLogin, comments.create);
 
 	app.route('/comments/:commentId')
