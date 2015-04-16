@@ -127,10 +127,9 @@ exports.list = function(req, res) {
  */
 exports.listComments = function(req, res) {
     var post = req.post;
-    var comments = post.comments;
 
-    Comment.populate(comments, {match : { isActive : true }}, function(err, res){
-       res.jsonp(res);
+    Post.populate(post, {path : 'comments', model : 'Comment', match : { isActive : true }}, function(err, populatedPost){
+        res.jsonp(populatedPost.comments);
     });
 };
 
