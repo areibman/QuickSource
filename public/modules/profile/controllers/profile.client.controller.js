@@ -47,7 +47,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		});
 
 		$scope.$on('$stateChangeStart', function() {
-			console.log('start');
+			//console.log('start');
 		});
 
 		$scope.inittab = function(){
@@ -59,7 +59,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 			var newitem = $scope.edufield.length+1;
 			$scope.edufield.push({'id':newitem});
 			$http.post('/users/profile/addEducation/').success(function(response){
-				console.log(response);
+				//console.log(response);
 			});
 		};
 		$scope.posfield = [{id: '1'}];
@@ -80,7 +80,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 		$scope.profile = function () {
 			$http.get('/users/profile').success(function(res){
-				console.log(res.profile.headline);
+				//console.log(res.profile.headline);
 				$scope.profile.headline = res.profile.headline;
 			});
 		};
@@ -92,7 +92,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 		$scope.uploadProfilePic = function (profilePic) {
 			if (profilePic) {
-				console.log(profilePic);
+				//console.log(profilePic);
 				$upload.upload({
 					url: '/file/uploadProfilePic',
 					method: 'POST',
