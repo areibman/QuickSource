@@ -30,9 +30,8 @@ exports.sendNotification_route = function(req, res) {
     //console.log(req.body);
     notification.recipient = user;
     notification.save(function(errN){
-        console.log(errN);
         if(errN) return res.status(400).send({ message: errorHandler.getErrorMessage(errN) });
-        user.notification.push(notification);
+        user.notifications.push(notification);
             if(user.enableEmailNotification)
                 emailHandler.sendEmail({
                     from: 'QuickSource <emory.quicksource@gmail.com>',
@@ -50,7 +49,7 @@ exports.sendNotification_route = function(req, res) {
 exports.sendNotification = function(user, notificationOpt) {
     var notification = new Notification(notificationOpt);
     notification.save(function(errN){
-        user.notification.push(notification);
+        user.notifications.push(notification);
         if(user.enableEmailNotification)
             emailHandler.sendEmail({
                 from: 'QuickSource <emory.quicksource@gmail.com>',

@@ -1,6 +1,4 @@
-<section class="row" data-ng-controller="ProfileController" data-ng-init="find()">
-	<h2>Edit Your Profile</h2>
-
+<section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 	<div class="row">
 		<div class="col-md-2">
 		</div>
@@ -10,7 +8,6 @@
 			<h4>{{user.profile.headline}}</h4>
 			<form name="headlineform" data-ng-submit="updateHead()" autocomplete="false">
 			<hr>
-			<h4>Headline</h4>
 				<div class="form-group">
 					<div class="input-group">
 						<input type="text" id="headline" name="headline" class="form-control" data-ng-model="profile.headline" placeholder="Headline">
@@ -23,7 +20,7 @@
             <hr>
             <h4>Documents</h4>
             <div>    
-                <div data-ng-init="profile()">
+                <div data-ng-init="">
                 	<div class="form-group col-md-6">
                 		<div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profilePic">Select Profile Picture</div>
                 	</div>

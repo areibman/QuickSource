@@ -7,7 +7,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.find = function(){
 			$http.get('/profile/'+$stateParams.username).success(function(user){
 				$scope.user = user;
-				console.log(user);
+				//console.log(user);
 				$scope.user.profileImage = '#!/uploads/profilePic/'+user.profilePic;
 			}).error(function(response){
 				$scope.error = response.message;
@@ -15,8 +15,11 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		};
 
 		$scope.updateHead = function(){
-			var headline =  $scope.profile.headline;
-			$http.put('/users/profile/update').success(function(response){
+			var headline = $scope.profile.headline;
+			var obj = { headline : $scope.profile.headline };
+
+			$http.put('/users/profile/update', obj).success(function(response){
+				//console.log(response);
 				$scope.profile.headline = headline;
 			});
 		};
@@ -26,6 +29,9 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.addNewEducation = function() {
 			var newitem = $scope.edufield.length+1;
 			$scope.edufield.push({'id':newitem});
+			$http.post('/users/profile/addEducation/').success(function(response){
+				console.log(response);
+			});
 		};
 		$scope.posfield = [{id: '1'}];
 		$scope.addNewPosition = function() {
@@ -45,7 +51,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 		$scope.profile = function () {
 			$http.get('/users/accounts').success(function(res){
-				//console.log(res);
+				console.log(res);
 			});
 		};
 

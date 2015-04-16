@@ -42,13 +42,12 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
             var message =$scope.notification.message;
             if(message.length>0){
                 $scope.notificationOft = {
-                    recipient: post.user_id,
                     title: 'I am interested in your QuickSource Project',
                     message: message
                 };
                 //console.log(post.user._id);
-                //console.log($scope);
-                $http.post('/notification/user/'+post.user._id+'/send').success(function(response) {
+                //console.log($scope.notificationOft);
+                $http.post('/notification/user/'+post.user._id+'/send',$scope.notificationOft).success(function(response) {
                 });
             }
             $http.post('/posts/'+post._id+'/opt-in').success(function(response){
@@ -56,7 +55,6 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
                 post.isAlreadyInterested = true;
             }).error(function(response){
                 $scope.error = response.message;
-
             });
 
         };

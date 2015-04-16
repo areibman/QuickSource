@@ -21,6 +21,7 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
     var user = req.user;
+
     Profile.findById(req.user.profile, function(err, profile){
         profile = _.extend(profile, req.body);
         user.updated = Date.now();
