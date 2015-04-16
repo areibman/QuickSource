@@ -18,7 +18,7 @@ module.exports = function(app) {
 
     // User profile
     app.route('/users/profile').get(users.profile); // Extended user profile info
-    app.route('/users/profile/update').put(users.requiresLogin, profile.hasAuthorization, profile.update)
+    app.route('/users/profile/update').put(users.requiresLogin, profile.hasAuthorization, profile.update);
     app.route('/users/profile/addPosition').post(users.requiresLogin, profile.hasAuthorization, experiences.createPosition);
     app.route('/users/profile/addEducation').post(users.requiresLogin, profile.hasAuthorization, experiences.createEducation);
     app.route('/users/profile/addCourse').post(users.requiresLogin, profile.hasAuthorization, experiences.createCourse);

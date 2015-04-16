@@ -47,9 +47,9 @@ describe('User Routes Unit Tests:', function() {
             zipCode: '12345'
 		});
 
-        profile = Profile({
+        profile = {
             headline: 'This is a test headline'
-        });
+        };
 
         user1.save(function(){
             done();
