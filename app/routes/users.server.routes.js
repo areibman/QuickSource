@@ -23,6 +23,7 @@ module.exports = function(app) {
     app.route('/users/profile/addEducation').post(users.requiresLogin, profile.hasAuthorization, experiences.createEducation);
     app.route('/users/profile/addCourse').post(users.requiresLogin, profile.hasAuthorization, experiences.createCourse);
     app.route('/users/profile/addPublication').post(users.requiresLogin, profile.hasAuthorization, experiences.createPublication);
+    app.route('/users/profile/:experienceId/update').put(users.requiresLogin, profile.hasAuthorization, experiences.hasAuthorization, experiences.update);
     app.route('/users/profile/:experienceId/remove').put(users.requiresLogin, profile.hasAuthorization, experiences.hasAuthorization, experiences.setInactive);
 
 	// Setting up the users password api
