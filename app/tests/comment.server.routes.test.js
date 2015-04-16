@@ -29,7 +29,7 @@ describe('Comment CRUD tests', function() {
             firstName: 'Full',
             lastName: 'Name',
             displayName: 'Full Name',
-            email: 'test@test.com',
+            email: 'test@test.edu',
             username: credentials.username,
             password: credentials.password,
             provider: 'local',
@@ -38,7 +38,7 @@ describe('Comment CRUD tests', function() {
 
 		// Save a user to the test db and create new Comment
 		user.save(function() {
-			comment = {
+            comment = {
 				content: 'Comment Name'
 			};
 
@@ -47,7 +47,7 @@ describe('Comment CRUD tests', function() {
 	});
 
 	it('should be able to save Comment instance if logged in', function(done) {
-		agent.post('/auth/signin')
+        agent.post('/auth/signin')
 			.send(credentials)
 			.expect(200)
 			.end(function(signinErr, signinRes) {
@@ -66,17 +66,17 @@ describe('Comment CRUD tests', function() {
 						if (commentSaveErr) done(commentSaveErr);
 
 						// Get a list of Comments
-						agent.get('/comments')
+						agent.get('/comments/'+commentSaveRes.body._id)
 							.end(function(commentsGetErr, commentsGetRes) {
 								// Handle Comment save error
 								if (commentsGetErr) done(commentsGetErr);
 
 								// Get Comments list
-								var comments = commentsGetRes.body;
+								var comment = commentsGetRes.body;
 
 								// Set assertions
-								(comments[0].user._id).should.equal(userId);
-								(comments[0].content).should.match('Comment Name');
+								(comment.user._id).should.equal(userId);
+								(comment.content).should.match('Comment Name');
 
 								// Call the assertion callback
 								done();
@@ -163,26 +163,6 @@ describe('Comment CRUD tests', function() {
 					});
 			});
 	});
-
-	it('should be able to get a list of Comments if not signed in', function(done) {
-		// Create new Comment model instance
-		var commentObj = new Comment(comment);
-
-		// Save the Comment
-		commentObj.save(function() {
-			// Request Comments
-			request(app).get('/comments')
-				.end(function(req, res) {
-					// Set assertion
-					res.body.should.be.an.Array.with.lengthOf(1);
-
-					// Call the assertion callback
-					done();
-				});
-
-		});
-	});
-
 
 	it('should be able to get a single Comment if not signed in', function(done) {
 		// Create new Comment model instance
