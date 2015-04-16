@@ -40,7 +40,9 @@ exports.sendNotification_route = function(req, res) {
                     text: notification.message,
                     html: '<b>' + notification.message + '</b>'
                 });
-        user.save();
+        user.save(function(){
+            res.json(notification);
+        });
         });
 };
 /**
@@ -58,7 +60,9 @@ exports.sendNotification = function(user, notificationOpt) {
                 text: notification.message,
                 html: '<b>' + notification.message + '</b>'
             });
-        user.save();
+        user.save(function(){
+            res.json(notification);
+        });
     });
 };
 

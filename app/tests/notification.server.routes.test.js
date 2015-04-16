@@ -4,8 +4,11 @@
 * Module dependencies.
 */
 var should = require('should'),
+    request = require('supertest'),
+    app = require('../../server'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
+    agent = request.agent(app),
 	Notification = mongoose.model('Notification');
 
 /**
@@ -16,7 +19,7 @@ var user, credentials_user, vistor, credentials_vistor,  notification;
 /**
 * Unit tests
 */
-describe('Notification Model Unit Tests:', function() {
+describe('Notification Routes Unit Tests:', function() {
 	beforeEach(function(done) {
         // Create user credentials_user
         credentials_user = {
@@ -65,21 +68,31 @@ describe('Notification Model Unit Tests:', function() {
 	});
 
 	describe('Method Save', function() {
-		it('should not be able to save without recipient', function(done) {
-			return notification.save(function(err) {
-                (err.errors.recipient.message).should.match('Recipient of the notification is required');
-				done();
-			});
-		});
-
-        it('should not be able to save without message', function(done) {
+		it('should be able to update recipient\'s notification', function(done) {
             notification.recipient = vistor;
-            notification.message = undefined;
-            return notification.save(function(err) {
-                (err.errors.message.message).should.match('Message of the notification is required');
-                done();
-            });
-        });
+
+            agent.post('/auth/signin')
+                .send(credentials_user)
+                .expect(200)
+                .end(function(signinErr, signinRes) {
+                    // Handle signin error
+                    if (signinErr) done(signinErr);
+
+                    var sentNotification;
+                    agent.post('/notification/user/' + vistor.id + '/send')
+                        .send(notification)
+                        .expect(200)
+                        .end(function(sendErr, sendRes){
+                            sentNotification = sendRes.body;
+
+                            User.findById(vistor._id, function(err, res){
+                                (res.notifications).should.be.an.Array.with.lengthOf(1);
+                                (res.notifications[0].toString()).should.equal(sentNotification._id);
+                                done(err);
+                            });
+                        });
+                });
+		});
 	});
 
 	afterEach(function(done) {
