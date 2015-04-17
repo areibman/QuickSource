@@ -64,6 +64,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 				$scope.edufield[newitem-2].submitted = true;
 				$scope.edufield.unshift({'id':newitem});
 				$scope.edufield = $scope.edufield.splice(previousitem,1);
+				//console.log($scope.profile.edufield);
 				previousitem._id = response._id;
 				$scope.profile.educations.unshift(previousitem);
 			}).error(function(response){
@@ -71,9 +72,13 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 			});
 		};
 		$scope.remove = function(experienceId){
+			console.log(experienceId);
 			$http.put('/users/profile/'+experienceId+'/remove').success(function(response){
-				if(response.type === 'educations') {
+				console.log(response);
+
+				if(response.type === 'education') {
 					$scope.profile.educations.splice(response, 1);
+					console.log($scope.profile.educations);
 				}
 				if(response.type === 'position'){
 					$scope.profile.positions.splice(response, 1);
