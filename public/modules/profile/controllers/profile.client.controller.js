@@ -57,11 +57,21 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.edufield = [{id: '1'}];
 		$scope.addNewEducation = function() {
 			var newitem = $scope.edufield.length+1;
-			$scope.edufield.push({'id':newitem});
-			console.log($scope);
-			$http.post('/users/profile/addEducation/').success(function(response){
-				//console.log(response);
+			var previousitem = $scope.edufield[newitem-2];
+			console.log(previousitem);
+			previousitem.title = $scope.profile.headline;
+			$http.post('/users/profile/addEducation',previousitem).success(function(response){
+				$scope.edufield[newitem-2].submitted = true;
+				$scope.edufield.push({'id':newitem});
+			}).error(function(response){
+				$scope.error = response.message;
 			});
+		};
+		$scope.remove = function(taskid,experienceID){
+			var item = $scope.edufield[taskid-1];
+			console.log(experienceID);
+			console.log(item);
+			//$http.post('/users/profile')
 		};
 		$scope.posfield = [{id: '1'}];
 		$scope.addNewPosition = function() {

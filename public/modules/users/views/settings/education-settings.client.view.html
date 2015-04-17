@@ -1,4 +1,4 @@
-<section class="row" data-ng-controller="ProfileController" data-ng-init="">
+<section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 
     <div class="row">
         <div class="col-md-6">
@@ -8,33 +8,41 @@
             <button ng-click="addNewEducation()" class="btn btn-large btn-block btn-primary">Add New Education</button>
         </div>
     </div>
+
+
     <div ng-repeat="choice in edufield">
         <div class="panel panel-default">
             <div class="panel-body">
-                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <fieldset disabled={{choice.submitted}}>
+                    <!--ng-show="choice.submitted"-->
+                <button type="button" class="close"  ng-click="remove(choice.id)"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <div class="row">
+                   <div class="col-md-6" >{{error}}
+                   </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="institution">School</label>
-                    <input type="text" name="institution" data-ng-model="user.education.institution"placeholder="School" class="form-control">
+                    <input type="text" name="institution" data-ng-model="choice.institution"placeholder="School" class="form-control">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="major">Majors</label>
-                    <input type="text" id="major" name="major" placeholder="Majors" class="form-control">
+                    <input type="text" id="major" name="major" data-ng-model="choice.major" placeholder="Majors" class="form-control">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="startdate">Start Date</label>
-                    <input type="date" id="startdate" name="startdate" placeholder="Start Date" class="form-control">
+                    <input type="date" id="startdate" name="startdate" data-ng-model="choice.startDate"   placeholder="Start Date" class="form-control">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="enddate">Graduation Date</label>
-                    <input type="date" placeholder="Graduation Date" class="form-control">
+                    <input type="date" placeholder="Graduation Date" data-ng-model="choice.endDate"  class="form-control">
                 </div>
                 <div class="form-group col-md-1">
-                    Currently Attending?<input type="checkbox" class="form-control">
+                    Currently Attending?<input type="checkbox" data-ng-model="choice.isCurrent"  class="form-control">
                 </div>
+                </fieldset>
             </div>
         </div>
     </div>
+
 
 </section>

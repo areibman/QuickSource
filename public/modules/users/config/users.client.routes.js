@@ -24,7 +24,7 @@ angular.module('users').config(['$stateProvider',
 				url:'/general',
 				templateUrl: 'modules/users/views/settings/position-settings.client.view.html'
 			}).state('validate',{
-				url:'/user/emailValidation/:userId',
+				url:'/users/emailValidation/:userId',
 				templateUrl: 'modules/users/views/settings/validated.client.view.html'
 			}).
 		state('password', {

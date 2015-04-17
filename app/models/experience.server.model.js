@@ -23,7 +23,6 @@ var ExperienceSchema = new Schema({
     title: {
         type: String,
         trim: true,
-        required: 'Title of the experience is required'
     },
     institution: {
         type: String,
@@ -42,8 +41,7 @@ var ExperienceSchema = new Schema({
         type: Date
     },
     isCurrent: {
-        type: Boolean,
-        required: 'Current status of the experience not specified'
+        type: Boolean
     },
     updated: {
         type: Date

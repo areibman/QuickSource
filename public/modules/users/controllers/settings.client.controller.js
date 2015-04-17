@@ -79,8 +79,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$http','$up
 
 
 		$scope.verify = function(){
-			$http.post('/users/'+$stateParams._id+'/emailValidation/').success(function(response){
-				console.log(response);
+			console.log($stateParams);
+			$http.post('/users/'+$stateParams.userId+'/emailValidation/').success(function(response){
+				//console.log(response);
+				Authentication.user = response;
 			});
 		};
 
