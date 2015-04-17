@@ -17,7 +17,7 @@ exports.uploadProfilePic = function(req, res) {
     req.busboy.on('file', function(fieldname, file, filename) {
         console.log(file);
         var newFilename = uuid.v1() + filename.substring(filename.lastIndexOf('.'), filename.length);
-        var saveTo = path.dirname(require.main.filename) + '/uploads/profilePic/' + newFilename;
+        var saveTo = path.dirname(require.main.filename) + '/public/uploads/profilePic/' + newFilename;
         var fstream = fs.createWriteStream(saveTo);
         file.pipe(fstream);
         fstream.on('close', function () {

@@ -8,7 +8,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 			$http.get('/profile/'+$stateParams.username).success(function(user){
 				$scope.user = user;
 				//console.log(user);
-				$scope.user.profileImage = '#!/uploads/profilePic/'+user.profilePic;
+				$scope.user.profileImage = 'uploads/profilePic/'+user.profilePic;
 			}).error(function(response){
 				$scope.error = response.message;
 			});
@@ -166,8 +166,10 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 					console.log('Picture uploading progress: ' + progressPercentage + '% ' +
 					evt.config.file.name);
 				}).success(function (response) {
+					//Not updating file upload correctly
 					$scope.user.profilePic = response;
 					$http.put('/users/profile/update',$scope.user).success(function (response) {
+						console.log(response);
 					});
 				});
 			}
