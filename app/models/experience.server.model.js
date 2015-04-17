@@ -22,7 +22,7 @@ var ExperienceSchema = new Schema({
     // General information
     title: {
         type: String,
-        trim: true,
+        trim: true
     },
     institution: {
         type: String,

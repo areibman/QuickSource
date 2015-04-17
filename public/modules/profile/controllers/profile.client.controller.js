@@ -29,7 +29,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 			{heading:'Position',route:'profile.position', active:false},
 			{heading:'Education',route:'profile.education',active:false},
 			{heading:'Courses',route:'profile.courses', active:false},
-			{heading:'Publication',route:'profile.publication', active:false},
+			{heading:'Publication',route:'profile.publication', active:false}
 		];
 		$scope.go = function(route){
 			$state.go(route);
@@ -58,20 +58,25 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.addNewEducation = function() {
 			var newitem = $scope.edufield.length+1;
 			var previousitem = $scope.edufield[newitem-2];
-			console.log(previousitem);
-			previousitem.title = $scope.profile.headline;
+			//console.log(previousitem);
+			//previousitem.title = $scope.profile.headline;
 			$http.post('/users/profile/addEducation',previousitem).success(function(response){
 				$scope.edufield[newitem-2].submitted = true;
-				$scope.edufield.push({'id':newitem});
+				$scope.edufield.unshift({'id':newitem});
+				$scope.edufield = $scope.edufield.splice(previousitem,1);
+				previousitem._id = response._id;
+				$scope.profile.educations.unshift(previousitem);
 			}).error(function(response){
 				$scope.error = response.message;
 			});
 		};
-		$scope.remove = function(taskid,experienceID){
-			var item = $scope.edufield[taskid-1];
-			console.log(experienceID);
-			console.log(item);
-			//$http.post('/users/profile')
+		$scope.remove = function(experienceId){
+			$http.put('/users/profile/'+experienceId+'/remove').success(function(response){
+				console.log(response);
+				console.log($scope.profile.educations);
+				$scope.profile.educations.splice(response,1);
+
+			});
 		};
 		$scope.posfield = [{id: '1'}];
 		$scope.addNewPosition = function() {
@@ -92,6 +97,8 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.profile = function () {
 			$http.get('/users/profile').success(function(res){
 				//console.log(res.profile.headline);
+				$scope.profile = res.profile;
+				$scope.profile.educations = res.profile.educations;
 				$scope.profile.headline = res.profile.headline;
 			});
 		};
