@@ -72,26 +72,68 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		};
 		$scope.remove = function(experienceId){
 			$http.put('/users/profile/'+experienceId+'/remove').success(function(response){
-				console.log(response);
-				console.log($scope.profile.educations);
-				$scope.profile.educations.splice(response,1);
-
+				if(response.type === 'educations') {
+					$scope.profile.educations.splice(response, 1);
+				}
+				if(response.type === 'position'){
+					$scope.profile.positions.splice(response, 1);
+				}
+				if(response.type === 'course'){
+					$scope.profile.courses.splice(response, 1);
+				}
+				if(response.type === 'publication'){
+					$scope.profile.publications.splice(response, 1);
+				}
 			});
 		};
 		$scope.posfield = [{id: '1'}];
 		$scope.addNewPosition = function() {
 			var newitem = $scope.posfield.length+1;
-			$scope.posfield.push({'id':newitem});
+			var previousitem = $scope.posfield[newitem-2];
+			//previousitem.title = $scope.profile.headline;
+			$http.post('/users/profile/addPosition',previousitem).success(function(response){
+				$scope.posfield[newitem-2].submitted = true;
+				$scope.posfield.unshift({'id':newitem});
+				$scope.posfield = $scope.posfield.splice(previousitem,1);
+				previousitem._id = response._id;
+				console.log($scope.profile.positions);
+				$scope.profile.positions.unshift(previousitem);
+			}).error(function(response){
+				$scope.error = response.message;
+			});
 		};
 		$scope.coursefield = [{id: '1'}];
 		$scope.addNewCourse = function() {
 			var newitem = $scope.coursefield.length+1;
-			$scope.coursefield.push({'id':newitem});
+			var previousitem = $scope.coursefield[newitem-2];
+			//previousitem.title = $scope.profile.headline;
+			$http.post('/users/profile/addCourse',previousitem).success(function(response){
+				$scope.coursefield[newitem-2].submitted = true;
+				$scope.coursefield.unshift({'id':newitem});
+				$scope.coursefield = $scope.coursefield.splice(previousitem,1);
+				previousitem._id = response._id;
+				console.log($scope.profile.courses);
+				$scope.profile.courses.unshift(previousitem);
+			}).error(function(response){
+				$scope.error = response.message;
+			});
 		};
+
 		$scope.pubfield = [{id: '1'}];
 		$scope.addNewPublication = function() {
 			var newitem = $scope.pubfield.length+1;
-			$scope.pubfield.push({'id':newitem});
+			var previousitem = $scope.pubfield[newitem-2];
+			//previousitem.title = $scope.profile.headline;
+			$http.post('/users/profile/addPublication',previousitem).success(function(response){
+				$scope.pubfield[newitem-2].submitted = true;
+				$scope.pubfield.unshift({'id':newitem});
+				$scope.pubfield = $scope.pubfield.splice(previousitem,1);
+				previousitem._id = response._id;
+				console.log($scope.profile.publications);
+				$scope.profile.publications.unshift(previousitem);
+			}).error(function(response){
+				$scope.error = response.message;
+			});
 		};
 
 		$scope.profile = function () {
@@ -100,6 +142,10 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 				$scope.profile = res.profile;
 				$scope.profile.educations = res.profile.educations;
 				$scope.profile.headline = res.profile.headline;
+				$scope.profile.positions = res.profile.positions;
+				$scope.profile.courses = res.profile.courses;
+				$scope.profile.publications = res.profile.publications;
+
 			});
 		};
 

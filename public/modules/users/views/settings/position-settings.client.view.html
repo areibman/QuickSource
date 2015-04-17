@@ -1,4 +1,4 @@
-<section class="row" data-ng-controller="ProfileController" data-ng-init="">
+<section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 
 <div class="row">
     <div class="col-md-6">
@@ -12,30 +12,69 @@
 <div ng-repeat="choice in posfield" >
     <div class="panel panel-default">
         <div class="panel-body">
-            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <div class="row">
-            </div>
+            <!--<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+            <fieldset disabled={{choice.submitted}}>
+
+                <div class="row">
+                    <div class="col-md-6" >{{error}}
+                    </div>
+                </div>
             <div class="form-group col-md-6">
                 <label for="institution">Company or Institution</label>
-                <input type="text" id="institution" name="institution" data-ng-model="user.education.institution" placeholder="Institution" class="form-control">
+                <input type="text" id="institution" name="institution" data-ng-model="choice.institution" placeholder="Institution" class="form-control">
             </div>
             <div class="form-group col-md-6">
                 <label for="position">Position</label>
-                <input type="text" id="position" name="position" placeholder="Position" class="form-control">
+                <input type="text" id="position" name="position" data-ng-model="choice.position" placeholder="Position" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="startdate">Start Date</label>
-                <input type="date" id="startdate" name="startdate" placeholder="Start Date" class="form-control">
+                <input type="date" id="startdate" name="startdate" data-ng-model="choice.startDate" placeholder="Start Date" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="enddate">End Date</label>
-                <input type="date" placeholder="End Date" class="form-control">
+                <input type="date" placeholder="End Date" data-ng-model="choice.endDate" class="form-control">
             </div>
-            <div class="form-group col-md-4">
-                Currently Position?<input type="checkbox" class="form-control">
+            <div class="form-group col-md-1">
+                Currently Position?<input type="checkbox" data-ng-model="choice.current" class="form-control">
+            </div>
+                </fieldset>
+        </div>
+        </div>
+    </div>
+
+    <div ng-repeat="position in profile.positions">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <button type="button" class="close" ng-click="remove(position._id)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                <fieldset disabled=true>
+                    <!--ng-show="choice.submitted"-->
+                    <div class="row">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="institution">Company or Institution</label>
+                        <input type="text" id="institution" name="instituion" data-ng-model="position.institution" placeholder="Institution" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="position">Position</label>
+                        <input type="text" id="position" name="position" data-ng-model="position.position" placeholder="Position" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="startdate">Start Date</label>
+                        {{position.startDate | date : format : short}}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="enddate">End Date</label>
+                        {{position.endDate | date : format : short}}
+                    </div>
+                    <div class="form-group col-md-4">
+                        Current Position?
+                        <input type="checkbox" checked="checked" disabled="{{position.isCurrent}}" />
+                    </div>
+                </fieldset>
             </div>
         </div>
     </div>
-</div>
 
 </section>
