@@ -172,8 +172,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 					evt.config.file.name);
 				}).success(function (response) {
 					//Not updating file upload correctly
-					$scope.user.profilePic = response;
-					$http.put('/users/profile/update',$scope.user).success(function (response) {
+					$http.put('/users/accounts', { profilePic : response }).success(function (response) {
 						console.log(response);
 					});
 				});
