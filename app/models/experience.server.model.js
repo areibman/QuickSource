@@ -6,6 +6,9 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
+var validateType = function(){
+    return(this.type == 'position' || this.type == 'education');
+};
 /**
  * Experience Schema
  */
@@ -27,7 +30,7 @@ var ExperienceSchema = new Schema({
     institution: {
         type: String,
         trim: true,
-        required: 'Affiliated institution of the experience is required'
+        validate: [validateType, 'Affiliated institution of the experience is required']
     },
     summary: {
         type: String,
@@ -80,5 +83,6 @@ var ExperienceSchema = new Schema({
         default: []
     }
 });
+
 
 mongoose.model('Experience', ExperienceSchema);
