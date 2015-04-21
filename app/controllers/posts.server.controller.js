@@ -39,9 +39,9 @@ exports.read = function(req, res) {
         if(!post.isActive){ return res.status(400).send({ message: 'Post Inactive'}); }
         else{
             var opt = [
-                { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
-                { path : 'interestedUsers', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
-                { path : 'participants', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
+                { path : 'user', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
+                { path : 'interestedUsers', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
+                { path : 'participants', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
                 { path : 'comments', model : 'Comment',  match : { isActive : true }}
             ];
 
@@ -111,7 +111,7 @@ exports.setInactive = function(req, res) {
  * List of Posts
  */
 exports.list = function(req, res) {
-    Post.find({ isActive : true }).sort('-created').populate('user', 'displayName school location').exec(function(err, posts) {
+    Post.find({ isActive : true }).sort('-created').populate('user', 'displayName username school location').exec(function(err, posts) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
@@ -216,9 +216,9 @@ exports.removeInterest = function(req, res){
                 if(!post.isActive){ return res.status(400).send({ message: 'Post Inactive'}); }
                 else{
                     var opt = [
-                        { path : 'user', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
-                        { path : 'interestedUsers', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
-                        { path : 'participants', model : 'User', select: 'displayName roles school zipCode isActive', match : { isActive : true }},
+                        { path : 'user', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
+                        { path : 'interestedUsers', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
+                        { path : 'participants', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
                         { path : 'comments', model : 'Comment',  match : { isActive : true }}
                     ];
 
