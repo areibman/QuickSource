@@ -218,7 +218,7 @@ exports.removeInterest = function(req, res){
                     var opt = [
                         { path : 'user', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
                         { path : 'interestedUsers', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
-                        { path : 'participants', model : 'User', select: 'displayName username roles school zipCode isActive', match : { isActive : true }},
+                        { path : 'participants', model : 'User', select: 'displayName username   roles school zipCode isActive', match : { isActive : true }},
                         { path : 'comments', model : 'Comment',  match : { isActive : true }}
                     ];
 
