@@ -15,7 +15,7 @@
 						<h5>Location: {{user.zipCode}}</p>
 						<h5>Interests:&nbsp;<span style="margin:2px" class="label label-primary" ng-repeat="interest in user.interests" data-ng-bind="interest">{{interest}}</span></h5>
 						<br>
-						<button class="btn btn-sm btn-primary">View Resume</button>
+						<a href="{{user.resume}}"><button class="btn btn-sm btn-primary">View Resume</button></a>
 					</div>
 				</div>
 			</div>
