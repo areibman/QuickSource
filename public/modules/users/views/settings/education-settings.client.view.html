@@ -1,5 +1,7 @@
 <section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 
+    <div class="container">
+
     <div class="row">
         <div class="col-md-6">
             <h4>Education</h4>
@@ -34,7 +36,11 @@
                         <label for="enddate">Graduation Date</label>
                         <input type="date" placeholder="Graduation Date" data-ng-model="choice.endDate"  class="form-control">
                     </div>
-                    <div class="form-group col-md-1">
+                    <div class="form-group col-md-2">
+                        <label for="gpa">GPA</label>
+                        <input type="number" placeholder="GPA" data-ng-model="choice.gpa"  class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
                         Currently Attending?<input type="checkbox" data-ng-model="choice.isCurrent"  class="form-control">
                     </div>
                 </fieldset>
@@ -66,7 +72,11 @@
                         <label for="enddate">Graduation Date:</label>
                         {{education.endDate | date : format : short}}
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
+                        <label for="gpa">GPA:</label>
+                        {{education.gpa}
+                    </div>
+                    <div class="form-group col-md-2">
                         Currently Attending?
                         <input type="checkbox" checked="checked" disabled="{{education.isCurrent}}"/>
                     </div>
@@ -75,6 +85,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
 </section>

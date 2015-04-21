@@ -7,7 +7,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.find = function(){
 			$http.get('/profile/'+$stateParams.username).success(function(user){
 				$scope.user = user;
-				//console.log(user);
+				console.log(user);
 				$scope.user.profileImage = 'uploads/profilePic/'+user.profilePic;
 			}).error(function(response){
 				$scope.error = response.message;
@@ -143,14 +143,14 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 		$scope.profile = function () {
 			$http.get('/users/profile').success(function(res){
-				//console.log(res.profile.headline);
+				
 				$scope.profile = res.profile;
 				$scope.profile.educations = res.profile.educations;
 				$scope.profile.headline = res.profile.headline;
 				$scope.profile.positions = res.profile.positions;
 				$scope.profile.courses = res.profile.courses;
 				$scope.profile.publications = res.profile.publications;
-
+				console.log($scope);
 			});
 		};
 

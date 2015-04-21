@@ -1,5 +1,7 @@
 <section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 
+<div class="container">
+
 <div class="row">
     <div class="col-md-6">
         <h4>Positions</h4>
@@ -25,7 +27,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="position">Position</label>
-                <input type="text" id="position" name="position" data-ng-model="choice.position" placeholder="Position" class="form-control">
+                <input type="text" id="position" name="position" data-ng-model="choice.title" placeholder="Position" class="form-control">
             </div>
             <div class="form-group col-md-4">
                 <label for="startdate">Start Date: </label>
@@ -35,7 +37,7 @@
                 <label for="enddate">End Date: </label>
                 <input type="date" placeholder="End Date" data-ng-model="choice.endDate" class="form-control">
             </div>
-            <div class="form-group col-md-1">
+            <div class="form-group col-md-4">
                 Current Position?<input type="checkbox" data-ng-model="choice.current" class="form-control">
             </div>
                 </fieldset>
@@ -59,7 +61,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="position">Position</label>
-                        <input type="text" id="position" name="position" data-ng-model="position.position" placeholder="Position" class="form-control">
+                        <input type="text" id="position" name="position" data-ng-model="position.title" placeholder="Position" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="startdate">Start Date</label>
@@ -77,5 +79,7 @@
             </div>
         </div>
     </div>
+
+</div>
 
 </section>
