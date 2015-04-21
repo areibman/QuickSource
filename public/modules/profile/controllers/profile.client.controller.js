@@ -64,7 +64,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 				$scope.edufield[newitem-2].submitted = true;
 				$scope.edufield.unshift({'id':newitem});
 				$scope.edufield = $scope.edufield.splice(previousitem,1);
-				//console.log($scope.profile.edufield);
+				$scope.error = '';
 				previousitem._id = response._id;
 				$scope.profile.educations.unshift(previousitem);
 			}).error(function(response){
@@ -78,10 +78,10 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 				if(response.type === 'education') {
 					$scope.profile.educations.splice(response, 1);
-					console.log($scope.profile.educations);
 				}
 				if(response.type === 'position'){
 					$scope.profile.positions.splice(response, 1);
+					console.log($scope.profile.positions);
 				}
 				if(response.type === 'course'){
 					$scope.profile.courses.splice(response, 1);
@@ -101,7 +101,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 				$scope.posfield.unshift({'id':newitem});
 				$scope.posfield = $scope.posfield.splice(previousitem,1);
 				previousitem._id = response._id;
-				console.log($scope.profile.positions);
+				$scope.error = '';
 				$scope.profile.positions.unshift(previousitem);
 			}).error(function(response){
 				$scope.error = response.message;
@@ -117,7 +117,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 				$scope.coursefield.unshift({'id':newitem});
 				$scope.coursefield = $scope.coursefield.splice(previousitem,1);
 				previousitem._id = response._id;
-				console.log($scope.profile.courses);
+				$scope.error = '';
 				$scope.profile.courses.unshift(previousitem);
 			}).error(function(response){
 				$scope.error = response.message;
@@ -134,7 +134,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 				$scope.pubfield.unshift({'id':newitem});
 				$scope.pubfield = $scope.pubfield.splice(previousitem,1);
 				previousitem._id = response._id;
-				console.log($scope.profile.publications);
+				$scope.error = '';
 				$scope.profile.publications.unshift(previousitem);
 			}).error(function(response){
 				$scope.error = response.message;
