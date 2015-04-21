@@ -107,7 +107,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
                     post.isPoster=true;
                 }
                 $scope.post = post;
-                //console.log(post);
+                console.log(post);
             }).error(function(response){
                 alert(response.message);
                 $scope.error = response.message;
