@@ -5,7 +5,7 @@
             <h4>Education</h4>
         </div>
         <div class="col-md-6">
-            <button ng-click="addNewEducation()" class="btn btn-large btn-block btn-primary">Add New Education</button>
+           
         </div>
     </div>
     <div ng-repeat="choice in edufield">
@@ -38,6 +38,7 @@
                         Currently Attending?<input type="checkbox" data-ng-model="choice.isCurrent"  class="form-control">
                     </div>
                 </fieldset>
+                 <button ng-click="addNewEducation()" class="btn btn-large btn-block btn-primary">Add New Education</button>
             </div>
         </div>
     </div>
@@ -58,11 +59,11 @@
                         <input type="text" id="major" name="major" data-ng-model="education.major" placeholder="Majors" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="startdate">Start Date</label>
+                        <label for="startdate">Start Date:</label>
                         {{education.startDate | date : format : short}}
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="enddate">Graduation Date</label>
+                        <label for="enddate">Graduation Date:</label>
                         {{education.endDate | date : format : short}}
                     </div>
                     <div class="form-group col-md-4">

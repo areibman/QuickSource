@@ -5,7 +5,7 @@
             <h4>Courses</h4>
         </div>
         <div class="col-md-6">
-            <button ng-click="addNewCourse()" class="btn btn-large btn-block btn-primary">Add New Course</button>
+           
         </div>
     </div>
     <div ng-repeat="choice in coursefield" >
@@ -24,6 +24,7 @@
                     <input type="text" id="courseno" name="courseno" data-ng-model="choice.courseNumber" placeholder="Course Number" class="form-control">
                 </div>
                     </fieldset>
+                     <button ng-click="addNewCourse()" class="btn btn-large btn-block btn-primary">Add New Course</button>
             </div>
             </div>
         </div>
