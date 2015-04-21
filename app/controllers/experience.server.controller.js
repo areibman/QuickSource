@@ -18,9 +18,11 @@ var create = function(req, res, type) {
     experience.profile = req.user.profile;
     experience.updated = Date.now();
     experience.type = type;
-
+    console.log(req.body);
+    console.log(type);
     experience.save(function(err) {
         if (err) {
+            console.log(err);
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });

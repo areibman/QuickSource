@@ -1,28 +1,50 @@
-<section class="row" data-ng-controller="ProfileController" data-ng-init="">
+<section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 
     <div class="row">
         <div class="col-md-6">
             <h4>Courses</h4>
         </div>
         <div class="col-md-6">
-            <button ng-click="addNewCourse()" class="btn btn-large btn-block btn-primary">Add New Course</button>
-
+           
         </div>
     </div>
     <div ng-repeat="choice in coursefield" >
         <div class="panel panel-default">
             <div class="panel-body">
                 <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <fieldset disabled="{{choice.submitted}}">
                 <div class="row">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="coursename">Course Name</label>
-                    <input type="text" id="coursename" name="coursename" data-ng-model="user.education.institution" placeholder="Course Name" class="form-control">
+                    <input type="text" id="coursename" name="coursename" data-ng-model="choice.course" placeholder="Course Name" class="form-control">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="courseno">Course Number</label>
-                    <input type="text" id="courseno" name="courseno" placeholder="Course Number" class="form-control">
+                    <input type="text" id="courseno" name="courseno" data-ng-model="choice.courseNumber" placeholder="Course Number" class="form-control">
                 </div>
+                    </fieldset>
+                     <button ng-click="addNewCourse()" class="btn btn-large btn-block btn-primary">Add New Course</button>
+            </div>
+            </div>
+        </div>
+
+    <div ng-repeat="course in profile.courses" >
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <button type="button" class="close" ng-click="remove(course._id)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <fieldset disabled=true>
+                    <div class="row">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="coursename">Course Name</label>
+                        <input type="text" id="coursename" name="coursename" data-ng-model="course.course" placeholder="Course Name" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="courseno">Course Number</label>
+                        <input type="text" id="courseno" name="courseno" data-ng-model="course.courseNumber" placeholder="Course Number" class="form-control">
+                    </div>
+                </fieldset>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-<section class="row" data-ng-controller="ProfileController" data-ng-init="">
+<section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 
     <div class="row">
         <div class="col-md-6">
@@ -6,26 +6,49 @@
 
         </div>
         <div class="col-md-6">
-            <button ng-click="addNewPublication()" class="btn btn-large btn-block btn-primary">Add New Publication</button>
+            
 
         </div>
     </div>
     <div ng-repeat="choice in pubfield" >
         <div class="panel panel-default">
             <div class="panel-body">
+
                 <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <fieldset disabled="{{choice.submitted}}">
                 <div class="row">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="coursename">Publication Name</label>
-                    <input type="text" id="pubname" name="pubname" data-ng-model="user.education.institution" placeholder="Publication Name" class="form-control">
+                    <input type="text" id="pubname" name="pubname" data-ng-model="choice.publication" placeholder="Publication Name" class="form-control">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="courseno">Publication Authors</label>
-                    <input type="text" id="pubauth" name="puthauth" placeholder="Publication Authors" class="form-control">
+                    <input type="text" id="pubauth" name="puthauth" data-ng-model="choice.authors" placeholder="Publication Authors" class="form-control">
                 </div>
+                </fieldset>
+                <button ng-click="addNewPublication()" class="btn btn-large btn-block btn-primary">Add New Publication</button>
             </div>
         </div>
     </div>
+    <div ng-repeat="publication in profile.publications" >
+        <div class="panel panel-default">
+            <div class="panel-body">
 
+                <button type="button" class="close" ng-click="remove(publication._id)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <fieldset disabled=true>
+                    <div class="row">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pubname">Publication Name</label>
+                        <input type="text" id="pubname" name="pubname" data-ng-model="publication.publication" placeholder="Publication Name" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pubauth">Publication Authors</label>
+                        <input type="text" id="pubauth" name="puthauth" data-ng-model="publication.authors" placeholder="Publication Authors" class="form-control">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
 </section>

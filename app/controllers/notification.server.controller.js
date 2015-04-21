@@ -61,7 +61,7 @@ exports.sendNotification = function(user, notificationOpt) {
                 html: '<b>' + notification.message + '</b>'
             });
         user.save(function(){
-            res.json(notification);
+            notification.json(notification);
         });
     });
 };

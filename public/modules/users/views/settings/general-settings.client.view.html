@@ -1,8 +1,8 @@
 <section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 
-    <div class="col-md-8">
+    <div class="col-md-12">
         <h2>{{profile.headline}}</h2>
-        <form name="headlineform" data-ng-submit="updateHead()" autocomplete="false">
+        <form name="headlineform" data-ng-submit="updateHead()"  autocomplete="false">
             <hr>
             <div class="form-group">
                 <div class="input-group">
@@ -14,9 +14,24 @@
             </div>
         </form>
         <hr>
-        <h4>Documents</h4>
-        <div>
-            <div data-ng-init="">
+        <form data-ng-controller="SettingsController" data-ng-submit="updateProfile()">
+        <div class="form-group col-md-6">
+            <label for="interests">Interests (select all that apply)</label>
+            <select multiple="yes" id="interests" name="interests" class="form-control" data-ng-model="user.interests">
+                <option value="Arts"> Arts </option>
+                <option value="Sciences"> Sciences </option>
+                <option value="Medicine"> Medicine </option>
+                <option value="Business"> Business </option>
+                <option value="Law"> Law </option>
+            </select>
+            <br>
+             <button type="submit" class="btn btn-medium btn-block btn-default">Save Interests</button>
+        </div>
+        </form>
+        
+        <div class="form-group col-md-6">
+            <h4>Documents</h4>
+            <div data-ng-init="find()">
                 <div class="form-group col-md-6">
                     <div class="btn btn-large btn-block btn-default" ng-file-select ng-model="profilePic">Select Profile Picture</div>
                 </div>

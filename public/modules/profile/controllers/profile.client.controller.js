@@ -7,8 +7,8 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.find = function(){
 			$http.get('/profile/'+$stateParams.username).success(function(user){
 				$scope.user = user;
-				//console.log(user);
-				$scope.user.profileImage = '#!/uploads/profilePic/'+user.profilePic;
+				console.log(user);
+				$scope.user.profileImage = 'uploads/profilePic/'+user.profilePic;
 			}).error(function(response){
 				$scope.error = response.message;
 			});
@@ -29,7 +29,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 			{heading:'Position',route:'profile.position', active:false},
 			{heading:'Education',route:'profile.education',active:false},
 			{heading:'Courses',route:'profile.courses', active:false},
-			{heading:'Publication',route:'profile.publication', active:false},
+			{heading:'Publication',route:'profile.publication', active:false}
 		];
 		$scope.go = function(route){
 			$state.go(route);
@@ -40,14 +40,14 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		};
 
 		$scope.$on('$stateChangeSuccess', function() {
-			console.log($state);
+			//console.log($state);
 			$scope.tabs.forEach(function(tab) {
 				tab.active = $scope.active(tab.route);
 			});
 		});
 
 		$scope.$on('$stateChangeStart', function() {
-			console.log("start");
+			//console.log('start');
 		});
 
 		$scope.inittab = function(){
@@ -57,31 +57,100 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.edufield = [{id: '1'}];
 		$scope.addNewEducation = function() {
 			var newitem = $scope.edufield.length+1;
-			$scope.edufield.push({'id':newitem});
-			$http.post('/users/profile/addEducation/').success(function(response){
+			var previousitem = $scope.edufield[newitem-2];
+			//console.log(previousitem);
+			//previousitem.title = $scope.profile.headline;
+			$http.post('/users/profile/addEducation',previousitem).success(function(response){
+				$scope.edufield[newitem-2].submitted = true;
+				$scope.edufield.unshift({'id':newitem});
+				$scope.edufield = $scope.edufield.splice(previousitem,1);
+				$scope.error = '';
+				previousitem._id = response._id;
+				$scope.profile.educations.unshift(previousitem);
+			}).error(function(response){
+				$scope.error = response.message;
+			});
+		};
+		$scope.remove = function(experienceId){
+			console.log(experienceId);
+			$http.put('/users/profile/'+experienceId+'/remove').success(function(response){
 				console.log(response);
+
+				if(response.type === 'education') {
+					$scope.profile.educations.splice(response, 1);
+				}
+				if(response.type === 'position'){
+					$scope.profile.positions.splice(response, 1);
+					console.log($scope.profile.positions);
+				}
+				if(response.type === 'course'){
+					$scope.profile.courses.splice(response, 1);
+				}
+				if(response.type === 'publication'){
+					$scope.profile.publications.splice(response, 1);
+				}
 			});
 		};
 		$scope.posfield = [{id: '1'}];
 		$scope.addNewPosition = function() {
 			var newitem = $scope.posfield.length+1;
-			$scope.posfield.push({'id':newitem});
+			var previousitem = $scope.posfield[newitem-2];
+			//previousitem.title = $scope.profile.headline;
+			$http.post('/users/profile/addPosition',previousitem).success(function(response){
+				$scope.posfield[newitem-2].submitted = true;
+				$scope.posfield.unshift({'id':newitem});
+				$scope.posfield = $scope.posfield.splice(previousitem,1);
+				previousitem._id = response._id;
+				$scope.error = '';
+				$scope.profile.positions.unshift(previousitem);
+			}).error(function(response){
+				$scope.error = response.message;
+			});
 		};
 		$scope.coursefield = [{id: '1'}];
 		$scope.addNewCourse = function() {
 			var newitem = $scope.coursefield.length+1;
-			$scope.coursefield.push({'id':newitem});
+			var previousitem = $scope.coursefield[newitem-2];
+			//previousitem.title = $scope.profile.headline;
+			$http.post('/users/profile/addCourse',previousitem).success(function(response){
+				$scope.coursefield[newitem-2].submitted = true;
+				$scope.coursefield.unshift({'id':newitem});
+				$scope.coursefield = $scope.coursefield.splice(previousitem,1);
+				previousitem._id = response._id;
+				$scope.error = '';
+				$scope.profile.courses.unshift(previousitem);
+			}).error(function(response){
+				$scope.error = response.message;
+			});
 		};
+
 		$scope.pubfield = [{id: '1'}];
 		$scope.addNewPublication = function() {
 			var newitem = $scope.pubfield.length+1;
-			$scope.pubfield.push({'id':newitem});
+			var previousitem = $scope.pubfield[newitem-2];
+			//previousitem.title = $scope.profile.headline;
+			$http.post('/users/profile/addPublication',previousitem).success(function(response){
+				$scope.pubfield[newitem-2].submitted = true;
+				$scope.pubfield.unshift({'id':newitem});
+				$scope.pubfield = $scope.pubfield.splice(previousitem,1);
+				previousitem._id = response._id;
+				$scope.error = '';
+				$scope.profile.publications.unshift(previousitem);
+			}).error(function(response){
+				$scope.error = response.message;
+			});
 		};
 
 		$scope.profile = function () {
 			$http.get('/users/profile').success(function(res){
-				console.log(res.profile.headline);
+				
+				$scope.profile = res.profile;
+				$scope.profile.educations = res.profile.educations;
 				$scope.profile.headline = res.profile.headline;
+				$scope.profile.positions = res.profile.positions;
+				$scope.profile.courses = res.profile.courses;
+				$scope.profile.publications = res.profile.publications;
+				console.log($scope);
 			});
 		};
 
@@ -92,7 +161,7 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 
 		$scope.uploadProfilePic = function (profilePic) {
 			if (profilePic) {
-				console.log(profilePic);
+				//console.log(profilePic);
 				$upload.upload({
 					url: '/file/uploadProfilePic',
 					method: 'POST',
@@ -102,8 +171,9 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 					console.log('Picture uploading progress: ' + progressPercentage + '% ' +
 					evt.config.file.name);
 				}).success(function (response) {
-					$scope.user.profilePic = response;
-					$http.put('/users/profile/update',$scope.user).success(function (response) {
+					//Not updating file upload correctly
+					$http.put('/users/accounts', { profilePic : response }).success(function (response) {
+						console.log(response);
 					});
 				});
 			}

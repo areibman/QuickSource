@@ -1,6 +1,6 @@
 # ~QuickSource~
 #### Current Demo: [Click here](http://45.55.134.189/#!/)
-#### Current Release: [v0.8](https://github.com/CS370-soft-eng-practicum/QuickSource/releases/tag/0.8)
+#### Current Release: [v1.0](https://github.com/CS370-soft-eng-practicum/QuickSource/releases/tag/1.0)
 
 ## Overview
 #### Idea : 

@@ -6,6 +6,16 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
+var validateInsitution = function(institution){
+    if(this.type !== 'position' && this.type !== 'education')  return true;
+    return (institution.length > 0);
+};
+
+var validateCourse = function(courseNumber){
+    if(this.type !== 'course')  return true;
+    return (courseNumber.length > 0);
+};
+
 /**
  * Experience Schema
  */
@@ -22,13 +32,13 @@ var ExperienceSchema = new Schema({
     // General information
     title: {
         type: String,
-        trim: true,
-        required: 'Title of the experience is required'
+        trim: true
     },
     institution: {
         type: String,
         trim: true,
-        required: 'Affiliated institution of the experience is required'
+        default: '',
+        validate: [validateInsitution, 'Affiliated institution of the experience is required']
     },
     summary: {
         type: String,
@@ -42,8 +52,7 @@ var ExperienceSchema = new Schema({
         type: Date
     },
     isCurrent: {
-        type: Boolean,
-        required: 'Current status of the experience not specified'
+        type: Boolean
     },
     updated: {
         type: Date
@@ -72,7 +81,9 @@ var ExperienceSchema = new Schema({
     // For courses
     courseNumber: {
         type: String,
-        trim: true
+        trim: true,
+        default: '',
+        validate: [validateCourse, 'Course number is required']
     },
 
     // For publication
@@ -82,5 +93,6 @@ var ExperienceSchema = new Schema({
         default: []
     }
 });
+
 
 mongoose.model('Experience', ExperienceSchema);
