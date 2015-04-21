@@ -106,6 +106,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
                 if(post.user._id===$scope.authentication.user._id){
                     post.isPoster=true;
                 }
+                post.user.profileImage = 'uploads/profilePic/'+post.user.profilePic;
                 $scope.post = post;
                 console.log(post);
             }).error(function(response){
