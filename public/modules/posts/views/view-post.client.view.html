@@ -106,7 +106,7 @@
 		<div class="col-md-3">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<img src="http://nocturnalgaming.com/wp-content/uploads/2014/02/seshn-default-avatar.png" alt="temp" class="img-thumbnail"><br>
+					<img ng-src="{{post.user.profilePic}}" alt="temp" class="img-thumbnail"><br>
 					<a style="text-decoration:none" href="#!/profile/{{post.user.username}}"><h4 class="text-center" data-ng-bind="post.user.displayName"></h4></a>
 					<p class="text-center">{{post.user.roles}}<br>{{post.user.school}}</p>
 				</div>
