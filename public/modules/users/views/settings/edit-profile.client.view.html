@@ -1,12 +1,13 @@
 <section class="row" data-ng-controller="ProfileController" data-ng-init="profile()">
 
-	<div data-ng-init="inittab()">
-	<tabset>
-		<tab  ng-repeat="t in tabs"  heading="{{t.heading}}"  ui-sref="{{t.route}}" active="t.active"> </tab>
-	</tabset>
+	<div class="container" style="margin-top:20px">
+		<h1>Edit Your Profile Information</h1>
+		<br>
+		<div data-ng-init="inittab()">
+			<tabset>
+				<tab  ng-repeat="t in tabs"  heading="{{t.heading}}"  ui-sref="{{t.route}}" active="t.active"> </tab>
+			</tabset>
 		</div>
-
-
 		<div ui-view></div>
 	</div>
 </section>

@@ -2,24 +2,24 @@
 	<div class="container" style="margin-top:20px">
 		<h1>{{user.displayName}}'s Profile</h1>
 		<div class="row">
-			<div class="col-md-5">
+			<div class="col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
     					<h3 class="panel-title">Personal Information</h3>
   					</div>
 					<div class="panel-body">
 						<img ng-src="{{user.profileImage}}" alt="temp" class="img-thumbnail"><hr>
-						<h5>{{user.displayName}}</h5>
+						<h4>{{user.displayName}}</h4>
 						<h5>{{user.roles}}</h5>
 						<h5>{{user.school}}</h5>
 						<h5>Location: {{user.zipCode}}</p>
 						<h5>Interests:&nbsp;<span style="margin:2px" class="label label-primary" ng-repeat="interest in user.interests" data-ng-bind="interest">{{interest}}</span></h5>
 						<br>
-						<button class="btn btn-sm btn-primary">View Resume</button>
+						<a href="{{user.resume}}"><button class="btn btn-sm btn-primary">View Resume</button></a>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-7">
+			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">
     					<h3 class="panel-title">Professional Information</h3>
@@ -27,33 +27,41 @@
   					<div class="panel-body">
   						<h5>{{user.profile.headline}}</h4>
   						<h4>Education</h4>
-  						<div ng-repeat="experience in education">
-  							<div class="well well-sm">
-	  							<div class="col-md-6">
-	  								<h5>{{experience.institution}}</h5>
+  						<div ng-repeat="test in user.profile.educations">
+  							<div class="panel panel-default" style="padding:15px">
+	  							<div class="row">
+		  							<div class="col-md-6">
+		  								<h5>{{test.institution}}</h5>
+		  							</div>
+		  							<div class="col-md-6">
+		  								<h5>{{test.startDate | date : format : short}} - {{test.endDate | date : format : short}}</h5>
+		  							</div>
 	  							</div>
-	  							<div class="col-md-6">
-	  								<h5>{{experience.startDate}} - {{experience.endDate}}</h5>
-	  							</div>
-	  							<div class="col-md-6">
-	  								<h5>{{experience.major}}</h5>
-	  							</div>
-	  							<div class="col-md-6">
-	  								<h5>{{experience.gpa}}</h5>
+	  							<div class="row">
+		  							<div class="col-md-6">
+		  								<h5>Majors: {{test.major}}</h5>
+		  							</div>
+		  							<div class="col-md-6">
+		  								<h5>{{test.gpa}}</h5>
+		  							</div>
 	  							</div>
   							</div>
   						</div>
   						<h4>Experience</h4>
-  						<div ng-repeat="position in positions">
-  							<div class="well well-sm">
-	  							<div class="col-md-6">
-	  								<h5>{{position.title}}</h5>
+  						<div ng-repeat="position in user.profile.positions">
+  							<div class="panel panel-default" style="padding:15px">
+	  							<div class="row">
+		  							<div class="col-md-8">
+		  								<h5>{{position.title}}</h5>
+		  							</div>
+		  							<div class="col-md-4">
+		  								<h5>{{position.startDate | date : format : short}} - {{position.endDate | date : format : short}}</h5>
+		  							</div>
 	  							</div>
-	  							<div class="col-md-6">
-	  								<h5>{{position.startDate}} - {{position.endDate}}</h5>
-	  							</div>
-	  							<div class="col-md-6">
-	  								<h5>{{position.institution}}</h5>
+	  							<div class="row">
+		  							<div class="col-md-6">
+		  								<h5>{{position.institution}}</h5>
+		  							</div>
 	  							</div>
 	  							<!-- <div class="col-md-6">
 	  								<h5>{{position.gpa}}</h5>
@@ -61,8 +69,8 @@
   							</div>
   						</div>
   						<h4>Courses</h4>
-  						<div ng-repeat="course in courses">
-  							<div class="well well-sm">
+  						<div ng-repeat="course in user.profile.courses">
+  							<div class="panel panel-default" style="padding:15px">
 	  							<div class="col-md-6">
 	  								<h5>{{course.title}}</h5>
 	  							</div>
@@ -72,8 +80,8 @@
   							</div>
   						</div>
   						<h4>Publications</h4>
-  						<div ng-repeat="publication in publications">
-  							<div class="well well-sm">
+  						<div ng-repeat="publication in user.profile.publications">
+  							<div class="panel panel-default" style="padding:15px">
 	  							<div class="col-md-6">
 	  								<h5>{{publication.title}}</h5>
 	  							</div>
