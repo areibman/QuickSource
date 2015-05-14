@@ -7,7 +7,6 @@ angular.module('profile').controller('ProfileController', ['$scope','$http','$up
 		$scope.find = function(){
 			$http.get('/profile/'+$stateParams.username).success(function(user){
 				$scope.user = user;
-				console.log(user);
 				$scope.user.profileImage = 'uploads/profilePic/'+user.profilePic;
 			}).error(function(response){
 				$scope.error = response.message;

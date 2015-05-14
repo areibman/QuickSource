@@ -108,7 +108,7 @@ angular.module('posts').controller('PostsController', ['$scope', '$stateParams',
                 }
                 post.user.profileImage = 'uploads/profilePic/'+post.user.profilePic;
                 $scope.post = post;
-                console.log(post);
+                //console.log(post);
             }).error(function(response){
                 alert(response.message);
                 $scope.error = response.message;

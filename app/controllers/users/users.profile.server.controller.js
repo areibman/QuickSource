@@ -57,6 +57,42 @@ exports.me = function(req, res) {
 };
 
 exports.profile = function(req, res) {
+    if(req.params.userUsername!==req.user.username){
+        User.find({username:req.params.userUsername}, function(err,user) {
+            var currUser = user[0];
+            console.log(currUser);
+
+            if (currUser) {
+                var oUser = [
+                    {path: 'profile', model: 'Profile', match: {isActive: true}},
+                    {
+                        path: 'notifications',
+                        model: 'Notification',
+                        select: 'title message created viewed',
+                        match: {isActive: true}
+                    }
+                ];
+            User.populate(currUser,oUser,function(err,user){
+                if(err) res.status(400).send({message:'Cannot find user profile'});
+                else{
+                    var oProfile =[
+                        { path : 'profile.positions', model : 'Experience', select : 'title institution summary startDate endDate isCurrent updated created', match : { isActive : true }},
+                        { path : 'profile.educations', model : 'Experience', select : 'title institution summary major gpa startDate endDate isCurrent updated created', match : { isActive : true }},
+                        { path : 'profile.courses', model : 'Experience', select : 'title institution summary courseNumber startDate endDate isCurrent updated created', match : { isActive : true }},
+                        { path : 'profile.publications', model : 'Experience', select : 'title institution summary authors startDate endDate isCurrent updated created', match : { isActive : true }}
+                    ];
+                    Profile.populate(user,oProfile,function(err,populatedProfile){
+                        if(err) res.status(400).send({message: 'Cannot find user profile'});
+                        else   { res.json(populatedProfile);}
+                    });
+                }
+
+            });
+            }
+            else res.json(null);
+        });}
+
+    else{
     if(req.user){
         var optUser = [
             { path : 'profile', model : 'Profile', match : { isActive : true }},
@@ -74,13 +110,13 @@ exports.profile = function(req, res) {
 
                 Profile.populate(user, optProfile, function(err, populatedProfile){
                     if(err) res.status(400).send({message: 'Cannot find user profile'});
-                    else    res.json(populatedProfile);
+                    else   { res.json(populatedProfile);}
                 });
             }
         });
     }
     else    res.json(null);
-};
+}};
 
 exports.getNotifications = function(req, res) {
     if(req.user){
