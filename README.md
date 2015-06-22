@@ -27,8 +27,6 @@ Language: JavaScript, HTML, CSS
 Framework: MEAN Stack (MongoDB, Express.js, Angular.js, Node.js)
 
 #### Process Tools :
-Slack for general communication and reporting:
-[Click here](https://datcoco.slack.com/messages)
   
 Pivotal Tracker:
 [Click here](https://www.pivotaltracker.com/n/projects/1276086)
