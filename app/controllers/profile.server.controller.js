@@ -72,7 +72,7 @@ exports.getProfile = function(req, res, next) {
     Profile.findById(req.user.profile).exec(function(err, profile) {
         if (err) return next(err);
         if (!profile) return next(new Error('Failed to load Profile'));
-        req.profile = profile;
+        res.profile = profile;
         next();
     });
 };

@@ -8,6 +8,6 @@ module.exports = function(app) {
     app.route('/profile/:userUsername')
         // View experience
         .get(profile.read);
-
+    app.route('/profile/view/:username');
     app.param('userUsername', users.profile);
 };
